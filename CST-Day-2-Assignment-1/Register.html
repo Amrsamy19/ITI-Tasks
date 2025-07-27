@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="style.css">
+	<title>Register</title>
+</head>
+
+<body>
+	<h1>Registeration Form</h1>
+
+	<table>
+		<form action="https://formspree.io/f/mwpqewbg" method="POST">
+			<tr>
+				<td><label for="fname">First Name</label></td>
+				<td colspan="3">
+					<input type="text" name="fname" id="fname" placeholder="Enter your first name" />
+				</td>
+			</tr>
+			<tr>
+				<td><label for="lname">Last Name</label></td>
+				<td colspan="3">
+					<input type="text" name="lname" id="lname" placeholder="Enter your last name" />
+				</td>
+			</tr>
+			<tr>
+				<td><label for="email">Email</label></td>
+				<td colspan="3">
+					<input type="email" name="email" id="email" placeholder="Enter your email" />
+				</td>
+			</tr>
+			<tr>
+				<td><label for="password">Password</label></td>
+				<td colspan="3">
+					<input type="password" name="password" id="password" placeholder="Enter your password" />
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="2"><label>Gender</label></td>
+				<td colspan="3">
+					<input type="radio" name="gender" id="male" value="male" />
+					<label for="male">Male</label>
+				</td>
+			<tr>
+				<td colspan="3">
+					<input type="radio" name="gender" id="female" value="female" />
+					<label for="female">Female</label>
+				</td>
+			</tr>
+			</tr>
+			<tr>
+				<td>Country</td>
+				<td colspan="3">
+					<select>
+						<option value="" selected>Select a Country</option>
+						<optgroup label="Africa">
+							<option value="egypt">Egypt</option>
+							<option value="sudan">Sudan</option>
+							<option value="libya">Libya</option>
+							<option value="tunisia">Tunisia</option>
+							<option value="moroco">Moroco</option>
+						</optgroup>
+						<optgroup label="Europe" disabled>
+							<option value="italy">Italy</option>
+							<option value="sweden">Sweden</option>
+							<option value="spain">Spain</option>
+						</optgroup>
+						<optgroup label="Asia">
+							<option value="palestine">Palestine</option>
+							<option value="korea">South Korea</option>
+							<option value="india">India</option>
+						</optgroup>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td><label for="birthdate">Birthday</label></td>
+				<td colspan="3"><input type="date" name="birthdate" id="birthdate" placeholder="mm/dd/yyyy" /></td>
+			</tr>
+			<tr>
+				<td id="titles" colspan="3"><label>Interests</label></td>
+			</tr>
+			<tr class="interests">
+				<td>
+					<input type="checkbox" name="interests" value="sports" id="sports">
+					<label for="sports">Sports</label>
+				</td>
+				<td>
+					<input type="checkbox" name="interests" value="music" id="music">
+					<label for="music">Music</label>
+				</td>
+				<td>
+					<input type="checkbox" name="interests" value="fashion" id="fashion">
+					<label for="fashion">Fashion</label>
+				</td>
+			</tr>
+			<tr class="interests">
+				<td>
+					<input type="checkbox" name="interests" value="reading" id="reading">
+					<label for="reading">Reading</label>
+				</td>
+				<td>
+					<input type="checkbox" name="interests" value="shopping" id="shopping">
+					<label for="shopping">Shopping</label>
+				</td>
+				<td>
+					<input type="checkbox" name="interests" value="movies" id="movies">
+					<label for="movies">Movies</label>
+				</td>
+				</td>
+				</td>
+			</tr>
+			<tr>
+				<td id="titles" colspan="3"><label>Bio</label></td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<textarea rows="3"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td class="btns" colspan="3">
+					<input type="submit" value="Register..">
+					<input type="reset" value="Clear..">
+				</td>
+			</tr>
+		</form>
+	</table>
+</body>
+
+</html>

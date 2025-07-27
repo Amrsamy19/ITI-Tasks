@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flying Child</title>
+  </head>
+  <body>
+    <h3>Flying Child Window</h3>
+    <p>This window moves up and down.</p>
+
+    <script>
+      let direction = 1; // 1 = down, -1 = up
+      let step = 5;
+      let minY = 0;
+      let maxY = screen.availHeight - window.outerHeight;
+
+      setInterval(function () {
+        if (window.opener && window.opener.stopChild) return;
+
+        let currentY = window.screenY;
+        let newY = currentY + step * direction;
+        
+        if (newY >= maxY || newY <= minY) {
+          direction *= -1;
+          newY = currentY + step * direction;
+        }
+
+        window.moveTo(window.screenX, newY);
+        window.focus();
+      }, 50);
+    </script>
+  </body>
+</html>
