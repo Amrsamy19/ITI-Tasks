@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="script.js" defer></script>
+    <style>
+      body {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+      }
+      body > div {
+        width: 300px;
+        height: 300px;
+        background-color: brown;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="div1"></div>
+    <form>
+      <div>
+        <label for="username"> Username </label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Enter your username"
+        />
+      </div>
+      <div>
+        <label for="password"> Password </label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Enter your password"
+        />
+      </div>
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>
