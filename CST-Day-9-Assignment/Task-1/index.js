@@ -7,21 +7,14 @@ document.getElementById("submit").addEventListener("click", function () {
   const color = document.getElementById("color").value;
   const id = Math.random();
 
-  console.log("Name:", name);
-  console.log("Age:", age);
-  console.log("Gender:", gender);
-  console.log("Color:", color);
-
   try {
-    cookieManager.setCookie("id", id, 2);
-    cookieManager.setCookie("name", name);
-    cookieManager.setCookie("age", age);
+    cookieManager.setCookie("signedId", `${name}${age}`);
     cookieManager.setCookie("gender", gender);
     cookieManager.setCookie("color", color);
-    cookieManager.setCookie("visits", 1);
+    cookieManager.setCookie(`${name}${age}`, 1);
     alert("Cookies set successfully!");
     window.location.href =
-      "http://127.0.0.1:5500/CST-Day-9-Assignment/welcome.html";
+      "http://127.0.0.1:5500/CST-Day-9-Assignment/Task-1/welcome.html";
   } catch (error) {
     alert(error.message);
   }
@@ -50,6 +43,6 @@ document.getElementById("submit").addEventListener("click", function () {
 
 // Handle the custom event
 // window.addEventListener("customEvent", () => {
-//   alert("No input entered for 5 seconds!");
+//   alert("No input entered for 5 seconds, Are you a human?");
 //   console.log("No user input detected.");
 // });

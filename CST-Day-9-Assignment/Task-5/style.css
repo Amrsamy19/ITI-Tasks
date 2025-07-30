@@ -1,0 +1,29 @@
+#container {
+  width: 600px;
+  height: 600px;
+  border: 5px solid black;
+}
+
+#container img:nth-child(1) {
+  position: absolute;
+  top: 295px;
+}
+
+#container img:nth-child(2) {
+  position: absolute;
+  left: 563px;
+  top: 295px;
+}
+
+#container img:nth-child(3) {
+  position: absolute;
+  left: 285px;
+  top: 580px;
+}
+
+#positions {
+  position: absolute;
+  top: 100px;
+  left: 800px;
+
+}
