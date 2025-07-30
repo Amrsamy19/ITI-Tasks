@@ -22,27 +22,27 @@ document.getElementById("submit").addEventListener("click", function () {
 
 //First Task
 
-// let userInteracted = false;
+let userInteracted = false;
 
 // Listen to user input in input and textarea
-// function markAsInteracted() {
-//   userInteracted = true;
-// }
+function markAsInteracted() {
+  userInteracted = true;
+}
 
-// document.querySelectorAll("input, select").forEach((el) => {
-//   el.addEventListener("input", markAsInteracted);
-// });
+document.querySelectorAll("input, select").forEach((el) => {
+  el.addEventListener("input", markAsInteracted);
+});
 
 // Fire custom event after 30 seconds of inactivity
-// setInterval(() => {
-//   if (!userInteracted) {
-//     const event = new CustomEvent("customEvent");
-//     window.dispatchEvent(event);
-//   }
-// }, 5000);
+setInterval(() => {
+  if (!userInteracted) {
+    const event = new CustomEvent("customEvent");
+    window.dispatchEvent(event);
+  }
+}, 5000);
 
 // Handle the custom event
-// window.addEventListener("customEvent", () => {
-//   alert("No input entered for 5 seconds, Are you a human?");
-//   console.log("No user input detected.");
-// });
+window.addEventListener("customEvent", () => {
+  alert("No input entered for 5 seconds, Are you a human?");
+  console.log("No user input detected.");
+});

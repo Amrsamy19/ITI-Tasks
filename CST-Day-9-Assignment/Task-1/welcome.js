@@ -1,5 +1,3 @@
-//TODO: Receive the cookie and check if there is a cookie with the name "id", or not
-
 const signedId = cookieManager.getCookie("signedId");
 const gender = cookieManager.getCookie("gender");
 const color = cookieManager.getCookie("color");
