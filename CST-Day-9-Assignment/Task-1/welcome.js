@@ -5,7 +5,7 @@ const userName = signedId.match(/([a-zA-Z]+)/)[0];
 const imgSrc =
   gender.toLowerCase() === "male" ? "images/1.jpg" : "images/2.jpg";
 
-let visits = parseInt(cookieManager.getCookie(signedId) || 1);
+let visits = parseInt(cookieManager.getCookie(signedId));
 
 const html = `
   <h2>Hello, <strong style="color:${color}">${userName}</strong>!</h2>
