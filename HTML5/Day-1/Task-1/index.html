@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Custom Video Controls</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <video id="video" preload="metadata">
+      <source
+        src="DAN DA DAN Opening  Otonoke by Creepy Nuts.mp4"
+        type="video/mp4"
+      />
+    </video>
+
+    <div class="controls">
+      <button id="play">Play</button>
+      <button id="back">-5s</button>
+      <button id="forward">+5s</button>
+      <input
+        id="progressRange"
+        type="range"
+        min="0"
+        max="100"
+        step="0.1"
+        value="0"
+      />
+      <span id="time">0:00 / 0:00</span>
+      <button id="mute">Mute</button>
+      <input id="volume" type="range" min="0" max="1" step="0.05" value="1" />
+      <button id="speedDown">- Speed</button>
+      <input
+        id="speedRange"
+        type="range"
+        min="0."
+        max="16"
+        step="0.5"
+        value="1"
+      />
+      <button id="speedUp">+ Speed</button>
+      <span id="speedLabel">1x</span>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
