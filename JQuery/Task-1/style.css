@@ -1,0 +1,112 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#buttons {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+.btn {
+  width: 10em;
+  height: 5em;
+  font-size: 18pt;
+  background-color: #8161f5;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn:hover {
+  background-color: #5a30f0;
+}
+.container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.submenu {
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  left: 0;
+  width: 200px;
+  display: none;
+  z-index: 100;
+}
+.submenu div {
+  background: #8161f5;
+  width: 13.5em;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.submenu div:hover {
+  background-color: #5a30f0;
+}
+.content {
+  margin-top: 10em;
+  padding: 0 10em;
+  width: 50%;
+  height: 50vh;
+  font-family: "Arial, sans-serif";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 5px solid #5a30f0;
+  border-radius: 20px;
+}
+.gallery {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.complain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.complain input {
+  font-size: 15pt;
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #5a30f0;
+  border-radius: 5px;
+}
+.complain textarea {
+  font-size: 15pt;
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #5a30f0;
+  border-radius: 5px;
+  resize: none;
+}
+.complain button {
+  font-size: 12pt;
+  background-color: #8161f5;
+  color: white;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #5a30f0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.complain button:hover {
+  background-color: #5a30f0;
+}
