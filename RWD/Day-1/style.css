@@ -1,0 +1,308 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+header,
+footer,
+section,
+aside,
+nav,
+article {
+  display: block;
+}
+
+body {
+  margin: 0 auto;
+  padding: 1.375rem 0;
+  width: 68.81vw;
+  font: 0.81em/1.38rem Helvetica, Arial, sans-serif;
+  background: #f0f0f0;
+}
+
+h1,
+h2 {
+  font-size: 1.75rem;
+  line-height: 2.75rem;
+  padding: 1.38rem 0;
+}
+
+h3 {
+  font-size: 1.13rem;
+  line-height: 1.38rem;
+  padding: 0.69rem 0;
+}
+
+p {
+  padding-bottom: 1.38rem;
+}
+
+/*------------------------------NAVIGATION------------------------------*/
+
+nav {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background: url("images/fnav_background.png");
+}
+
+nav ul {
+  margin: 0 auto;
+  width: 68.81vw;
+  list-style: none;
+}
+
+nav ul li {
+  float: left;
+}
+
+nav ul li a {
+  display: block;
+  margin-right: 1.25rem;
+  width: 10.25vw;
+  font-size: 0.88rem;
+  line-height: 2.75rem;
+  text-align: center;
+  text-decoration: none;
+  color: #777;
+}
+
+nav ul li a:hover {
+  color: #fff;
+}
+
+nav ul li.selected a {
+  color: #fff;
+}
+
+nav ul li.subscribe a {
+  margin-left: 1.38rem;
+  padding-left: 2.06rem;
+  text-align: left;
+  background: url("images/rss.png") left center no-repeat;
+}
+
+/*------------------------------INTRODUCTION------------------------------*/
+
+#intro {
+  position: relative;
+  margin-top: 4.13rem;
+  padding: 2.75rem;
+  background: #467612 url("images/intro_background.png") repeat-x;
+  background-size: 100%;
+  border-radius: 22px;
+}
+
+#intro h2,
+#intro p {
+  position: relative;
+  z-index: 9999;
+  width: 24.6vw;
+}
+
+#intro h2 {
+  padding: 0 0 1.38rem 0;
+  font-weight: normal;
+  color: #fff;
+}
+
+#intro p {
+  padding: 0;
+  color: #d9f499;
+}
+
+#intro img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 47.8vw;
+  height: 100%;
+  border-radius: 1.38rem;
+}
+
+/*------------------------------CONTENT AREA AND SIDEBAR LAYOUT------------------------------*/
+
+#content {
+  display: table;
+}
+
+#mainContent {
+  display: table-cell;
+  width: 45.39vw;
+  padding-right: 1.38rem;
+}
+
+aside {
+  display: table-cell;
+  width: 21.96vw;
+  background: url("images/sidebar_background.png") top left;
+}
+
+/*------------------------------BLOG POST------------------------------*/
+.blogPost header p,
+.blogPost header p a {
+  font-size: 0.88rem;
+  font-style: italic;
+  color: #777;
+}
+
+.blogPost header p a:hover {
+  text-decoration: none;
+  color: #000;
+}
+
+.blogPost img {
+  margin: 1.38rem 0;
+  box-shadow: 3px 3px 7px #777;
+}
+
+/*------------------------------COMMENTS------------------------------*/
+
+#comments {
+  margin-top: 1.31rem;
+  padding-top: 1.38rem;
+  border-top: 1px solid #d7d7d7;
+}
+
+#comments article {
+  display: table;
+  padding: 1.38rem;
+}
+
+#comments article:nth-child(odd) {
+  padding: 1.31rem;
+  background: #e3e3e3;
+  border: 1px solid #d7d7d7;
+  border-radius: 0.69rem;
+}
+
+#comments article header {
+  display: table-cell;
+  width: 16.11vw;
+  padding-right: 1.38rem;
+}
+
+#comments article header a {
+  display: block;
+  font-weight: bold;
+  color: #000;
+}
+
+#comments article header a:hover {
+  text-decoration: none;
+}
+
+#comments article p {
+  padding: 0;
+}
+
+/*------------------------------COMMENT FORM------------------------------*/
+form {
+  margin-top: 1.31rem;
+  padding-top: 1.38rem;
+  border-top: 1px solid #d7d7d7;
+}
+
+form p {
+  display: table;
+  margin-bottom: 1.38rem;
+  padding: 0 1.38rem;
+}
+
+form label {
+  display: table-cell;
+  width: 10.25vw;
+  padding-right: 1.25rem;
+  text-align: right;
+  font-weight: bold;
+  vertical-align: top;
+}
+
+form input[type="text"] {
+  display: table-cell;
+  width: 21.96vw;
+  height: 1.25rem;
+  border: 1px solid #d7d7d7;
+}
+
+form textarea {
+  width: 21.96vw;
+  height: 6.25rem;
+  border: 1px solid #d7d7d7;
+}
+
+form input[type="submit"] {
+  margin-left: 10.13rem;
+}
+
+/*------------------------------SIDEBAR------------------------------*/
+aside section {
+  margin: 1.38rem 0 0 1.38rem;
+  padding: 0.69rem 1.38rem;
+  background: url("images/sidebar_section_background.png") repeat-x;
+  border-radius: 0.69rem;
+}
+
+aside section ul {
+  margin: 0 0 0 1.38rem;
+  list-style: none;
+}
+
+aside section ul li a {
+  display: block;
+  text-decoration: none;
+  color: #000;
+}
+
+aside section ul li a:hover {
+  text-decoration: underline;
+}
+
+/*------------------------------FOOTER------------------------------*/
+footer {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background: #222;
+}
+
+footer div {
+  display: table;
+  margin: 0 auto;
+  padding: 2.75rem 0;
+  width: 68.81vw;
+  color: #777;
+}
+
+footer div section {
+  display: table-cell;
+  width: 21.96vw;
+}
+
+footer div #about,
+footer div #blogroll {
+  padding-right: 1.25rem;
+}
+
+footer h3 {
+  color: #fff;
+}
+
+footer a {
+  color: #999;
+}
+
+footer a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+footer ul {
+  margin: 0 0 0 2.5rem;
+  list-style: square;
+  color: #565656;
+}
+
+footer ul li a {
+  display: block;
+}

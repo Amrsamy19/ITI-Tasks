@@ -1,0 +1,52 @@
+#bookmarkContainer {
+  position: relative;
+}
+#bookmark {
+  position: absolute;
+  width: 100px;
+  z-index: -1;
+  top: -60px;
+  left: 40px;
+}
+
+video {
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.line {
+  position: relative;
+  height: 2px;
+  background-color: #000;
+  margin: 40px auto;
+  width: 90%;
+}
+
+.line::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid #000;
+}
+
+@media screen and (max-width: 576px) {
+  #bookmark {
+    display: none;
+  }
+  #impIMG {
+    width: 150%;
+  }
+}
+@media screen and (min-width: 577px) and (max-width: 768px) {
+  #bookmark {
+    top: -20px;
+    width: 50px;
+    height: 50px;
+  }
+}
