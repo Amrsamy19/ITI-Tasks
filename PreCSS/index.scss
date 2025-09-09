@@ -15,6 +15,7 @@
   }
 }
 
+
 .content {
   @each $size in variables.$font-sizes {
     .font-#{$size} {
@@ -40,16 +41,6 @@
   }
 }
 
-// @mixin respond-to($bp, $num) {
-//   @each $breakpoint, $value in $grid-breakpoints {
-//     @if $bp == $breakpoint {
-//       @media screen and (max-width: $value) {
-//         @include columns($bp, $num);
-//       }
-//     }
-//   }
-// }
-
 @mixin respond-to($num) {
   @each $breakpoint, $value in variables.$grid-breakpoints {
     @media screen and (max-width: $value) {
@@ -57,6 +48,5 @@
     }
   }
 }
-@include respond-to(12);
 
-// @include respond-to("sm", 6);
+@include respond-to(12);
