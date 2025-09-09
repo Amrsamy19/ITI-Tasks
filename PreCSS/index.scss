@@ -1,0 +1,62 @@
+@use "variables";
+
+.main {
+  &-title {
+    color: variables.$primary;
+  }
+  &-subtitle {
+    color: variables.$secondary;
+  }
+  &-btn {
+    color: variables.$primary;
+    &:hover {
+      color: variables.$secondary;
+    }
+  }
+}
+
+.content {
+  @each $size in variables.$font-sizes {
+    .font-#{$size} {
+      font-size: $size;
+    }
+  }
+}
+
+.finish-btn {
+  @media screen and (max-width: 1024px) {
+    width: 50%;
+  }
+  @media screen and (max-width: 675px) {
+    width: 100%;
+  }
+}
+
+@mixin columns($breakpoint, $num) {
+  @for $i from 1 through $num {
+    .col-#{$breakpoint}-#{$i} {
+      width: calc(100% / $num) * $i;
+    }
+  }
+}
+
+// @mixin respond-to($bp, $num) {
+//   @each $breakpoint, $value in $grid-breakpoints {
+//     @if $bp == $breakpoint {
+//       @media screen and (max-width: $value) {
+//         @include columns($bp, $num);
+//       }
+//     }
+//   }
+// }
+
+@mixin respond-to($num) {
+  @each $breakpoint, $value in variables.$grid-breakpoints {
+    @media screen and (max-width: $value) {
+      @include columns($breakpoint, $num);
+    }
+  }
+}
+@include respond-to(12);
+
+// @include respond-to("sm", 6);
