@@ -105,17 +105,17 @@ use("FacultySystemV2");
 //   },
 // ]);
 
-// db.students.aggregate([
-// {firstName:"Noha"},
-//   {
-//     $lookup: {
-//       from: "courses",
-//       localField: "courses._id",
-//       foreignField: "_id",
-//       as: "enrolledCourses",
-//     },
-//   },
-// ]);
+db.students.aggregate([
+  { $match: { firstName: "Noha" } },
+  {
+    $lookup: {
+      from: "courses",
+      localField: "courses._id",
+      foreignField: "_id",
+      as: "enrolledCourses",
+    },
+  },
+]);
 
 //5
 // db.students.aggregate([
