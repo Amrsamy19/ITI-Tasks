@@ -4,9 +4,9 @@ import { flipCard } from "./gameLogic.js";
 import { playSound } from "./utils.js";
 // Initialize game
 window.onload = function () {
-    shuffleImages(memoryImagesPaths);
     const board = document.getElementById("gameBoard");
-    playSound("assets/start.mp3");
+    shuffleImages(memoryImagesPaths);
+    playSound(Math.random() < 0.5 ? "assets/start.mp3" : "assets/start_2.mp3");
     if (board) {
         board.innerHTML = "";
         for (let i = 0; i < memoryImagesPaths.length; i++) {
