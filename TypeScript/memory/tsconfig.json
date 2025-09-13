@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "ES2017", // or later (ES2019, ES2020, ESNext)
+    "module": "ES6",
+    "lib": ["ES2017", "DOM"], // include modern JS + browser DOM
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true
+  }
+}
