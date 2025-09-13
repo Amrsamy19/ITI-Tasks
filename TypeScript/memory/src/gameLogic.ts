@@ -38,8 +38,8 @@ function checkMatch() {
       "card" + second
     ) as HTMLImageElement | null;
 
-    if (firstCard) firstCard.src = "imgs/Moon.gif";
-    if (secondCard) secondCard.src = "imgs/Moon.gif";
+    if (firstCard) firstCard.src = "assets/Moon.gif";
+    if (secondCard) secondCard.src = "assets/Moon.gif";
   }
   flippedCards.length = 0; // reset flippedCards
 }
@@ -50,6 +50,6 @@ export function resetGame() {
 
   for (let i = 0; i < memoryImagesPaths.length; i++) {
     const card = document.getElementById("card" + i) as HTMLImageElement | null;
-    if (card) card.src = "imgs/Moon.gif";
+    if (card) card.src = "assets/Moon.gif";
   }
 }

@@ -1,16 +1,16 @@
 export const memoryImagesPaths: string[] = [
-  "imgs/1.gif",
-  "imgs/1.gif",
-  "imgs/2.gif",
-  "imgs/2.gif",
-  "imgs/3.gif",
-  "imgs/3.gif",
-  "imgs/4.gif",
-  "imgs/4.gif",
-  "imgs/5.gif",
-  "imgs/5.gif",
-  "imgs/6.gif",
-  "imgs/6.gif",
+  "assets/1.gif",
+  "assets/1.gif",
+  "assets/2.gif",
+  "assets/2.gif",
+  "assets/3.gif",
+  "assets/3.gif",
+  "assets/4.gif",
+  "assets/4.gif",
+  "assets/5.gif",
+  "assets/5.gif",
+  "assets/6.gif",
+  "assets/6.gif",
 ];
 
 export const shuffleImages = (data: string[]) => {
