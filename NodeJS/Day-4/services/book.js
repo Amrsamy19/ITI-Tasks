@@ -22,9 +22,7 @@ const addBookFromDB = async (newBook) => {
 };
 
 const updateBookFromDB = async (bookId, updatedBook) => {
-  return await BookModel.findByIdAndUpdate(bookId, updatedBook, {
-    new: true,
-  });
+  return await BookModel.findByIdAndUpdate(bookId, updatedBook, { new: true });
 };
 
 const deleteBookFromDB = async (bookId) => {
