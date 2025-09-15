@@ -1,15 +1,13 @@
 const mongoose = require("mongoose");
 
-async function run() {
+async function connectDB() {
   try {
-    await mongoose.connect("mongodb://localhost:27017/library");
-
-    console.log("Connected");
-  } catch (error) {
-    console.log(error);
-  } finally {
-    await mongoose.disconnect();
+    await mongoose.connect("mongodb://127.0.0.1:27017/library");
+    console.log("✅ Connected to MongoDB");
+  } catch (err) {
+    console.error("❌ Could not connect:", err);
+    process.exit(1); // stop server if DB fails
   }
 }
 
-module.exports = run;
+module.exports = connectDB;

@@ -1,4 +1,4 @@
-const { getAllBooks, saveBooks } = require("../models/bookModel");
+const { getAllBooks, saveBooks } = require("../services/book");
 
 function getBooks(req, res) {
   let books = getAllBooks();

@@ -1,19 +1,22 @@
 const express = require("express");
 const cors = require("cors");
 const bookRoutes = require("./routes/bookRoutes");
-const logger = require("./middlewares/middlewares");
-const run = require("./db/db");
+const userRoutes = require("./routes/userRoutes");
+const logger = require("./middlewares/logger");
+const connectDB = require("./db/db");
 require("dotenv").config();
 
 const app = express();
+
+connectDB();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(logger);
-run();
 
 // Routes
+app.use("/users", userRoutes);
 app.use("/books", bookRoutes);
 
 app.listen(process.env.PORT, () => {
