@@ -1,60 +1,50 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { jwtSecret, jwtExpiresIn } = require("../configs/envConfigs");
-
+const { jwtSecret, jwtExpiresIn } = require("../utils/utils");
+const { getByUserName, createUser } = require("../services/user");
 
 const register = async (userData) => {
-  if (!userData.name || !userData.email || !userData.password) {
-    throw Error("Name & Email & Password are required!");
-  }
   // check if user exists
-  const user = await usersRepo.getByEmail(userData.email);
+  const user = await getByUserName(userData.username);
 
   if (user) {
-    throw Error("User Exists!");
+    return null;
   }
 
   // hash password
   const hashedPassword = await bcrypt.hash(userData.password, 10);
 
-  const newUser = await usersRepo.createUser({
+  const newUser = await createUser({
     name: userData.name,
     password: hashedPassword,
-    email: userData.email,
+    username: userData.username,
+    role: userData.role,
   });
 
   return {
     id: newUser.id,
     name: newUser.name,
-    email: newUser.email,
+    username: newUser.username,
   };
 };
 
-const signIn = async (signInRequest) => {
-  // 1. validate input request (email & password)
-  if (!signInRequest.email || !signInRequest.password) {
-    throw Error("Email & Password are required");
-  }
-
-  // 2. get user by email (exists)
-  const user = await usersRepo.getByEmail(signInRequest.email);
+const authenticate = async (signInRequest) => {
+  const user = await getByUserName(signInRequest.username);
 
   if (!user) {
-    throw Error("Invalid email or password");
+    throw Error("Invalid username");
   }
 
-  // 3. compare password
   const isValid = await bcrypt.compare(signInRequest.password, user.password);
 
   if (!isValid) {
-    throw Error("Invalid email or password");
+    throw Error("Invalid password");
   }
 
-  // 4. generate token
   const tokenPayload = {
     id: user.id,
     name: user.name,
-    email: user.email,
+    username: user.username,
   };
 
   return generateToken(tokenPayload, user.id);
@@ -74,6 +64,6 @@ const verifyToken = async (token) => {
 
 module.exports = {
   register,
-  signIn,
+  authenticate,
   verifyToken,
 };

@@ -1,20 +1,9 @@
 const express = require("express");
+const { createNewUser, login, currentUser } = require("../services/auth");
 const router = express.Router();
 
-router.post("/register", (req, res) => {
-  const { username, password, role, name } = req.body;
+router.post("/register", createNewUser);
 
-  
-});
-
-router.post("/login", (req, res) => {
-  // Login logic here
-  res.send("User logged in");
-});
-
-router.get("/users/me", (req, res) => {
-  // Get current user logic here
-  res.send("Current user data");
-});
+router.post("/login", login);
 
 module.exports = router;

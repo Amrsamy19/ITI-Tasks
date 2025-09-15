@@ -1,7 +1,6 @@
-const requireAuthMiddleware = async (req, resp, next) => {
-  console.log("Validating user authenticaiton...");
+const { verifyToken } = require("../controllers/authController");
 
-  // 1. read token
+const authMiddleware = async (req, resp, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -9,24 +8,22 @@ const requireAuthMiddleware = async (req, resp, next) => {
       error: "Missing access token.",
     });
   }
-  // Bearer asdsadv123-12312124
+
   const token = authHeader.substring(7);
 
-  // 2. verify token
   try {
-    const results = await authService.verifyToken(token);
+    const results = await verifyToken(token);
     req.currentUser = {
       name: results.name,
-      email: results.email,
+      username: results.username,
       id: results.id,
     };
     return next();
   } catch (err) {
-    // token is not valid
     resp.status(401).send({
       error: "Invalid or expired token.",
     });
   }
 };
 
-module.exports = requireAuthMiddleware;
+module.exports = authMiddleware;

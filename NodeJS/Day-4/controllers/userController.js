@@ -1,4 +1,4 @@
-const { getAll, getById, getByUserName } = require("../services/dbUser");
+const { getAll, getById, getByUserName } = require("../services/user");
 
 const getUsers = async (req, res) => {
   try {

@@ -14,7 +14,7 @@ const getByUserName = async (userName) => {
 
 const createUser = async (newUser) => {
   const userModel = new UserModel({
-    userName: newUser.userName,
+    username: newUser.username,
     password: newUser.password,
     name: newUser.name,
     role: newUser.role,

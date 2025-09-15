@@ -1,10 +1,10 @@
-const express = require("express");
-const cors = require("cors");
 const bookRoutes = require("./routes/bookRoutes");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
 const logger = require("./middlewares/logger");
+const express = require("express");
 const connectDB = require("./db/db");
+const cors = require("cors");
 const { PORT, createApiPrefix } = require("./utils/utils");
 
 const app = express();
