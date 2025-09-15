@@ -1,18 +1,15 @@
-//User:
-// username (unique)
-// password (hashed)
-// role ("user" | "admin"; default "user")
-// name (optional)
+const mongoose = require("mongoose");
 
-// Book: 
-// title(required)
-// bookCoverImage(required)
-// description(optional);
-// genre(optional);
-// price(number >= 0, requird);
-// publishedYear(number, optional);
-// createdBy(userId);
-// createdAt / updatedAt;
+async function run() {
+  try {
+    await mongoose.connect("mongodb://localhost:27017/library");
 
+    console.log("Connected");
+  } catch (error) {
+    console.log(error);
+  } finally {
+    await mongoose.disconnect();
+  }
+}
 
-
+module.exports = run;

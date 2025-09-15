@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bookRoutes = require("./routes/bookRoutes");
 const logger = require("./middlewares/middlewares");
+const run = require("./db/db");
 require("dotenv").config();
 
 const app = express();
@@ -10,6 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(logger);
+run();
 
 // Routes
 app.use("/books", bookRoutes);
