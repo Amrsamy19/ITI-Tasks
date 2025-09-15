@@ -8,8 +8,8 @@ const getById = async (userId) => {
   return await UserModel.findById(userId);
 };
 
-const getByEmail = async (userEmail) => {
-  return await UserModel.findOne({ email: userEmail });
+const getByUserName = async (userName) => {
+  return await UserModel.findOne({ username: userName });
 };
 
 const createUser = async (newUser) => {
@@ -27,5 +27,5 @@ module.exports = {
   getAll,
   getById,
   createUser,
-  getByEmail,
+  getByUserName,
 };
