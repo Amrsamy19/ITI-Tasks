@@ -12,6 +12,7 @@ const {
 //Book Routes
 router.get("/", getBooks);
 router.get("/:id", getBookById);
+
 router.post("/", addBook);
 router.put("/:id", updateBook);
 router.delete("/:id", deleteBook);

@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 router.post("/register", (req, res) => {
-  // Registration logic here
-  res.send("User registered");
+  const { username, password, role, name } = req.body;
+
+  
 });
 
 router.post("/login", (req, res) => {
