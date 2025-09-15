@@ -1,1 +1,52 @@
-[{"id":1,"title":"React","description":"A book about React"},{"id":2,"title":"Angular","description":"A book about Angular"},{"id":3,"title":"Vue","description":"A book about Vue"},{"id":4,"title":"MongoDB","description":"A book about MongoDB"},{"id":5,"title":"NodeJS","description":"A book about NodeJS"}]
+[
+  {
+    "title": "The Lost Kingdom",
+    "bookCoverImage": "https://images.unsplash.com/photo-1507842217343-583bb7270b66",
+    "description": "An epic fantasy tale of adventure, betrayal, and destiny.",
+    "genre": "Fantasy",
+    "price": 19.99,
+    "publishedYear": 2018,
+    "createdAt": "2018-09-10",
+    "updatedAt": "2020-02-14"
+  },
+  {
+    "title": "The Silent Truth",
+    "bookCoverImage": "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f",
+    "description": "A gripping thriller unraveling the secrets of a small town.",
+    "genre": "Thriller",
+    "price": 14.5,
+    "publishedYear": 2020,
+    "createdAt": "2020-06-22",
+    "updatedAt": "2021-01-05"
+  },
+  {
+    "title": "Code of Tomorrow",
+    "bookCoverImage": "https://images.unsplash.com/photo-1518770660439-4636190af475",
+    "description": "A futuristic sci-fi novel exploring AI and humanity’s future.",
+    "genre": "Science Fiction",
+    "price": 22.0,
+    "publishedYear": 2021,
+    "createdAt": "2021-03-01",
+    "updatedAt": "2022-05-19"
+  },
+  {
+    "title": "Whispers of the Past",
+    "bookCoverImage": "https://images.unsplash.com/photo-1495446815901-a7297e633e8d",
+    "description": "A historical drama interweaving love, war, and survival.",
+    "genre": "Historical Fiction",
+    "price": 17.25,
+    "publishedYear": 2019,
+    "createdAt": "2019-11-13",
+    "updatedAt": "2020-12-01"
+  },
+  {
+    "title": "Mind Over Matter",
+    "bookCoverImage": "https://images.unsplash.com/photo-1512820790803-83ca734da794",
+    "description": "A self-help guide to building mental strength and resilience.",
+    "genre": "Non-fiction",
+    "price": 12.99,
+    "publishedYear": 2022,
+    "createdAt": "2022-04-08",
+    "updatedAt": "2023-07-22"
+  }
+]

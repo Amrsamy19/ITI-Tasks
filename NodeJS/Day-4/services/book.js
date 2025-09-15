@@ -1,16 +1,40 @@
-const fs = require("fs");
-const filePath = "books.json";
+const BookModel = require("../models/book");
 
-function getAllBooks(id) {
-  if (id) {
-    const books = JSON.parse(fs.readFileSync(filePath));
-    return books.find((book) => book.id === Number(id));
-  }
-  return JSON.parse(fs.readFileSync(filePath));
-}
+const getAllBooks = async () => {
+  return await BookModel.find();
+};
 
-function saveBooks(books) {
-  fs.writeFileSync(filePath, JSON.stringify(books));
-}
+const getById = async (bookId) => {
+  return await BookModel.findById(bookId);
+};
 
-module.exports = { getAllBooks, saveBooks };
+const addBookFromDB = async (newBook) => {
+  const bookModel = new BookModel({
+    title: newBook.title,
+    bookCoverImage: newBook.bookCoverImage,
+    description: newBook.description,
+    genre: newBook.genre,
+    price: newBook.price,
+    publishedYear: newBook.publishedYear,
+    createdBy: newBook.createdBy,
+  });
+  return await bookModel.save();
+};
+
+const updateBookFromDB = async (bookId, updatedBook) => {
+  return await BookModel.findByIdAndUpdate(bookId, updatedBook, {
+    new: true,
+  });
+};
+
+const deleteBookFromDB = async (bookId) => {
+  return await BookModel.findByIdAndDelete(bookId);
+};
+
+module.exports = {
+  getAllBooks,
+  getById,
+  addBookFromDB,
+  updateBookFromDB,
+  deleteBookFromDB,
+};
