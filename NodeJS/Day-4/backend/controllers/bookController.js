@@ -14,11 +14,13 @@ const getBooks = async (req, res) => {
 
     if (!q && !sort) return res.status(200).json(books);
 
-    books = books.filter(
-      (book) =>
-        book.title.toLowerCase().includes(q.toLowerCase()) ||
-        book.description.toLowerCase().includes(q.toLowerCase())
-    );
+    if (q) {
+      books = books.filter(
+        (book) =>
+          book.title.toLowerCase().includes(q.toLowerCase()) ||
+          book.description.toLowerCase().includes(q.toLowerCase())
+      );
+    }
 
     if (books.length === 0) {
       return res.status(404).json({ message: "No books found" });
@@ -36,6 +38,7 @@ const getBooks = async (req, res) => {
       }
     });
   }
+
   res.status(200).json(books);
 };
 

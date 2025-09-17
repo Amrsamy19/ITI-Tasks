@@ -4,21 +4,19 @@ const { jwtSecret, jwtExpiresIn } = require("../utils/utils");
 const { getByUserName, createUser } = require("../services/user");
 
 const register = async (userData) => {
-  // check if user exists
   const user = await getByUserName(userData.username);
 
   if (user) {
     return null;
   }
 
-  // hash password
   const hashedPassword = await bcrypt.hash(userData.password, 10);
 
   const newUser = await createUser({
     name: userData.name,
     password: hashedPassword,
     username: userData.username,
-    role: userData.role,
+    role: "user",
   });
 
   return {

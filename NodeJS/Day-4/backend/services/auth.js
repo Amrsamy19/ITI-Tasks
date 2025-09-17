@@ -6,13 +6,13 @@ const {
 
 const createNewUser = async (req, res) => {
   try {
-    const { username, password, role, name } = req.body;
+    const { username, password, name } = req.body;
 
-    if (!username || !password || !role || !name) {
+    if (!username || !password || !name) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const newUser = await register({ name, username, password, role });
+    const newUser = await register({ name, username, password });
 
     if (!newUser) {
       return res.status(409).json({ message: "User already exists" });
@@ -26,6 +26,7 @@ const createNewUser = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { username, password } = req.body;
+    
     if (!username || !password) {
       return res
         .status(400)
@@ -43,7 +44,6 @@ const login = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-
 
 module.exports = {
   createNewUser,

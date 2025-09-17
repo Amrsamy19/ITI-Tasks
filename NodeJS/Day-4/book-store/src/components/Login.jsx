@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Login = ({ setIsAuthenticated, setUser }) => {
   const [formData, setFormData] = useState({
@@ -8,7 +8,6 @@ const Login = ({ setIsAuthenticated, setUser }) => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -18,21 +17,37 @@ const Login = ({ setIsAuthenticated, setUser }) => {
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    // setLoading(true);
-    // setError("");
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
-    // try {
-    //   const response = await loginUser(formData);
-    //   localStorage.setItem("token", response.data.token);
-    //   setUser(response.data.user);
-    //   setIsAuthenticated(true);
-    //   navigate("/dashboard");
-    // } catch (err) {
-    //   setError("Invalid username or password");
-    // } finally {
-    //   setLoading(false);
-    // }
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const userData = JSON.parse(atob(data.token.split(".")[1]));
+
+        setIsAuthenticated(true);
+        setUser(userData);
+
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(userData));
+        window.location.href = "/";
+      } else {
+        const data = await response.json();
+        setError(data.error || "Login failed. Please try again.");
+      }
+    } catch (err) {
+      setError(err.error || "An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -100,12 +115,6 @@ const Login = ({ setIsAuthenticated, setUser }) => {
             >
               Sign up
             </Link>
-          </p>
-        </div>
-
-        <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-          <p className="text-xs text-blue-700">
-            Demo credentials: username = "admin", password = "password"
           </p>
         </div>
       </div>
