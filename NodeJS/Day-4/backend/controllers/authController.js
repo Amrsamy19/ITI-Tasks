@@ -43,6 +43,7 @@ const authenticate = async (signInRequest) => {
     id: user.id,
     name: user.name,
     username: user.username,
+    role: user.role,
   };
 
   return generateToken(tokenPayload, user.id);

@@ -9,6 +9,8 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoutes";
+import BookDetails from "./components/BookDetails";
+import Navigation from "./components/Navigation";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -43,11 +45,27 @@ function App() {
             path="/dashboard"
             element={
               <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <Navigation
+                  setIsAuthenticated={setIsAuthenticated}
+                  setUser={setUser}
+                />
                 <Dashboard
                   user={user}
                   setIsAuthenticated={setIsAuthenticated}
                   setUser={setUser}
                 />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/book/:id"
+            element={
+              <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <Navigation
+                  setIsAuthenticated={setIsAuthenticated}
+                  setUser={setUser}
+                />
+                <BookDetails />
               </ProtectedRoute>
             }
           />

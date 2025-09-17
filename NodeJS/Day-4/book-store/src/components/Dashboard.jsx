@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Book from "./Book";
+import Model from "./Model";
 
-const Dashboard = ({ user, setIsAuthenticated, setUser }) => {
+const Dashboard = ({ user }) => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setIsAuthenticated(false);
-    setUser(null);
-    navigate("/login");
-  };
+  const [popUp, setPopUp] = useState(false);
 
   const handleSearch = async (event) => {
     event.preventDefault();
@@ -69,25 +61,24 @@ const Dashboard = ({ user, setIsAuthenticated, setUser }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm border-b border-b-blue-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <h1 className="text-xl font-semibold text-gray-900">Bookys</h1>
-            <button
-              onClick={handleLogout}
-              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-200"
-            >
-              Logout
-            </button>
-          </div>
-        </div>
-      </nav>
-
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="flex justify-between items-center bg-white rounded-lg shadow p-6">
           <h2 className="text-2xl font-bold text-gray-900">
-            Welcome, <span className="text-blue-800">{user?.name || user?.username}</span>!
+            Welcome,{" "}
+            <span className="text-blue-800">
+              {user?.name || user?.username}
+            </span>
+            !
           </h2>
+          <button
+            onClick={() => setPopUp(true)}
+            className={`bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 ${
+              user.role === "admin" ? "" : "hidden"
+            }`}
+          >
+            Add a Book
+          </button>
+          {popUp && <Model type={"add"} book={null} setPopUp={setPopUp} />}
         </div>
         <div>
           <div>
@@ -116,7 +107,6 @@ const Dashboard = ({ user, setIsAuthenticated, setUser }) => {
                   <option value="" selected disabled>
                     Select a filter
                   </option>
-                  <option value="author">Author</option>
                   <option value="title">Title</option>
                   <option value="genre">Genre</option>
                 </select>

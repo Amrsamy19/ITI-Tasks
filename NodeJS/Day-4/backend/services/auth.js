@@ -26,7 +26,7 @@ const createNewUser = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { username, password } = req.body;
-    
+
     if (!username || !password) {
       return res
         .status(400)
@@ -45,7 +45,18 @@ const login = async (req, res) => {
   }
 };
 
+const verify = async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const results = await verifyToken(token);
+    res.status(200).json(results);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
 module.exports = {
   createNewUser,
   login,
+  verify,
 };

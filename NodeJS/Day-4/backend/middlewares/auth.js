@@ -13,10 +13,15 @@ const authMiddleware = async (req, resp, next) => {
 
   try {
     const results = await verifyToken(token);
+    if (results.role !== "admin") {
+      return resp.status(401).send({
+        error: "Unauthorized Access.",
+      });
+    }
     req.currentUser = {
-      name: results.name,
       username: results.username,
       id: results.id,
+      role: results.role,
     };
     return next();
   } catch (err) {
