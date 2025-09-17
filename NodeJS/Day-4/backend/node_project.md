@@ -11,7 +11,7 @@
   - `bookCoverImage` (required),
   - `description` (optional)
   - `genre` (optional)
-  - `price` (number >= 0, requird)
+  - `price` (number >= 0, required)
   - `publishedYear` (number, optional)
   - `createdBy` (userId)
   - `createdAt`/`updatedAt`

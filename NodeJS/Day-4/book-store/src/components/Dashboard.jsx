@@ -42,7 +42,7 @@ const Dashboard = ({ user }) => {
       const response = await fetch("http://localhost:3000/api/books");
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+
         setLoading(false);
         setError("");
         setBooks(data);
@@ -57,7 +57,7 @@ const Dashboard = ({ user }) => {
 
   useEffect(() => {
     getBooks();
-  }, [user, books]);
+  }, [books]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -102,9 +102,10 @@ const Dashboard = ({ user }) => {
                 <select
                   name="filter"
                   id="filter"
+                  defaultValue={""}
                   className="border border-gray-300 rounded-md px-4 py-2 bg-white"
                 >
-                  <option value="" selected disabled>
+                  <option value="" disabled>
                     Select a filter
                   </option>
                   <option value="title">Title</option>
@@ -117,9 +118,10 @@ const Dashboard = ({ user }) => {
                   name="sort"
                   onChange={handleSort}
                   id="sort"
+                  defaultValue={""}
                   className="border border-gray-300 rounded-md px-4 py-2 bg-white"
                 >
-                  <option value="" selected disabled>
+                  <option value="" disabled>
                     Sort by
                   </option>
                   <option value="price">Ascending</option>
