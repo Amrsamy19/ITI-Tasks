@@ -16,7 +16,7 @@ const register = async (userData) => {
     name: userData.name,
     password: hashedPassword,
     username: userData.username,
-    role: "user",
+    role: userData.role || "user",
   });
 
   return {

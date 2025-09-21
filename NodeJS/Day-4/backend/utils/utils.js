@@ -10,8 +10,6 @@ const createApiPrefix = (prefix) => {
   return apiPrefix + prefix;
 };
 
-
-
 module.exports = {
   jwtSecret,
   jwtExpiresIn,

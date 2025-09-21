@@ -12,7 +12,7 @@ const createNewUser = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const newUser = await register({ name, username, password });
+    const newUser = await register({ name, username, password, role: "user" });
 
     if (!newUser) {
       return res.status(409).json({ message: "User already exists" });

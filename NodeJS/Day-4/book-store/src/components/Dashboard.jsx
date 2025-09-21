@@ -136,6 +136,10 @@ const Dashboard = ({ user }) => {
             <h3 className="text-red-500 font-bold text-2xl mt-24 text-center">
               {error}
             </h3>
+          ) : books.length === 0 ? (
+            <h3 className="text-red-500 font-bold text-2xl mt-24 text-center">
+              No books found
+            </h3>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {books.map((book) => (
