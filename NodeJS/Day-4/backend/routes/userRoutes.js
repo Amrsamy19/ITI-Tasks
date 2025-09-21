@@ -5,9 +5,10 @@ const {
   getUserById,
   getUserByUserName,
 } = require("../controllers/userController");
+const authMiddleware = require("../middlewares/auth");
 
-router.get("/", getUsers);
-router.get("/:id", getUserById);
+router.get("/", authMiddleware, getUsers);
+router.get("/:id", authMiddleware, getUserById);
 router.get("/username/:userName", getUserByUserName);
 
 module.exports = router;

@@ -11,6 +11,7 @@ import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoutes";
 import BookDetails from "./components/BookDetails";
 import Navigation from "./components/Navigation";
+import Users from "./components/Users";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -69,7 +70,20 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/users"
+            element={
+              <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <Navigation
+                  setIsAuthenticated={setIsAuthenticated}
+                  setUser={setUser}
+                />
+                <Users user={user} />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </div>
     </Router>
