@@ -4,6 +4,10 @@ const getAllBooks = async () => {
   return await BookModel.find();
 };
 
+const getGenresFromDB = async () => {
+  return await BookModel.find().select("genre").distinct("genre");
+};
+
 const getById = async (bookId) => {
   return await BookModel.findById(bookId);
 };
@@ -33,6 +37,7 @@ const deleteBookFromDB = async (bookId) => {
 module.exports = {
   getAllBooks,
   getById,
+  getGenresFromDB,
   addBookFromDB,
   updateBookFromDB,
   deleteBookFromDB,

@@ -7,7 +7,8 @@ function Book({ book }) {
   const [message, setMessage] = useState({ message: "", type: "" });
   const [opened, setOpened] = useState(false);
 
-  const handleDelete = async () => {
+  const handleDelete = async (event) => {
+    event.preventDefault();
     const response = await fetch(
       `http://localhost:3000/api/books/${book._id}`,
       {

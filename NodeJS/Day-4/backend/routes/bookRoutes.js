@@ -8,10 +8,12 @@ const {
   addBook,
   updateBook,
   deleteBook,
+  getGenres,
 } = require("../controllers/bookController");
 
 //Book Routes
 router.get("/", getBooks);
+router.get("/genres", getGenres);
 router.get("/:id", getBookById);
 router.post("/", authMiddleware, addBook);
 router.put("/:id", authMiddleware, updateBook);

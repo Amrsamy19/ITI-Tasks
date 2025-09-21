@@ -4,6 +4,8 @@ import Model from "./Model";
 
 const Dashboard = ({ user }) => {
   const [books, setBooks] = useState([]);
+  const [filteredBooks, setFilteredBooks] = useState([]);
+  const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [popUp, setPopUp] = useState(false);
@@ -27,6 +29,14 @@ const Dashboard = ({ user }) => {
     }
   };
 
+  const handleFilter = (event) => {
+    const genre = event.target.value;
+
+    genre === "all"
+      ? setFilteredBooks(books)
+      : setFilteredBooks(books.filter((book) => book.genre === genre));
+  };
+
   const handleSort = async (event) => {
     const sortBy = event.target.value;
     const response = await fetch(
@@ -34,6 +44,21 @@ const Dashboard = ({ user }) => {
     );
     const data = await response.json();
     setBooks(data);
+  };
+
+  const getGenres = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/books/genres");
+      if (response.ok) {
+        const data = await response.json();
+        setGenres(data);
+        setError("");
+      } else {
+        setError("Failed to fetch genres");
+      }
+    } catch (error) {
+      setError("Error fetching genres:", error.message);
+    }
   };
 
   const getBooks = async () => {
@@ -46,6 +71,7 @@ const Dashboard = ({ user }) => {
         setLoading(false);
         setError("");
         setBooks(data);
+        setFilteredBooks(data);
       } else {
         setLoading(true);
         setError("Failed to fetch books");
@@ -57,6 +83,7 @@ const Dashboard = ({ user }) => {
 
   useEffect(() => {
     getBooks();
+    getGenres();
   }, []);
 
   return (
@@ -101,15 +128,20 @@ const Dashboard = ({ user }) => {
                 <label htmlFor="filter">Filter by:</label>
                 <select
                   name="filter"
+                  onChange={handleFilter}
                   id="filter"
                   defaultValue={""}
                   className="border border-gray-300 rounded-md px-4 py-2 bg-white"
                 >
                   <option value="" disabled>
-                    Select a filter
+                    Select a genre
                   </option>
-                  <option value="title">Title</option>
-                  <option value="genre">Genre</option>
+                  <option value="all">All</option>
+                  {genres.map((genre) => (
+                    <option key={genre} value={genre}>
+                      {genre}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="flex items-center justify-around space-x-4">
@@ -142,7 +174,7 @@ const Dashboard = ({ user }) => {
             </h3>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {books.map((book) => (
+              {filteredBooks.map((book) => (
                 <Book key={book._id} book={book} />
               ))}
             </div>

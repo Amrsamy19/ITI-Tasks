@@ -1,6 +1,7 @@
 const {
   getAllBooks,
   getById,
+  getGenresFromDB,
   addBookFromDB,
   updateBookFromDB,
   deleteBookFromDB,
@@ -18,7 +19,7 @@ const getBooks = async (req, res) => {
       books = books.filter(
         (book) =>
           book.title.toLowerCase().includes(q.toLowerCase()) ||
-          book.description.toLowerCase().includes(q.toLowerCase())
+          book.description.toLowerCase().includes(q.toLowerCase()),
       );
     }
 
@@ -40,6 +41,15 @@ const getBooks = async (req, res) => {
   }
 
   res.status(200).json(books);
+};
+
+const getGenres = async (req, res) => {
+  const genres = await getGenresFromDB();
+
+  if (!genres) {
+    return res.status(404).json({ error: "Genres not found" });
+  }
+  res.status(200).json(genres);
 };
 
 const getBookById = async (req, res) => {
@@ -95,4 +105,11 @@ const deleteBook = async (req, res) => {
   res.status(200).json({ message: "Book deleted successfully" });
 };
 
-module.exports = { getBooks, getBookById, addBook, updateBook, deleteBook };
+module.exports = {
+  getBooks,
+  getBookById,
+  getGenres,
+  addBook,
+  updateBook,
+  deleteBook,
+};
