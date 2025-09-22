@@ -5,11 +5,26 @@ const logger = require("./middlewares/logger");
 const express = require("express");
 const connectDB = require("./db/db");
 const cors = require("cors");
+const { getAll } = require("./services/user");
 const { PORT, createApiPrefix } = require("./utils/utils");
+const { register } = require("./controllers/authController");
 
 const app = express();
 
 connectDB();
+
+getAll().then((users) => {
+  if (users.length > 0) return;
+
+  // Here we create the admin user for the first time
+  //if we want to create a normal user then run the frontend code and backend role and register
+  register({
+    name: "admin",
+    password: "admin",
+    username: "admin",
+    role: "admin",
+  });
+});
 
 // Middleware
 app.use(cors());
