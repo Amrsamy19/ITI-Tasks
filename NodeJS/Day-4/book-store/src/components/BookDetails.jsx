@@ -78,10 +78,12 @@ function BookDetails() {
                   Description
                 </h3>
                 <div className="prose max-w-none">
-                  <p className="text-gray-700 leading-relaxed">
-                    {showFullDescription
-                      ? book.description
-                      : `${book.description.substring(0, 300)}...`}
+                  <p
+                    className={`${
+                      showFullDescription ? "" : "line-clamp-1 break-words"
+                    } leading-relaxed`}
+                  >
+                    {book.description}
                   </p>
                   <button
                     onClick={() => setShowFullDescription(!showFullDescription)}

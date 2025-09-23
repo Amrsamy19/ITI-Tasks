@@ -118,6 +118,7 @@ function Users({ user }) {
                       >
                         <option value="user">User</option>
                         <option value="admin">Admin</option>
+                        <option value="owner">Owner</option>
                       </select>
                     </td>
                     <td className="flex items-center justify-around px-6 py-4 whitespace-nowrap">
