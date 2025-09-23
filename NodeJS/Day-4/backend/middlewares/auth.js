@@ -13,7 +13,11 @@ const authMiddleware = async (req, resp, next) => {
 
   try {
     const results = await verifyToken(token);
-    if (results.role !== "admin" || results.role !== "owner") {
+    if (results.role !== "admin" && results.role !== "owner") {
+      if (req.url.includes("users") && results.role !== "admin")
+        return resp.status(403).send({
+          error: "Forbidden Access.",
+        });
       return resp.status(403).send({
         error: "Forbidden Access.",
       });

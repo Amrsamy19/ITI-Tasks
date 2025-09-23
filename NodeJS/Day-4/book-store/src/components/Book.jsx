@@ -36,7 +36,7 @@ function Book({ book }) {
           to={`/book/${book._id}`}
           className="block hover:scale-105 hover:opacity-75 transition duration-200"
         >
-          <article className="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl px-8 pb-8 pt-40 max-w-sm mx-auto mt-4">
+          <article className="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl px-8 pb-8 pt-40 max-w-sm mx-auto mt-4 h-96">
             <img
               src={book.bookCoverImage}
               alt={book.title}

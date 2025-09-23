@@ -1,3 +1,4 @@
+const { create } = require("../models/user");
 const {
   getAllBooks,
   getById,
@@ -6,6 +7,7 @@ const {
   updateBookFromDB,
   deleteBookFromDB,
 } = require("../services/book");
+const mongoose = require("mongoose");
 
 const getBooks = async (req, res) => {
   let books = await getAllBooks();
@@ -19,7 +21,7 @@ const getBooks = async (req, res) => {
       books = books.filter(
         (book) =>
           book.title.toLowerCase().includes(q.toLowerCase()) ||
-          book.description.toLowerCase().includes(q.toLowerCase()),
+          book.description.toLowerCase().includes(q.toLowerCase())
       );
     }
 
@@ -65,15 +67,15 @@ const getBookById = async (req, res) => {
 };
 
 const addBook = async (req, res) => {
-  const book = req.body;
+  const { body, currentUser } = req;
 
-  if (!book) {
+  if (!body) {
     return res.status(400).json({ error: "Book data is missing" });
   }
 
-  const newBook = await addBookFromDB(book);
+  await addBookFromDB({ ...body, createdBy: currentUser.id });
 
-  res.status(201).json(newBook);
+  res.status(201).json({ message: "Book added successfully" });
 };
 
 const updateBook = async (req, res) => {

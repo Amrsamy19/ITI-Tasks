@@ -18,15 +18,13 @@ function Model({ setPopUp, type, book }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setFormData({
-      ...formData,
-      createdBy: JSON.parse(localStorage.getItem("user"))._id,
-    });
     try {
       const response = await fetch(
-        `http://localhost:3000/api/books/${book._id}`,
+        action === "Add"
+          ? "http://localhost:3000/api/books"
+          : `http://localhost:3000/api/books/${book._id}`,
         {
-          method: "PUT",
+          method: action === "Add" ? "POST" : "PUT",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
@@ -35,9 +33,7 @@ function Model({ setPopUp, type, book }) {
         }
       );
       if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        navigate("/dashboard");
+        navigate(0);
       } else {
         const data = await response.json();
         setError(data.error);

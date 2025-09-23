@@ -19,7 +19,7 @@ const Dashboard = ({ user }) => {
       );
       if (response.ok) {
         const data = await response.json();
-        setBooks(data);
+        setFilteredBooks(data);
         setError("");
       } else {
         setError("No books found");
@@ -43,7 +43,7 @@ const Dashboard = ({ user }) => {
       `http://localhost:3000/api/books?sort=${sortBy}`
     );
     const data = await response.json();
-    setBooks(data);
+    setFilteredBooks(data);
   };
 
   const getGenres = async () => {
@@ -100,7 +100,7 @@ const Dashboard = ({ user }) => {
           <button
             onClick={() => setPopUp(true)}
             className={`bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 ${
-              user.role === "admin" ? "" : "hidden"
+              user.role === "admin" || user.role === "owner" ? "" : "hidden"
             }`}
           >
             Add a Book
