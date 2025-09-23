@@ -9,10 +9,11 @@ const {
 } = require("../controllers/userController");
 const authMiddleware = require("../middlewares/auth");
 
-router.get("/", authMiddleware, getUsers);
-router.get("/:id", authMiddleware, getUserById);
+router.use(authMiddleware);
+router.get("/", getUsers);
+router.get("/:id", getUserById);
 router.get("/username/:userName", getUserByUserName);
-router.patch("/:id", authMiddleware, updateUserById);
-router.delete("/:id", authMiddleware, deleteUserById);
+router.patch("/:id", updateUserById);
+router.delete("/:id", deleteUserById);
 
 module.exports = router;
