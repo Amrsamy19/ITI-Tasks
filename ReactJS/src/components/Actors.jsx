@@ -1,16 +1,31 @@
-import { useEffect, useContext, useState } from "react";
-import { DataContext } from "../context/dataContext";
+import { useEffect, useState } from "react";
+import { useData } from "../context/dataContext";
 import { Link } from "react-router-dom";
 
 function Actors() {
-  const { data, setData } = useContext(DataContext);
+  const { data, setData } = useData();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch("http://localhost:3000/actors")
-      .then((response) => response.json())
-      .then((data) => setData({ ...data, actors: data }));
+  const getActors = async () => {
+    const response = await fetch(
+      "https://api.themoviedb.org/3/person/popular",
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMTQ5OGRiN2RjNThhM2Q1YzRiYjVlOGFkMTdkOWYyZCIsIm5iZiI6MTY2NDA1MTI1NC4yOTcsInN1YiI6IjYzMmY2ODM2N2VjZDI4MDA3ZTA4MGQxNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1jP-j-mfmo6pqcovyBAlXzVP663pgrK_1a-1065-6Q0",
+        },
+      }
+    );
+
+    const actors = await response.json();
+    setData({ ...data, actors: actors.results });
     setLoading(false);
+  };
+
+  useEffect(() => {
+    getActors();
   }, []);
 
   if (loading) {

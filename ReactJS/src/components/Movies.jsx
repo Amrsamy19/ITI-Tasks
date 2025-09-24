@@ -1,16 +1,26 @@
-import { useState, useEffect, useContext } from "react";
-import { DataContext } from "../context/dataContext";
+import { useState, useEffect } from "react";
+import { useData } from "../context/dataContext";
 import { Link } from "react-router-dom";
 
 export default function Movies() {
   const [loading, setLoading] = useState(true);
-  const { data, setData } = useContext(DataContext);
+  const { data, setData } = useData();
 
   const getMovies = async () => {
-    const response = await fetch("http://localhost:3000/movies");
+    const response = await fetch(
+      "https://api.themoviedb.org/3/movie/now_playing?language=en-US",
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMTQ5OGRiN2RjNThhM2Q1YzRiYjVlOGFkMTdkOWYyZCIsIm5iZiI6MTY2NDA1MTI1NC4yOTcsInN1YiI6IjYzMmY2ODM2N2VjZDI4MDA3ZTA4MGQxNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1jP-j-mfmo6pqcovyBAlXzVP663pgrK_1a-1065-6Q0",
+        },
+      }
+    );
 
     const movies = await response.json();
-    setData({ ...data, movies: movies });
+    setData({ ...data, movies: movies.results });
     setLoading(false);
   };
 
@@ -35,7 +45,7 @@ export default function Movies() {
       <div className="flex flex-wrap justify-center">
         {data.movies.map((movie) => (
           <Link
-            to={`/${movie.id}`}
+            to={`/movies/${movie.id}`}
             key={movie.id}
             className="flex flex-col items-center text-center w-[200px] m-5 font-semibold hover:text-amber-500 hover:scale-105 transition duration-500"
           >

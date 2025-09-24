@@ -5,9 +5,24 @@ import Actors from "./components/Actors";
 import Actor from "./components/Actor";
 import Layout from "./components/Layout";
 import NotFound from "./components/NotFound";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { DataProvider } from "./context/dataContext";
+import { ThemeProvider, createTheme } from "@mui/material";
+import Profile from "./components/Profile";
 
 function App() {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#e68f0d",
+        secondary: "#FFEB3B",
+        contrastText: "#fff",
+      },
+    },
+  });
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -15,20 +30,37 @@ function App() {
       errorElement: <NotFound />,
       children: [
         {
-          index: true,
-          element: <Movies />,
+          path: "login",
+          element: <Login />,
         },
         {
-          path: "/:id",
-          element: <Movie />,
+          path: "register",
+          element: <Register />,
         },
         {
-          path: "/actors",
-          element: <Actors />,
-        },
-        {
-          path: "/actors/:id",
-          element: <Actor />,
+          element: <ProtectedRoute />,
+          children: [
+            {
+              path: "movies",
+              element: <Movies />,
+            },
+            {
+              path: "movies/:id",
+              element: <Movie />,
+            },
+            {
+              path: "actors",
+              element: <Actors />,
+            },
+            {
+              path: "actors/:id",
+              element: <Actor />,
+            },
+            {
+              path: "profile",
+              element: <Profile />,
+            },
+          ],
         },
       ],
     },
@@ -36,9 +68,11 @@ function App() {
 
   return (
     <>
-      <DataProvider>
-        <RouterProvider router={router} />
-      </DataProvider>
+      <ThemeProvider theme={theme}>
+        <DataProvider>
+          <RouterProvider router={router} />
+        </DataProvider>
+      </ThemeProvider>
     </>
   );
 }
