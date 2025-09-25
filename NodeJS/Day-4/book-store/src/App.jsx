@@ -1,9 +1,9 @@
 import { useState } from "react";
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
+  createBrowserRouter,
+  RouterProvider,
   Navigate,
+  Outlet,
 } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -12,6 +12,26 @@ import ProtectedRoute from "./components/ProtectedRoutes";
 import BookDetails from "./components/BookDetails";
 import Navigation from "./components/Navigation";
 import Users from "./components/Users";
+import MyBooks from "./components/MyBooks";
+
+// Layout wrapper for protected routes
+function ProtectedLayout({
+  isAuthenticated,
+  setIsAuthenticated,
+  setUser,
+  user,
+}) {
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return (
+    <>
+      <Navigation setIsAuthenticated={setIsAuthenticated} setUser={setUser} />
+      <Outlet context={{ user, setIsAuthenticated, setUser }} />
+    </>
+  );
+}
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -19,75 +39,68 @@ function App() {
   );
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
-  return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route
-            path="/login"
-            element={
-              isAuthenticated ? (
-                <Navigate to="/dashboard" />
-              ) : (
-                <Login
-                  setIsAuthenticated={setIsAuthenticated}
-                  setUser={setUser}
-                />
-              )
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              isAuthenticated ? <Navigate to="/dashboard" /> : <Register />
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute isAuthenticated={isAuthenticated}>
-                <Navigation
-                  setIsAuthenticated={setIsAuthenticated}
-                  setUser={setUser}
-                />
-                <Dashboard
-                  user={user}
-                  setIsAuthenticated={setIsAuthenticated}
-                  setUser={setUser}
-                />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/book/:id"
-            element={
-              <ProtectedRoute isAuthenticated={isAuthenticated}>
-                <Navigation
-                  setIsAuthenticated={setIsAuthenticated}
-                  setUser={setUser}
-                />
-                <BookDetails />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/users"
-            element={
-              <ProtectedRoute isAuthenticated={isAuthenticated}>
-                <Navigation
-                  setIsAuthenticated={setIsAuthenticated}
-                  setUser={setUser}
-                />
-                <Users user={user} />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="*" element={<Navigate to="/login" />} />
-        </Routes>
-      </div>
-    </Router>
-  );
+  const router = createBrowserRouter([
+    {
+      path: "/login",
+      element: isAuthenticated ? (
+        <Navigate to="/dashboard" replace />
+      ) : (
+        <Login setIsAuthenticated={setIsAuthenticated} setUser={setUser} />
+      ),
+    },
+    {
+      path: "/register",
+      element: isAuthenticated ? (
+        <Navigate to="/dashboard" replace />
+      ) : (
+        <Register />
+      ),
+    },
+    {
+      element: (
+        <ProtectedLayout
+          isAuthenticated={isAuthenticated}
+          setIsAuthenticated={setIsAuthenticated}
+          setUser={setUser}
+          user={user}
+        />
+      ),
+      children: [
+        {
+          path: "/dashboard",
+          element: (
+            <Dashboard
+              user={user}
+              setIsAuthenticated={setIsAuthenticated}
+              setUser={setUser}
+            />
+          ),
+        },
+        {
+          path: "/book/:id",
+          element: <BookDetails />,
+        },
+        {
+          path: "/my-books",
+          element: <MyBooks />,
+        },
+        {
+          path: "/users",
+          element: <Users user={user} />,
+        },
+      ],
+    },
+    {
+      path: "/",
+      element: <Navigate to="/login" replace />,
+    },
+    {
+      path: "*",
+      element: <Navigate to="/login" replace />,
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;

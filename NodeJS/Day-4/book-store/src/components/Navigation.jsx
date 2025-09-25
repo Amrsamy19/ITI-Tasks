@@ -1,9 +1,8 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 function Navigation({ setIsAuthenticated, setUser }) {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
-  const isActive = (path) => window.location.pathname === path;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -19,13 +18,46 @@ function Navigation({ setIsAuthenticated, setUser }) {
         <div className="flex justify-between items-center h-16">
           <h1 className="text-xl font-semibold text-gray-900">Bookys</h1>
           <div className="flex justify-center items-center gap-4">
+            <NavLink
+              to={"/dashboard"}
+              className={({ isActive }) =>
+                `${
+                  isActive
+                    ? "text-gray-900 transform scale-110"
+                    : "text-gray-500"
+                } text-lg font-medium hover:text-gray-900 transition duration-300`
+              }
+            >
+              Books
+            </NavLink>
             {user.role === "admin" && (
-              <Link
-                to={isActive("/users") ? "/dashboard" : `/users`}
-                className={`text-lg font-medium text-gray-900 hover:text-gray-900 transition duration-200`}
+              <NavLink
+                to={"/users"}
+                className={({ isActive }) =>
+                  `${
+                    isActive
+                      ? "text-gray-900 transform scale-110"
+                      : "text-gray-500"
+                  } text-lg font-medium hover:text-gray-900 transition duration-300`
+                }
               >
-                {isActive("/users") ? "Dashboard" : "Users"}
-              </Link>
+                Users
+              </NavLink>
+            )}
+
+            {(user.role === "admin" || user.role === "owner") && (
+              <NavLink
+                to={"/my-books"}
+                className={({ isActive }) =>
+                  `${
+                    isActive
+                      ? "text-gray-900 transform scale-110"
+                      : "text-gray-500"
+                  } text-lg font-medium hover:text-gray-900 transition duration-300`
+                }
+              >
+                My Books
+              </NavLink>
             )}
             <button
               onClick={handleLogout}
