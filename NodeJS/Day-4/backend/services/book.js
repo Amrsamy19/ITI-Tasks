@@ -1,5 +1,5 @@
+const { default: mongoose } = require("mongoose");
 const BookModel = require("../models/book");
-
 const getAllBooks = async () => {
   return await BookModel.find();
 };
@@ -24,7 +24,7 @@ const addBookFromDB = async (newBook) => {
     genre: newBook.genre || "",
     price: newBook.price,
     publishedYear: new Date(newBook.createdAt).getFullYear(),
-    createdBy: newBook.createdBy,
+    createdBy: new mongoose.Types.ObjectId(newBook.createdBy),
   });
   return await bookModel.save();
 };

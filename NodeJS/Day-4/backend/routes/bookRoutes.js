@@ -15,8 +15,8 @@ const {
 //Book Routes
 router.get("/", getBooks);
 router.get("/genres", getGenres);
+router.get("/user", authMiddleware, getBooksByUserId);
 router.get("/:id", getBookById);
-router.get("/user/:id", authMiddleware, getBooksByUserId);
 router.post("/", authMiddleware, addBook);
 router.put("/:id", authMiddleware, updateBook);
 router.delete("/:id", authMiddleware, deleteBook);

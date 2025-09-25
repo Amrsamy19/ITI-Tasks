@@ -61,6 +61,7 @@ const getBookById = async (req, res) => {
   }
 
   const books = await getById(req.params.id);
+
   if (!books) {
     return res.status(404).json({ error: "Book not found" });
   }
@@ -68,13 +69,12 @@ const getBookById = async (req, res) => {
 };
 
 const getBooksByUserId = async (req, res) => {
-  if (req.params.id) {
-    return res.status(400).json({ error: "Invalid user ID" });
-  }
-  const books = await getUsersBooks(userId);
+  const books = await getUsersBooks(req.currentUser.id);
 
-  if (!books) {
-    return res.status(404).json({ error: "Books not found" });
+  if (books.length === 0) {
+    return res
+      .status(404)
+      .json({ error: "No books were created by this user" });
   }
 
   res.status(200).json(books);
