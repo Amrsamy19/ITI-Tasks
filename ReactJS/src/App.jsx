@@ -8,7 +8,8 @@ import NotFound from "./components/NotFound";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { DataProvider } from "./context/dataContext";
+import { Provider } from "react-redux";
+import store from "./redux/store/store";
 import { ThemeProvider, createTheme } from "@mui/material";
 import Profile from "./components/Profile";
 
@@ -69,9 +70,9 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <DataProvider>
+        <Provider store={store}>
           <RouterProvider router={router} />
-        </DataProvider>
+        </Provider>
       </ThemeProvider>
     </>
   );

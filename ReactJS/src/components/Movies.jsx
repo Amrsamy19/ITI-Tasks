@@ -1,10 +1,27 @@
 import { useState, useEffect } from "react";
-import { useData } from "../context/dataContext";
 import { Link } from "react-router-dom";
+import {
+  addFavourite,
+  removeFavourite,
+} from "../redux/store/slices/favouriteSlice";
+import {
+  Box,
+  CardMedia,
+  Grid,
+  IconButton,
+  Card,
+  CardContent,
+  Typography,
+} from "@mui/material";
+import { Favorite } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { amber } from "@mui/material/colors";
 
 export default function Movies() {
+  const favorites = useSelector((state) => state.favourite.favouriteList);
+  const actions = useDispatch();
   const [loading, setLoading] = useState(true);
-  const { data, setData } = useData();
+  const [data, setData] = useState([]);
 
   const getMovies = async () => {
     const response = await fetch(
@@ -20,8 +37,21 @@ export default function Movies() {
     );
 
     const movies = await response.json();
-    setData({ ...data, movies: movies.results });
+    setData(movies.results);
     setLoading(false);
+  };
+
+  const checkIfFavourite = (movie) => {
+    return favorites.includes(movie);
+  };
+
+  const handleClick = (event, data) => {
+    event.preventDefault();
+    if (checkIfFavourite(data)) {
+      actions(removeFavourite(data));
+    } else {
+      actions(addFavourite(data));
+    }
   };
 
   useEffect(() => {
@@ -30,34 +60,80 @@ export default function Movies() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <h1 className="text-3xl text-amber-600 font-bold">Loading...</h1>
-      </div>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h4" sx={{ color: amber[600], fontWeight: "bold" }}>
+          Loading...
+        </Typography>
+      </Box>
     );
   }
 
   return (
-    <div className="flex flex-wrap justify-center">
-      <h1 className="text-3xl text-amber-600 text-center my-2 font-bold">
-        Movies
-      </h1>
+    <Box sx={{ padding: "1rem" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-around",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h4" sx={{ color: amber[600], fontWeight: "bold" }}>
+          Movies
+        </Typography>
+        <Typography variant="h6" sx={{ color: amber[600], fontWeight: "bold" }}>
+          Favourites: <span>{favorites.length}</span>
+        </Typography>
+      </Box>
 
-      <div className="flex flex-wrap justify-center">
-        {data.movies.map((movie) => (
-          <Link
-            to={`/movies/${movie.id}`}
-            key={movie.id}
-            className="flex flex-col items-center text-center w-[200px] m-5 font-semibold hover:text-amber-500 hover:scale-105 transition duration-500"
+      <Grid container spacing={2} justifyContent={"center"}>
+        {data.map((movie) => (
+          <Card
+            sx={{
+              boxShadow: "none",
+              borderRadius: "1rem",
+            }}
           >
-            <img
-              src={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}
-              alt={movie.title}
-              className="w-[200px] h-[300px]"
-            />
-            <h3>{movie.title}</h3>
-          </Link>
+            <Link
+              to={`/movies/${movie.id}`}
+              key={movie.id}
+              className="flex flex-col items-center text-center w-[200px] m-5 font-semibold hover:text-amber-500 hover:scale-105 transition duration-500"
+            >
+              <CardMedia
+                component="img"
+                height="300"
+                src={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}
+                alt={movie.title}
+                title={movie.title}
+              />
+              <CardContent
+                width={200}
+                sx={{ display: "flex", flexDirection: "column" }}
+              >
+                <Typography variant="p">{movie.title}</Typography>
+                <IconButton
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "transparent",
+                      transform: "scale(1.2)",
+                      transition: "transform 0.2s",
+                    },
+                  }}
+                  color={checkIfFavourite(movie) ? "error" : "inherit"}
+                  onClick={(event) => handleClick(event, movie)}
+                >
+                  <Favorite />
+                </IconButton>
+              </CardContent>
+            </Link>
+          </Card>
         ))}
-      </div>
-    </div>
+      </Grid>
+    </Box>
   );
 }

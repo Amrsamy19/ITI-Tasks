@@ -1,9 +1,19 @@
+import {
+  Box,
+  Typography,
+  ImageList,
+  ImageListItem,
+  Card,
+  CardMedia,
+  CardContent,
+  Grid,
+} from "@mui/material";
+import { amber } from "@mui/material/colors";
 import { useEffect, useState } from "react";
-import { useData } from "../context/dataContext";
 import { Link } from "react-router-dom";
 
 function Actors() {
-  const { data, setData } = useData();
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const getActors = async () => {
@@ -20,7 +30,7 @@ function Actors() {
     );
 
     const actors = await response.json();
-    setData({ ...data, actors: actors.results });
+    setData(actors.results);
     setLoading(false);
   };
 
@@ -30,38 +40,61 @@ function Actors() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <h1 className="text-3xl text-amber-600 font-bold">Loading...</h1>
-      </div>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        height={"h-screen"}
+      >
+        <Typography variant="h4" sx={{ color: amber[600], fontWeight: "bold" }}>
+          Loading...
+        </Typography>
+      </Box>
     );
   }
 
   return (
-    data.actors && (
-      <div className="flex flex-col flex-wrap justify-center">
-        <div>
-          <h1 className="text-3xl text-amber-600 text-center my-2 font-bold">
-            Actors
-          </h1>
-        </div>
-        <div className="flex flex-wrap justify-center">
-          {data.actors.map((actor) => (
+    <Box sx={{ padding: "1rem" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-around",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h4" sx={{ color: amber[600], fontWeight: "bold" }}>
+          Actors
+        </Typography>
+      </Box>
+      <Grid container justifyContent={"center"} spacing={2}>
+        {data.map((actor) => (
+          <Card
+            sx={{
+              boxShadow: "none",
+              borderRadius: "1rem",
+            }}
+          >
             <Link
               to={`/actors/${actor.id}`}
               key={actor.id}
               className="flex flex-col items-center text-center w-[200px] m-5 font-semibold hover:text-amber-500 hover:scale-105 transition duration-500"
             >
-              <img
-                src={`https://image.tmdb.org/t/p/w780${actor.profile_path}`}
+              <CardMedia
+                component="img"
+                image={`https://image.tmdb.org/t/p/w780${actor.profile_path}`}
                 alt={actor.name}
-                className="w-[200px] h-[300px]"
+                title={actor.name}
               />
-              <h3>{actor.name}</h3>
+              <CardContent>
+                <Typography variant="subtitle1">{actor.name}</Typography>
+              </CardContent>
             </Link>
-          ))}
-        </div>
-      </div>
-    )
+          </Card>
+        ))}
+      </Grid>
+    </Box>
   );
 }
 

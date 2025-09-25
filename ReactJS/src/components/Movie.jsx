@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Box, Typography } from "@mui/material";
+import { amber } from "@mui/material/colors";
 
 function Movie() {
   const { id } = useParams();
@@ -32,40 +34,90 @@ function Movie() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <h1 className="text-3xl text-amber-600 font-bold">Loading...</h1>
-      </div>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        height={"h-screen"}
+      >
+        <Typography variant="h4" sx={{ color: amber[600], fontWeight: "bold" }}>
+          Loading...
+        </Typography>
+      </Box>
     );
   }
 
   return (
-    <div className="flex flex-col justify-center mt-6">
-      <h1 className="text-3xl text-amber-600 text-center font-bold">Movie</h1>
-      <div className="flex items-center justify-center gap-6">
-        <div className="flex items-center w-[200px] font-semibold ">
-          <img
-            src={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}
-            alt={movie.title}
-            className="w-[200px] h-[300px]"
-          />
-        </div>
-        <div className="flex flex-col items-start gap-7 ">
-          <h3 className="text-2xl">{movie.name}</h3>
-          <div>
-            <span className="font-bold">Overview: </span>
-            <p className="w-[600px]">{movie.overview}</p>
-          </div>
-          <div>
-            <span className="font-bold">Rating: </span>
-            <p>{rating}/10</p>
-          </div>
-          <div>
-            <span className="font-bold">Genre:</span>
-            <p>{movie.genres.map((genre) => genre.name).join(", ")}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        marginTop: "2rem",
+      }}
+    >
+      <Typography
+        variant="h4"
+        sx={{ color: amber[600], fontWeight: "bold", textAlign: "center" }}
+      >
+        Movie
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "2rem",
+        }}
+      >
+        <img
+          src={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}
+          alt={movie.title}
+          className="w-[200px] h-[300px]"
+        />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+            alignItems: "start",
+          }}
+        >
+          <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+            {movie.title}
+          </Typography>
+          <Box>
+            <Typography variant="span" sx={{ fontWeight: "bold" }}>
+              Overview:
+            </Typography>
+            <Typography
+              variant="span"
+              sx={{ display: "block", width: "600px" }}
+            >
+              {movie.overview}
+            </Typography>
+          </Box>
+          <Box>
+            <Typography variant="span" sx={{ fontWeight: "bold" }}>
+              Rating:
+            </Typography>
+            <Typography variant="span" sx={{ display: "block" }}>
+              {rating}/10
+            </Typography>
+          </Box>
+          <Box>
+            <Typography variant="span" sx={{ fontWeight: "bold" }}>
+              Genre:
+            </Typography>
+            <Typography variant="span" sx={{ display: "block" }}>
+              {movie.genres.map((genre) => genre.name).join(", ")}
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

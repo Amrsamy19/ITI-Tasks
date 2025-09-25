@@ -1,10 +1,8 @@
 import { Button, FormControl, TextField } from "@mui/material";
 import { useState } from "react";
-import { useData } from "../context/dataContext";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { login } = useData();
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
 
@@ -17,7 +15,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(formData);
+    // login(formData);
     navigate("/movies");
   };
 

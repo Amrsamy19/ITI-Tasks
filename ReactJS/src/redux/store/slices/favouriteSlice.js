@@ -4,7 +4,6 @@ export const favouriteSlice = createSlice({
   name: "favourite",
   initialState: {
     favouriteList: [],
-    counter: 0,
   },
   reducers: {
     addFavourite: (state, action) => {
@@ -12,21 +11,12 @@ export const favouriteSlice = createSlice({
     },
     removeFavourite: (state, action) => {
       state.favouriteList = state.favouriteList.filter(
-        (item) => item.id !== action.payload
+        (movie) => movie.id !== action.payload.id
       );
-    },
-    checkFavourite: (state, action) => {
-      state.isFavourite = state.favouriteList.some(
-        (item) => item.id === action.payload
-      );
-    },
-    getCounter: (state) => {
-      state.counter = state.favouriteList.length;
     },
   },
 });
 
-export const { addFavourite, removeFavourite, checkFavourite, getCounter } =
-  favouriteSlice.actions;
+export const { addFavourite, removeFavourite } = favouriteSlice.actions;
 
 export default favouriteSlice.reducer;

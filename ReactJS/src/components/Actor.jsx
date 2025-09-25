@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Box, Typography, Button } from "@mui/material";
+import { amber } from "@mui/material/colors";
 
 function Actor() {
   const { id } = useParams();
@@ -22,7 +24,6 @@ function Actor() {
 
     const data = await response.json();
     setActor(data);
-    console.log(data);
     setLoading(false);
   };
 
@@ -36,53 +37,128 @@ function Actor() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <h1 className="text-3xl text-amber-600 font-bold">Loading...</h1>
-      </div>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        height={"h-screen"}
+      >
+        <Typography variant="h4" sx={{ color: amber[600], fontWeight: "bold" }}>
+          Loading...
+        </Typography>
+      </Box>
     );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center mt-6">
-      <h1 className="text-3xl text-amber-600 text-center font-bold">Actor</h1>
-      <div className="flex flex-wrap items-center justify-center w-[1000px]">
-        <div
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        marginTop: "2rem",
+      }}
+    >
+      <Typography
+        variant="h4"
+        sx={{ color: amber[600], fontWeight: "bold", textAlign: "center" }}
+      >
+        Actor
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
+        <Box
           key={actor.id}
-          className="flex items-center justify-center w-full gap-8 m-5"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "2rem",
+            margin: "2rem",
+          }}
         >
           <img
             src={`https://image.tmdb.org/t/p/w780${actor.profile_path}`}
             alt={actor.name}
             className="w-[300px] h-[400px]"
           />
-          <div className="flex flex-col items-start gap-7 ">
-            <h3 className="text-2xl">{actor.name}</h3>
-            <div>
-              <span className="text-xl font-semibold">Born: </span>
-              <p className="text-lg">{actor.birthday}</p>
-            </div>
-            <div>
-              <span className="text-xl font-semibold">Place of Birth: </span>
-              <p className="text-lg">{actor.place_of_birth}</p>
-            </div>
-            <div className={`${actor.biography ? "" : "hidden"} h-[100px]`}>
-              <span className="text-xl font-semibold">Biography:</span>
-              <p
-                className={`${show ? "line-clamp-1 break-words" : ""} text-lg`}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+              alignItems: "start",
+            }}
+          >
+            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+              {actor.name}
+            </Typography>
+            <Box>
+              <Typography
+                variant="span"
+                sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
               >
-                {actor.biography}
-              </p>
-              <button
+                Born:
+              </Typography>
+              <Typography
+                variant="span"
+                sx={{ display: "block", fontSize: "1.1rem" }}
+              >
+                {actor.birthday}
+              </Typography>
+            </Box>
+            <Box>
+              <Typography
+                variant="span"
+                sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
+              >
+                Place of Birth:
+              </Typography>
+              <Typography
+                variant="span"
+                sx={{ display: "block", fontSize: "1.1rem" }}
+              >
+                {actor.place_of_birth}
+              </Typography>
+            </Box>
+            <Box
+              sx={{ display: actor.biography ? "" : "hidden", height: "100px" }}
+            >
+              <Typography
+                variant="span"
+                sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
+              >
+                Biography:
+              </Typography>
+              <Box>
+                <Typography
+                  variant="span"
+                  sx={{ fontSize: "1.1rem" }}
+                  className={`${show ? "line-clamp-1 break-words" : ""}`}
+                >
+                  {actor.biography}
+                </Typography>
+              </Box>
+              <Button
+                variant="text"
                 onClick={handleClick}
-                className="text-amber-600 underline cursor-pointer"
+                sx={{ color: amber[800], textDecoration: "underline" }}
               >
                 {show ? "Read More" : "Read Less"}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

@@ -11,10 +11,8 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useData } from "../context/dataContext";
 
 const Register = () => {
-  const { login } = useData();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ genres: [] });
 
@@ -42,7 +40,7 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(formData);
+    // login(formData);
     localStorage.setItem("user", JSON.stringify(formData));
     navigate("/login");
   };
