@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Model from "./Model";
+import { checkAuth } from "../utils";
 
 function BookDetails() {
   const { id } = useParams();
@@ -99,20 +100,20 @@ function BookDetails() {
                 </div>
               </div>
 
-              <div>
-                <button
-                  onClick={() => setPopUp(true)}
-                  className={`bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 ${
-                    user.role === "admin" ? "" : "hidden"
-                  }`}
-                >
-                  Edit Book
-                </button>
+              {checkAuth(book, user) && (
+                <div>
+                  <button
+                    onClick={() => setPopUp(true)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+                  >
+                    Edit Book
+                  </button>
 
-                {popUp && (
-                  <Model type={"edit"} book={book} setPopUp={setPopUp} />
-                )}
-              </div>
+                  {popUp && (
+                    <Model type={"edit"} book={book} setPopUp={setPopUp} />
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BsTrash2 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Notification from "./Notification";
+import { checkAuth } from "../utils";
 
 function Book({ book }) {
   const [message, setMessage] = useState({ message: "", type: "" });
@@ -54,14 +55,16 @@ function Book({ book }) {
             </div>
           </article>
         </Link>
-        <div className="absolute right-6 bottom-8">
-          <button
-            onClick={handleDelete}
-            className="text-white text-bold text-2xl text-center p-2 rounded-xl hover:bg-red-600 transition duration-200"
-          >
-            <BsTrash2 />
-          </button>
-        </div>
+        {checkAuth(book, JSON.parse(localStorage.getItem("user"))) && (
+          <div className="absolute right-6 bottom-8">
+            <button
+              onClick={handleDelete}
+              className="text-white text-bold text-2xl text-center p-2 rounded-xl hover:bg-red-600 transition duration-200"
+            >
+              <BsTrash2 />
+            </button>
+          </div>
+        )}
       </li>
       {opened && (
         <Notification
