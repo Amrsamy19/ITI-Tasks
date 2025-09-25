@@ -42,11 +42,11 @@ const MyBooks = () => {
       <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold text-gray-900">
-            <span className="text-blue-500">{user.username}'s</span> Books
+            <span className="text-blue-800">{user.name}'s</span> Books
           </h1>
           <button
             onClick={() => navigate(-1)}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+            className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
           >
             Back to Dashboard
           </button>
@@ -66,7 +66,7 @@ const MyBooks = () => {
       </div>
     </div>
   ) : (
-    <p className="text-center text-2xl text-blue-600">Loading...</p>
+    <p className="text-center text-2xl text-blue-800">Loading...</p>
   );
 };
 

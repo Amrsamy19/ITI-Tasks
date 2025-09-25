@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BsTrash2 } from "react-icons/bs";
+import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Notification from "./Notification";
 import { checkAuth } from "../utils";
@@ -55,16 +56,21 @@ function Book({ book }) {
             </div>
           </article>
         </Link>
-        {checkAuth(book, JSON.parse(localStorage.getItem("user"))) && (
+        <div className="flex">
           <div className="absolute right-6 bottom-8">
-            <button
-              onClick={handleDelete}
-              className="text-white text-bold text-2xl text-center p-2 rounded-xl hover:bg-red-600 transition duration-200"
-            >
-              <BsTrash2 />
+            <button className=" text-white text-bold text-2xl text-center p-2 rounded-xl hover:bg-blue-600 transition duration-200 mr-2">
+              <FaPlus />
             </button>
+            {checkAuth(book, JSON.parse(localStorage.getItem("user"))) && (
+              <button
+                onClick={handleDelete}
+                className="text-white text-bold text-2xl text-center p-2 rounded-xl hover:bg-red-600 transition duration-200"
+              >
+                <BsTrash2 />
+              </button>
+            )}
           </div>
-        )}
+        </div>
       </li>
       {opened && (
         <Notification

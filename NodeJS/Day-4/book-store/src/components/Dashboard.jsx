@@ -99,7 +99,7 @@ const Dashboard = ({ user }) => {
           </h2>
           <button
             onClick={() => setPopUp(true)}
-            className={`bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 ${
+            className={`bg-blue-800 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 ${
               user.role === "admin" || user.role === "owner" ? "" : "hidden"
             }`}
           >
@@ -109,7 +109,7 @@ const Dashboard = ({ user }) => {
         </div>
         <div>
           <div>
-            <h2 className="text-center text-2xl font-bold text-gray-900 mb-4 mt-8">
+            <h2 className="text-center text-2xl font-bold text-blue-800 mb-4 mt-8">
               Available Books
             </h2>
             <div className="flex items-center justify-around space-x-4 mb-4">
