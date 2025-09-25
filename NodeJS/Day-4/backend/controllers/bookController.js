@@ -1,9 +1,10 @@
 const { create } = require("../models/user");
 const {
-  getAllBooks,
   getById,
-  getGenresFromDB,
+  getAllBooks,
+  getUsersBooks,
   addBookFromDB,
+  getGenresFromDB,
   updateBookFromDB,
   deleteBookFromDB,
 } = require("../services/book");
@@ -66,6 +67,19 @@ const getBookById = async (req, res) => {
   res.status(200).json(books);
 };
 
+const getBooksByUserId = async (req, res) => {
+  if (req.params.id) {
+    return res.status(400).json({ error: "Invalid user ID" });
+  }
+  const books = await getUsersBooks(userId);
+
+  if (!books) {
+    return res.status(404).json({ error: "Books not found" });
+  }
+
+  res.status(200).json(books);
+};
+
 const addBook = async (req, res) => {
   const { body, currentUser } = req;
 
@@ -116,6 +130,7 @@ const deleteBook = async (req, res) => {
 module.exports = {
   getBooks,
   getBookById,
+  getBooksByUserId,
   getGenres,
   addBook,
   updateBook,

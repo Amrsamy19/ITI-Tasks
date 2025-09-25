@@ -12,6 +12,10 @@ const getById = async (bookId) => {
   return await BookModel.findById(bookId);
 };
 
+const getUsersBooks = async (userId) => {
+  return await BookModel.find({ createdBy: userId });
+};
+
 const addBookFromDB = async (newBook) => {
   const bookModel = new BookModel({
     title: newBook.title,
@@ -35,10 +39,11 @@ const deleteBookFromDB = async (bookId) => {
 };
 
 module.exports = {
-  getAllBooks,
   getById,
-  getGenresFromDB,
+  getAllBooks,
   addBookFromDB,
+  getUsersBooks,
+  getGenresFromDB,
   updateBookFromDB,
   deleteBookFromDB,
 };
