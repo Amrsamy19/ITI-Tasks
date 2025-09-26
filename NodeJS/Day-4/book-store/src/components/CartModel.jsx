@@ -62,7 +62,7 @@ const CartModel = ({ setIsOpen }) => {
         </div>
         <div className="flex items-center justify-between w-full">
           <p className="font-bold">Total Price</p>
-          <p className="font-bold text-green-800">${totalPrice}</p>
+          <p className="font-bold text-green-800">${totalPrice.toFixed(2)}</p>
         </div>
         <div className="flex items-center justify-center gap-4">
           <button

@@ -1,6 +1,6 @@
 function Notification({ message, type }) {
   return (
-    <div className="fixed bottom-10 right-6 z-10 rounded-4xl transition-all duration-200">
+    <div className="fixed bottom-10 right-6 z-10 rounded-4xl animate-bounce">
       <div
         className={`${
           type === "success" ? "bg-green-500" : "bg-red-500"

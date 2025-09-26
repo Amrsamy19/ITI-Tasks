@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { BsTrash2 } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { clearMessage, fetchBooks } from "../redux/store/slices/booksSlice";
+import { clearMessage } from "../redux/store/slices/booksSlice";
 import Notification from "./Notification";
 import { checkAuth } from "../utils";
 import { useDispatch, useSelector } from "react-redux";

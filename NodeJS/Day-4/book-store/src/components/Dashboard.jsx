@@ -3,10 +3,10 @@ import Book from "./Book";
 import Model from "./Model";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  clearMessage,
   fetchBooks,
   filterBooks,
   searchBooks,
+  sortBooks,
 } from "../redux/store/slices/booksSlice";
 import Notification from "./Notification";
 
@@ -31,10 +31,7 @@ const Dashboard = ({ user }) => {
 
   const handleSort = async (event) => {
     const sortBy = event.target.value;
-    const response = await fetch(
-      `http://localhost:3000/api/books?sort=${sortBy}`
-    );
-    const data = await response.json();
+    actions(sortBooks(sortBy));
   };
 
   const getGenres = async () => {

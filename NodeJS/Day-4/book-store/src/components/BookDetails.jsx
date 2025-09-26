@@ -2,26 +2,31 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Model from "./Model";
 import { checkAuth } from "../utils";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBookById } from "../redux/store/slices/booksSlice";
 
 function BookDetails() {
+  const { currentBook } = useSelector((state) => state.books);
+  const actions = useDispatch();
   const { id } = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
   const [loading, setLoading] = useState(true);
   const [showFullDescription, setShowFullDescription] = useState(false);
-  const [book, setBook] = useState(null);
   const [popUp, setPopUp] = useState(false);
   const navigate = useNavigate();
 
-  const fetchBook = async () => {
-    const response = await fetch(`http://localhost:3000/api/books/${id}`);
-    const data = await response.json();
-    setBook(data);
-    setLoading(false);
-  };
-
   useEffect(() => {
-    fetchBook();
-  }, []);
+    actions(fetchBookById(id));
+    setLoading(false);
+  }, [actions, id, currentBook]);
+
+  if (!currentBook) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <h1 className="text-2xl text-center">Loading...</h1>
+      </div>
+    );
+  }
 
   return loading ? (
     <p>Loading...</p>
@@ -44,8 +49,8 @@ function BookDetails() {
             <div className="w-1/2">
               <div className="flex justify-center">
                 <img
-                  src={book.bookCoverImage}
-                  alt={book.title}
+                  src={currentBook.bookCoverImage}
+                  alt={currentBook.title}
                   className="w-64 h-96 object-cover rounded-lg shadow-md"
                 />
               </div>
@@ -55,13 +60,15 @@ function BookDetails() {
             <div className="flex-1 mt-8 lg:mt-0 space-y-6">
               <div>
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                  {book.title}
+                  {currentBook.title}
                 </h1>
 
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div className="space-y-2">
                     <div className="flex items-center text-gray-600">
-                      <span>{new Date(book.createdAt).toDateString()}</span>
+                      <span>
+                        {new Date(currentBook.createdAt).toDateString()}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -71,7 +78,7 @@ function BookDetails() {
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
                   Genre
                 </h3>
-                <div className="flex flex-wrap gap-2">{book.genre}</div>
+                <div className="flex flex-wrap gap-2">{currentBook.genre}</div>
               </div>
 
               <div>
@@ -84,7 +91,7 @@ function BookDetails() {
                       showFullDescription ? "" : "line-clamp-1 break-words"
                     } leading-relaxed`}
                   >
-                    {book.description}
+                    {currentBook.description}
                   </p>
                   <button
                     onClick={() => setShowFullDescription(!showFullDescription)}
@@ -95,12 +102,12 @@ function BookDetails() {
                 </div>
                 <div className="text-left space-y-4 mt-8">
                   <p className="text-3xl font-bold text-green-600">
-                    ${book.price}
+                    ${currentBook.price}
                   </p>
                 </div>
               </div>
 
-              {checkAuth(book, user) && (
+              {checkAuth(currentBook, user) && (
                 <div>
                   <button
                     onClick={() => setPopUp(true)}
@@ -110,7 +117,11 @@ function BookDetails() {
                   </button>
 
                   {popUp && (
-                    <Model type={"edit"} book={book} setPopUp={setPopUp} />
+                    <Model
+                      type={"edit"}
+                      book={currentBook}
+                      setPopUp={setPopUp}
+                    />
                   )}
                 </div>
               )}

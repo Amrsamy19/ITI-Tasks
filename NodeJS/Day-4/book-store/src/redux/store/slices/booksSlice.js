@@ -6,6 +6,49 @@ export const fetchBooks = createAsyncThunk("books/fetchBooks", async () => {
   return data;
 });
 
+export const fetchBookById = createAsyncThunk(
+  "books/fetchBookById",
+  async (id) => {
+    const res = await fetch(`http://localhost:3000/api/books/${id}`);
+    const data = await res.json();
+    return data;
+  }
+);
+
+export const searchBooks = createAsyncThunk(
+  "books/searchBooks",
+  async (searchTerm, { rejectWithValue }) => {
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/books?q=${searchTerm}`
+      );
+      if (!res.ok) {
+        const error = await res.json();
+        return rejectWithValue(error.message || "Failed to search books");
+      }
+      return await res.json();
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const sortBooks = createAsyncThunk(
+  "books/sortBooks",
+  async (sortBy, { rejectWithValue }) => {
+    try {
+      const res = await fetch(`http://localhost:3000/api/books?sort=${sortBy}`);
+      if (!res.ok) {
+        const error = await res.json();
+        return rejectWithValue(error.message || "Failed to sort books");
+      }
+      return await res.json();
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const addNewBook = createAsyncThunk(
   "books/addNewBook",
   async (book, { rejectWithValue }) => {
@@ -22,24 +65,6 @@ export const addNewBook = createAsyncThunk(
       if (!res.ok) {
         const error = await res.json();
         return rejectWithValue(error.message || "Failed to add book");
-      }
-      return await res.json();
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const searchBooks = createAsyncThunk(
-  "books/searchBooks",
-  async (searchTerm, { rejectWithValue }) => {
-    try {
-      const res = await fetch(
-        `http://localhost:3000/api/books?q=${searchTerm}`
-      );
-      if (!res.ok) {
-        const error = await res.json();
-        return rejectWithValue(error.message || "Failed to search books");
       }
       return await res.json();
     } catch (error) {
@@ -97,6 +122,7 @@ const booksSlice = createSlice({
   name: "books",
   initialState: {
     books: [],
+    currentBook: null,
     filtered: [],
     status: "idle",
     error: null,
@@ -131,12 +157,23 @@ const booksSlice = createSlice({
         state.state = "failed";
         state.error = action.error.message;
       })
+      .addCase(fetchBookById.fulfilled, (state, action) => {
+        state.currentBook = action.payload;
+      })
+      .addCase(fetchBookById.rejected, (state, action) => {
+        state.error = action.payload || "Failed to fetch book";
+      })
       .addCase(searchBooks.fulfilled, (state, action) => {
         state.books = action.payload;
-        state.message = "Books found successfully!";
       })
       .addCase(searchBooks.rejected, (state, action) => {
         state.error = action.payload || "Failed to search books";
+      })
+      .addCase(sortBooks.fulfilled, (state, action) => {
+        state.filtered = action.payload;
+      })
+      .addCase(sortBooks.rejected, (state, action) => {
+        state.error = action.payload || "Failed to sort books";
       })
       .addCase(addNewBook.fulfilled, (state, action) => {
         state.books.push(action.payload);
@@ -147,7 +184,7 @@ const booksSlice = createSlice({
       })
       .addCase(updateBook.fulfilled, (state, action) => {
         state.books.push(action.payload);
-        state.message = "Book added successfully!";
+        state.message = "Book updated successfully!";
       })
       .addCase(updateBook.rejected, (state, action) => {
         state.error = action.payload || "Failed to add book";

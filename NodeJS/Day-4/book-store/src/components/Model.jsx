@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addNewBook } from "../redux/store/slices/booksSlice";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addNewBook, updateBook } from "../redux/store/slices/booksSlice";
 
 function Model({ setPopUp, type, book }) {
+  const { error, message } = useSelector((state) => state.books);
   const actions = useDispatch();
   const [formData, setFormData] = useState(book || {});
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [action] = useState(type === "edit" ? "Edit" : "Add");
 
   const handleChange = (e) => {
@@ -18,10 +17,11 @@ function Model({ setPopUp, type, book }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    const res = actions(addNewBook(formData));
-    console.log(res);
+    actions(action === "Edit" ? updateBook(formData) : addNewBook(formData));
+    setPopUp(false);
   };
+
+  useEffect(() => {}, [error, message]);
 
   return (
     <div className="z-20 w-screen h-screen bg-gray-900/60 fixed top-0 right-0 flex justify-center items-center">
@@ -109,10 +109,9 @@ function Model({ setPopUp, type, book }) {
             </button>
             <button
               type="submit"
-              disabled={loading}
               className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
             >
-              {loading ? `${action.toLowerCase()}ing...` : action}
+              {action}
             </button>
           </div>
         </form>
