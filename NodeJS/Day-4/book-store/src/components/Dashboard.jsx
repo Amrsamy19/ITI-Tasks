@@ -11,12 +11,11 @@ import {
 import Notification from "./Notification";
 
 const Dashboard = ({ user }) => {
-  const { books, filtered, status, error, message } = useSelector(
+  const { filtered, status, error, message } = useSelector(
     (state) => state.books
   );
   const actions = useDispatch();
   const [genres, setGenres] = useState([]);
-  const [notify, setNotify] = useState("");
   const [popUp, setPopUp] = useState(false);
 
   const handleSearch = async (event) => {
@@ -39,18 +38,10 @@ const Dashboard = ({ user }) => {
   };
 
   const getGenres = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/api/books/genres");
-      if (response.ok) {
-        const data = await response.json();
-        setGenres(data);
-        setNotify("");
-      } else {
-        setNotify("Failed to fetch genres");
-      }
-    } catch (error) {
-      setNotify("Error fetching genres:", error.message);
-    }
+    const response = await fetch("http://localhost:3000/api/books/genres");
+
+    const data = await response.json();
+    setGenres(data);
   };
 
   useEffect(() => {
@@ -58,21 +49,13 @@ const Dashboard = ({ user }) => {
     getGenres();
   }, [actions]);
 
-  useEffect(() => {
-    if (message || error) {
-      const timer = setTimeout(() => {
-        actions(clearMessage());
-        setNotify("");
-        setPopUp(false);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [message, error, actions]);
-
   return (
     <div className="min-h-screen bg-gray-50">
-      {notify && (
-        <Notification message={notify} type="success" setOpened={setNotify} />
+      {message && (
+        <Notification
+          message={message || error}
+          type={message ? "success" : "error"}
+        />
       )}
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center bg-white rounded-lg shadow p-6">
@@ -154,7 +137,7 @@ const Dashboard = ({ user }) => {
             <h3 className="text-red-500 font-bold text-2xl mt-24 text-center">
               {error}
             </h3>
-          ) : books.length === 0 ? (
+          ) : filtered.length === 0 ? (
             <h3 className="text-red-500 font-bold text-2xl mt-24 text-center">
               No books found
             </h3>

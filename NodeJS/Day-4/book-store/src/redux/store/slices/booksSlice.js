@@ -13,6 +13,7 @@ export const addNewBook = createAsyncThunk(
       const res = await fetch("http://localhost:3000/api/books", {
         method: "POST",
         headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(book),
@@ -54,6 +55,7 @@ export const updateBook = createAsyncThunk(
       const res = await fetch(`http://localhost:3000/api/books/${book._id}`, {
         method: "PUT",
         headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(book),
@@ -75,12 +77,16 @@ export const deleteBook = createAsyncThunk(
     try {
       const res = await fetch(`http://localhost:3000/api/books/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
       });
       if (!res.ok) {
         const error = await res.json();
         return rejectWithValue(error.message || "Failed to delete book");
       }
-      return await res.json();
+      return id;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -148,6 +154,7 @@ const booksSlice = createSlice({
       })
       .addCase(deleteBook.fulfilled, (state, action) => {
         state.books = state.books.filter((b) => b._id !== action.payload);
+        state.filtered = state.filtered.filter((b) => b._id !== action.payload);
         state.message = "Book removed successfully!";
       })
       .addCase(deleteBook.rejected, (state, action) => {

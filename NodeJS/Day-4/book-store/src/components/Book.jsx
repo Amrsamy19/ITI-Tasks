@@ -1,28 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BsTrash2 } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { clearMessage, fetchBooks } from "../redux/store/slices/booksSlice";
 import Notification from "./Notification";
 import { checkAuth } from "../utils";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/store/slices/cartSlice";
+import { deleteBook } from "../redux/store/slices/booksSlice";
 
 function Book({ book }) {
   const action = useDispatch();
-  const [message, setMessage] = useState({ message: "", type: "" });
-  const [opened, setOpened] = useState(false);
+  const { message, error } = useSelector((state) => state.books);
 
   const handleDelete = async (event) => {
     event.preventDefault();
-    
+    action(deleteBook(book._id));
   };
 
   const handleClick = (event) => {
     event.preventDefault();
     action(addToCart(book));
-    setMessage({ message: "Book added to cart", type: "success" });
-    setOpened(true);
   };
+
+  useEffect(() => {
+    if (message || error) {
+      const timer = setTimeout(() => {
+        action(clearMessage());
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message, error, action]);
 
   return (
     <>
@@ -68,12 +76,10 @@ function Book({ book }) {
           </div>
         </div>
       </li>
-      {opened && (
+      {message && (
         <Notification
-          message={message.message}
-          type={message.type}
-          setOpened={setOpened}
-          setMessage={setMessage}
+          message={message || error}
+          type={message ? "success" : "error"}
         />
       )}
     </>
