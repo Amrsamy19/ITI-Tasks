@@ -45,7 +45,7 @@ const MyBooks = () => {
             <span className="text-blue-800">{user.name}'s</span> Books
           </h1>
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/dashboard")}
             className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
           >
             Back to Dashboard

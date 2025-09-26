@@ -31,7 +31,7 @@ function BookDetails() {
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold text-gray-900">Book Details</h1>
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/dashboard")}
             className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
           >
             Back to Dashboard
