@@ -4,8 +4,12 @@ import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Notification from "./Notification";
 import { checkAuth } from "../utils";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../redux/store/slices/cartSlice";
 
 function Book({ book }) {
+  const cart = useSelector((state) => state.cart);
+  const action = useDispatch();
   const [message, setMessage] = useState({ message: "", type: "" });
   const [opened, setOpened] = useState(false);
 
@@ -29,6 +33,12 @@ function Book({ book }) {
       setMessage({ message: data.error, type: "error" });
       setOpened(true);
     }
+  };
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    action(addToCart(book));
+    console.log(cart);
   };
 
   return (
@@ -58,7 +68,10 @@ function Book({ book }) {
         </Link>
         <div className="flex">
           <div className="absolute right-6 bottom-8">
-            <button className=" text-white text-bold text-2xl text-center p-2 rounded-xl hover:bg-blue-600 transition duration-200 mr-2">
+            <button
+              onClick={handleClick}
+              className=" text-white text-bold text-2xl text-center p-2 rounded-xl hover:bg-blue-600 transition duration-200 mr-2"
+            >
               <FaPlus />
             </button>
             {checkAuth(book, JSON.parse(localStorage.getItem("user"))) && (

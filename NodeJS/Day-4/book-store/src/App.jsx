@@ -8,11 +8,12 @@ import {
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoutes";
+import store from "./redux/store";
 import BookDetails from "./components/BookDetails";
 import Navigation from "./components/Navigation";
 import Users from "./components/Users";
 import MyBooks from "./components/MyBooks";
+import { Provider } from "react-redux";
 
 // Layout wrapper for protected routes
 function ProtectedLayout({
@@ -24,7 +25,7 @@ function ProtectedLayout({
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-
+  store;
   return (
     <>
       <Navigation setIsAuthenticated={setIsAuthenticated} setUser={setUser} />
@@ -100,7 +101,11 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  );
 }
 
 export default App;
