@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addNewBook } from "../redux/store/slices/booksSlice";
 
 function Model({ setPopUp, type, book }) {
-  const navigate = useNavigate();
+  const actions = useDispatch();
   const [formData, setFormData] = useState(book || {});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -18,29 +19,8 @@ function Model({ setPopUp, type, book }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    try {
-      const response = await fetch(
-        action === "Add"
-          ? "http://localhost:3000/api/books"
-          : `http://localhost:3000/api/books/${book._id}`,
-        {
-          method: action === "Add" ? "POST" : "PUT",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-      if (response.ok) {
-        navigate(0);
-      } else {
-        const data = await response.json();
-        setError(data.error);
-      }
-    } catch (error) {
-      setError(error.message);
-    }
+    const res = actions(addNewBook(formData));
+    console.log(res);
   };
 
   return (

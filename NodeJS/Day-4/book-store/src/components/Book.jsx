@@ -4,41 +4,24 @@ import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Notification from "./Notification";
 import { checkAuth } from "../utils";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/store/slices/cartSlice";
 
 function Book({ book }) {
-  const cart = useSelector((state) => state.cart);
   const action = useDispatch();
   const [message, setMessage] = useState({ message: "", type: "" });
   const [opened, setOpened] = useState(false);
 
   const handleDelete = async (event) => {
     event.preventDefault();
-    const response = await fetch(
-      `http://localhost:3000/api/books/${book._id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
-    if (response.ok) {
-      const data = await response.json();
-      setMessage({ message: data.message, type: "success" });
-      setOpened(true);
-    } else {
-      const data = await response.json();
-      setMessage({ message: data.error, type: "error" });
-      setOpened(true);
-    }
+    
   };
 
   const handleClick = (event) => {
     event.preventDefault();
     action(addToCart(book));
-    console.log(cart);
+    setMessage({ message: "Book added to cart", type: "success" });
+    setOpened(true);
   };
 
   return (

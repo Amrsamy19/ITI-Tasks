@@ -1,40 +1,33 @@
 import { useEffect, useState } from "react";
 import Book from "./Book";
 import Model from "./Model";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearMessage,
+  fetchBooks,
+  filterBooks,
+  searchBooks,
+} from "../redux/store/slices/booksSlice";
+import Notification from "./Notification";
 
 const Dashboard = ({ user }) => {
-  const [books, setBooks] = useState([]);
-  const [filteredBooks, setFilteredBooks] = useState([]);
+  const { books, filtered, status, error, message } = useSelector(
+    (state) => state.books
+  );
+  const actions = useDispatch();
   const [genres, setGenres] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [notify, setNotify] = useState("");
   const [popUp, setPopUp] = useState(false);
 
   const handleSearch = async (event) => {
     event.preventDefault();
     const searchTerm = event.target.value;
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/books?q=${searchTerm}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setFilteredBooks(data);
-        setError("");
-      } else {
-        setError("No books found");
-      }
-    } catch (error) {
-      setError("Error fetching books:", error.message);
-    }
+    actions(searchBooks(searchTerm));
   };
 
   const handleFilter = (event) => {
     const genre = event.target.value;
-
-    genre === "all"
-      ? setFilteredBooks(books)
-      : setFilteredBooks(books.filter((book) => book.genre === genre));
+    actions(filterBooks(genre));
   };
 
   const handleSort = async (event) => {
@@ -43,7 +36,6 @@ const Dashboard = ({ user }) => {
       `http://localhost:3000/api/books?sort=${sortBy}`
     );
     const data = await response.json();
-    setFilteredBooks(data);
   };
 
   const getGenres = async () => {
@@ -52,42 +44,36 @@ const Dashboard = ({ user }) => {
       if (response.ok) {
         const data = await response.json();
         setGenres(data);
-        setError("");
+        setNotify("");
       } else {
-        setError("Failed to fetch genres");
+        setNotify("Failed to fetch genres");
       }
     } catch (error) {
-      setError("Error fetching genres:", error.message);
-    }
-  };
-
-  const getBooks = async () => {
-    if (books.length > 0) return;
-    try {
-      const response = await fetch("http://localhost:3000/api/books");
-      if (response.ok) {
-        const data = await response.json();
-
-        setLoading(false);
-        setError("");
-        setBooks(data);
-        setFilteredBooks(data);
-      } else {
-        setLoading(true);
-        setError("Failed to fetch books");
-      }
-    } catch (error) {
-      setError("Error fetching books:", error.message);
+      setNotify("Error fetching genres:", error.message);
     }
   };
 
   useEffect(() => {
-    getBooks();
+    actions(fetchBooks());
     getGenres();
-  }, []);
+  }, [actions]);
+
+  useEffect(() => {
+    if (message || error) {
+      const timer = setTimeout(() => {
+        actions(clearMessage());
+        setNotify("");
+        setPopUp(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message, error, actions]);
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {notify && (
+        <Notification message={notify} type="success" setOpened={setNotify} />
+      )}
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center bg-white rounded-lg shadow p-6">
           <h2 className="text-2xl font-bold text-gray-900">
@@ -162,7 +148,7 @@ const Dashboard = ({ user }) => {
               </div>
             </div>
           </div>
-          {loading ? (
+          {status === "loading" ? (
             <p>Loading books...</p>
           ) : error ? (
             <h3 className="text-red-500 font-bold text-2xl mt-24 text-center">
@@ -174,7 +160,7 @@ const Dashboard = ({ user }) => {
             </h3>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredBooks.map((book) => (
+              {filtered.map((book) => (
                 <Book key={book._id} book={book} />
               ))}
             </div>
