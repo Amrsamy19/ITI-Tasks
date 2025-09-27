@@ -37,7 +37,7 @@ function BookDetails() {
           <h1 className="text-3xl font-bold text-gray-900">Book Details</h1>
           <button
             onClick={() => navigate("/dashboard")}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+            className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
           >
             Back to Dashboard
           </button>
@@ -95,7 +95,7 @@ function BookDetails() {
                   </p>
                   <button
                     onClick={() => setShowFullDescription(!showFullDescription)}
-                    className="mt-2 text-blue-600 hover:text-blue-700 font-medium"
+                    className="mt-2 text-blue-700 hover:text-blue-900 font-medium"
                   >
                     {showFullDescription ? "Show Less" : "Read More"}
                   </button>
@@ -111,7 +111,7 @@ function BookDetails() {
                 <div>
                   <button
                     onClick={() => setPopUp(true)}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+                    className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
                   >
                     Edit Book
                   </button>

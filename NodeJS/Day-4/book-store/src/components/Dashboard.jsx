@@ -10,7 +10,7 @@ import {
 } from "../redux/store/slices/booksSlice";
 
 const Dashboard = ({ user }) => {
-  const { filtered, status } = useSelector((state) => state.books);
+  const { filtered, status, error } = useSelector((state) => state.books);
   const actions = useDispatch();
   const [genres, setGenres] = useState([]);
   const [popUp, setPopUp] = useState(false);
@@ -121,7 +121,7 @@ const Dashboard = ({ user }) => {
           </div>
           {status === "loading" ? (
             <p>Loading books...</p>
-          ) : filtered.length === 0 ? (
+          ) : error ? (
             <h3 className="text-red-500 font-bold text-2xl mt-24 text-center">
               No books found
             </h3>

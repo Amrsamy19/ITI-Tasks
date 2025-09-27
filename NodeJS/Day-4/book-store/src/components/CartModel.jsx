@@ -15,9 +15,15 @@ const CartModel = ({ setIsOpen }) => {
   const actions = useDispatch();
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex flex-col items-center justify-center z-30">
-      <div className="bg-white py-8 px-10 rounded-lg flex flex-col items-center justify-center gap-8 shadow-md">
-        <h1 className="text-2xl text-blue-800 font-bold">Cart</h1>
+    <div
+      onClick={() => setIsOpen(false)}
+      className="fixed top-0 left-0 w-full h-full bg-black/50 flex flex-col items-center justify-center z-30"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white py-8 px-10 rounded-lg flex flex-col items-center justify-center gap-8 shadow-md"
+      >
+        <h1 className="text-2xl text-gray-900 font-bold">Cart</h1>
         <div className="h-64 overflow-y-auto p-4 flex flex-col gap-6">
           {cart.cart.length > 0 ? (
             cart.cart.map((book) => (
@@ -33,20 +39,20 @@ const CartModel = ({ setIsOpen }) => {
                   <div className="flex items-center gap-4">
                     <button
                       onClick={() => actions(decrementQuantity(book._id))}
-                      className="text-blue-500 hover:text-blue-600 transition duration-200"
+                      className="text-blue-800 hover:text-blue-600 transition duration-200"
                     >
                       <FaMinus />
                     </button>
                     <p className="text-gray-600">{book.quantity}</p>
                     <button
                       onClick={() => actions(incrementQuantity(book._id))}
-                      className="text-blue-500 hover:text-blue-600 transition duration-200"
+                      className="text-blue-800 hover:text-blue-600 transition duration-200"
                     >
                       <FaPlus />
                     </button>
                     <button
                       onClick={() => actions(removeFromCart(book._id))}
-                      className="text-red-500 hover:text-red-600 transition duration-200"
+                      className="text-red-800 hover:text-red-600 transition duration-200"
                     >
                       <FaTrash />
                     </button>
@@ -56,7 +62,7 @@ const CartModel = ({ setIsOpen }) => {
             ))
           ) : (
             <div className="flex items-center justify-center h-full">
-              <p className="text-red-500 text-xl font-bold">Cart is empty</p>
+              <p className="text-red-700 text-xl font-bold">Cart is empty</p>
             </div>
           )}
         </div>
@@ -66,12 +72,12 @@ const CartModel = ({ setIsOpen }) => {
         </div>
         <div className="flex items-center justify-center gap-4">
           <button
-            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-200"
+            className="bg-red-800 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-200"
             onClick={() => setIsOpen(false)}
           >
-            Browse more books
+            Continue shopping
           </button>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+          <button className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
             Checkout
           </button>
         </div>

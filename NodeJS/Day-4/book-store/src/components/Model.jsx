@@ -23,8 +23,14 @@ function Model({ setPopUp, type, book }) {
   useEffect(() => {}, [error, message]);
 
   return (
-    <div className="z-20 w-screen h-screen bg-gray-900/60 fixed top-0 right-0 flex justify-center items-center">
-      <div className="bg-white w-1/2 p-10 rounded-md shadow-md">
+    <div
+      onClick={() => setPopUp(false)}
+      className="z-20 w-screen h-screen bg-gray-900/60 fixed top-0 right-0 flex justify-center items-center"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white w-1/2 p-10 rounded-md shadow-md"
+      >
         <h1 className="font-bold text-center text-2xl my-5">Add a book</h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col">
@@ -101,14 +107,14 @@ function Model({ setPopUp, type, book }) {
           </div>
           <div className="flex justify-between mt-5">
             <button
-              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
+              className="bg-red-800 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
               onClick={() => setPopUp(false)}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+              className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
             >
               {type === "edit" ? "Update" : "Add"}
             </button>
