@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 import {
+  clearCart,
   decrementQuantity,
   incrementQuantity,
   removeFromCart,
@@ -13,6 +14,10 @@ const CartModel = ({ setIsOpen }) => {
     0
   );
   const actions = useDispatch();
+
+  const handleClear = () => {
+    actions(clearCart());
+  };
 
   return (
     <div
@@ -77,7 +82,13 @@ const CartModel = ({ setIsOpen }) => {
           >
             Continue shopping
           </button>
-          <button className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+          <button
+            onClick={handleClear}
+            className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+          >
+            Clear cart
+          </button>
+          <button className="bg-green-800 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-200">
             Checkout
           </button>
         </div>
