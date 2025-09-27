@@ -8,12 +8,9 @@ import {
   searchBooks,
   sortBooks,
 } from "../redux/store/slices/booksSlice";
-import Notification from "./Notification";
 
 const Dashboard = ({ user }) => {
-  const { filtered, status, error, message } = useSelector(
-    (state) => state.books
-  );
+  const { filtered, status } = useSelector((state) => state.books);
   const actions = useDispatch();
   const [genres, setGenres] = useState([]);
   const [popUp, setPopUp] = useState(false);
@@ -48,12 +45,6 @@ const Dashboard = ({ user }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {message && (
-        <Notification
-          message={message || error}
-          type={message ? "success" : "error"}
-        />
-      )}
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center bg-white rounded-lg shadow p-6">
           <h2 className="text-2xl font-bold text-gray-900">
@@ -130,10 +121,6 @@ const Dashboard = ({ user }) => {
           </div>
           {status === "loading" ? (
             <p>Loading books...</p>
-          ) : error ? (
-            <h3 className="text-red-500 font-bold text-2xl mt-24 text-center">
-              {error}
-            </h3>
           ) : filtered.length === 0 ? (
             <h3 className="text-red-500 font-bold text-2xl mt-24 text-center">
               No books found

@@ -177,13 +177,17 @@ const booksSlice = createSlice({
       })
       .addCase(addNewBook.fulfilled, (state, action) => {
         state.books.push(action.payload);
+        state.filtered.push(action.payload);
         state.message = "Book added successfully!";
       })
       .addCase(addNewBook.rejected, (state, action) => {
         state.error = action.payload || "Failed to add book";
       })
       .addCase(updateBook.fulfilled, (state, action) => {
-        state.books.push(action.payload);
+        state.filtered = state.filtered.map((b) =>
+          b._id === action.payload._id ? action.payload : b
+        );
+        state.currentBook = action.payload;
         state.message = "Book updated successfully!";
       })
       .addCase(updateBook.rejected, (state, action) => {

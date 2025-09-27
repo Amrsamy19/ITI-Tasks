@@ -6,7 +6,6 @@ function Model({ setPopUp, type, book }) {
   const { error, message } = useSelector((state) => state.books);
   const actions = useDispatch();
   const [formData, setFormData] = useState(book || {});
-  const [action] = useState(type === "edit" ? "Edit" : "Add");
 
   const handleChange = (e) => {
     setFormData({
@@ -17,7 +16,7 @@ function Model({ setPopUp, type, book }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    actions(action === "Edit" ? updateBook(formData) : addNewBook(formData));
+    actions(type === "edit" ? updateBook(formData) : addNewBook(formData));
     setPopUp(false);
   };
 
@@ -111,7 +110,7 @@ function Model({ setPopUp, type, book }) {
               type="submit"
               className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
             >
-              {action}
+              {type === "edit" ? "Update" : "Add"}
             </button>
           </div>
         </form>

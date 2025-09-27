@@ -18,7 +18,7 @@ function BookDetails() {
   useEffect(() => {
     actions(fetchBookById(id));
     setLoading(false);
-  }, [actions, id, currentBook]);
+  }, [actions, id]);
 
   if (!currentBook) {
     return (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -13,7 +13,9 @@ import BookDetails from "./components/BookDetails";
 import Navigation from "./components/Navigation";
 import Users from "./components/Users";
 import MyBooks from "./components/MyBooks";
-import { Provider } from "react-redux";
+import Notification from "./components/Notification";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import { clearMessage } from "./redux/store/slices/booksSlice";
 
 // Layout wrapper for protected routes
 function ProtectedLayout({
@@ -22,13 +24,30 @@ function ProtectedLayout({
   setUser,
   user,
 }) {
+  const { message, error } = useSelector((state) => state.books);
+  const action = useDispatch();
+
+  useEffect(() => {
+    if (message || error) {
+      const timer = setTimeout(() => {
+        action(clearMessage());
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message, error, action]);
+
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-  store;
   return (
     <>
       <Navigation setIsAuthenticated={setIsAuthenticated} setUser={setUser} />
+      {message && (
+        <Notification
+          message={message || error}
+          type={message ? "success" : "error"}
+        />
+      )}
       <Outlet context={{ user, setIsAuthenticated, setUser }} />
     </>
   );

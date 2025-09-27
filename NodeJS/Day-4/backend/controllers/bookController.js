@@ -100,7 +100,10 @@ const updateBook = async (req, res) => {
     return res.status(400).json({ error: "Book data is missing" });
   }
 
-  if (book.createdBy !== req.currentUser.id) {
+  if (
+    book.createdBy !== req.currentUser.id &&
+    req.currentUser.role !== "admin"
+  ) {
     return res
       .status(403)
       .json({ error: "You are not authorized to update this book" });
