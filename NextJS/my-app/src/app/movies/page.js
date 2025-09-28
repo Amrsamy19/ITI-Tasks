@@ -1,32 +1,51 @@
+"use client";
+
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovies } from "../../lib/features/movies/moviesSlice";
 import Link from "next/link";
-import React from "react";
+import Image from "next/image";
 
 const Movies = () => {
+  const dispatch = useDispatch();
+  const { data, loading, error } = useSelector((state) => state.movies);
+
+  useEffect(() => {
+    dispatch(fetchMovies());
+  }, [dispatch]);
+
+  if (loading) return <p>Loading movies...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  console.log(data);
+
   return (
-    <>
-      <div className="flex justify-center">
-        <div className="grid grid-cols-3 gap-6">
-          <Link
-            href="/movies/1"
-            className="col-span-1 border-2 border-black p-2 w-fit"
+    <div>
+      <ul className="grid grid-cols-4 gap-4">
+        {data.slice(0, 10).map((movie) => (
+          <li
+            className="flex flex-col justify-center items-center"
+            key={movie.id}
           >
-            <h1 className="text-2xl">First</h1>
-          </Link>
-          <Link
-            href="/movies/2"
-            className="col-span-1 border-2 border-black p-2 w-fit"
-          >
-            <h1 className="text-2xl">Second</h1>
-          </Link>
-          <Link
-            href="/movies/3"
-            className="col-span-1 border-2 border-black p-2 w-fit"
-          >
-            <h1 className="text-2xl">Third</h1>
-          </Link>
-        </div>
-      </div>
-    </>
+            <Link
+              href={`/movies/${movie.id}`}
+              className="text-[#233d4d] hover:text-[#FE7F2D] hover:scale-105 transition duration-300"
+            >
+              <Image
+                src={movie.image.medium}
+                alt={movie.name}
+                width={200}
+                height={200}
+              />
+              <div className="flex items-center justify-between gap-4">
+                <p className="text-lg font-bold">{movie.name}</p>
+                <p className="text-lg">{movie.rating.average}</p>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
