@@ -1,4 +1,4 @@
-const { default: mongoose } = require("mongoose");
+const { mongoose } = require("mongoose");
 const BookModel = require("../models/book");
 const getAllBooks = async () => {
   return await BookModel.find();
