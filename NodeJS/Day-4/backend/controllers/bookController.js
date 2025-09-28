@@ -1,4 +1,3 @@
-const { create } = require("../models/user");
 const {
   getById,
   getAllBooks,
@@ -8,7 +7,6 @@ const {
   updateBookFromDB,
   deleteBookFromDB,
 } = require("../services/book");
-const mongoose = require("mongoose");
 
 const getBooks = async (req, res) => {
   let books = await getAllBooks();
