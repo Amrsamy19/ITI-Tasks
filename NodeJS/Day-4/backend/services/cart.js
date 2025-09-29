@@ -7,13 +7,14 @@ const getCartByUserId = async (userId) => {
   });
 };
 
-const createCart = async (cart) => {
+const createCart = async (data) => {
   const cart = new CartModel({
-    userId: new mongoose.Types.ObjectId(cart.userId),
-    books: cart.books,
+    userId: new mongoose.Types.ObjectId(data.userId),
+    books: data.books,
     createdAt: new Date(),
     updatedAt: new Date(),
-    isPurchased: false,
+    totalAmount: data.totalAmount,
+    isPurchased: data.isPurchased,
   });
   return await cart.save();
 };

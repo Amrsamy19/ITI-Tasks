@@ -8,11 +8,7 @@ import {
 } from "../redux/store/slices/cartSlice";
 
 const CartModel = ({ setIsOpen }) => {
-  const cart = useSelector((state) => state.cart);
-  const totalPrice = cart.cart.reduce(
-    (total, book) => total + book.price * book.quantity,
-    0
-  );
+  const cart = useSelector((state) => state.cart.cart);
   const actions = useDispatch();
 
   const handleClear = () => {
@@ -30,14 +26,10 @@ const CartModel = ({ setIsOpen }) => {
       >
         <h1 className="text-2xl text-gray-900 font-bold">Cart</h1>
         <div className="h-64 overflow-y-auto p-4 flex flex-col gap-6">
-          {cart.cart.length > 0 ? (
-            cart.cart.map((book) => (
+          {cart.books.length > 0 ? (
+            cart.books.map((book) => (
               <div key={book._id} className="flex items-center w-full gap-4">
-                <img
-                  src={book.bookCoverImage}
-                  alt={book.title}
-                  className="w-20 h-24"
-                />
+                <img src={book.poster} alt={book.title} className="w-20 h-24" />
                 <div className="flex flex-col">
                   <p className="font-bold">{book.title}</p>
                   <p className="font-bold text-green-600">${book.price}</p>
@@ -73,7 +65,7 @@ const CartModel = ({ setIsOpen }) => {
         </div>
         <div className="flex items-center justify-between w-full">
           <p className="font-bold">Total Price</p>
-          <p className="font-bold text-green-800">${totalPrice.toFixed(2)}</p>
+          <p className="font-bold text-green-800">${cart.totalAmount}</p>
         </div>
         <div className="flex items-center justify-center gap-4">
           <button

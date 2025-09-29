@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { checkAuth } from "../utils";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../redux/store/slices/cartSlice";
+import { addCart, addToCart } from "../redux/store/slices/cartSlice";
 import { deleteBook } from "../redux/store/slices/booksSlice";
 
 function Book({ book }) {
@@ -16,7 +16,18 @@ function Book({ book }) {
 
   const handleClick = (event) => {
     event.preventDefault();
-    action(addToCart(book));
+    action((action, getState) => {
+      action(
+        addToCart({
+          productId: book._id,
+          price: book.price,
+          poster: book.bookCoverImage,
+          title: book.title,
+        })
+      );
+      const { cart } = getState().cart;
+      action(addCart(cart));
+    });
   };
 
   return (

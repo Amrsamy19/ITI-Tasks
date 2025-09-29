@@ -4,7 +4,7 @@ import { useNavigate, NavLink } from "react-router-dom";
 import CartModel from "./CartModel";
 
 function Navigation({ setIsAuthenticated, setUser }) {
-  const cart = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart.cart);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
   const [isOpen, setIsOpen] = useState(false);
@@ -86,7 +86,7 @@ function Navigation({ setIsAuthenticated, setUser }) {
               </svg>
               <span className="absolute inset-0 object-right-top -mr-6">
                 <div className="inline-flex items-center px-1.5 py-1  rounded-full text-xs font-semibold leading-4 bg-red-500 text-white">
-                  {cart.cart.length}
+                  {cart.books ? cart.books.length : 0}
                 </div>
               </span>
             </button>

@@ -8,6 +8,7 @@ import {
   searchBooks,
   sortBooks,
 } from "../redux/store/slices/booksSlice";
+import { fetchCart } from "../redux/store/slices/cartSlice";
 
 const Dashboard = ({ user }) => {
   const { filtered, status, error } = useSelector((state) => state.books);
@@ -40,6 +41,7 @@ const Dashboard = ({ user }) => {
 
   useEffect(() => {
     actions(fetchBooks());
+    actions(fetchCart());
     getGenres();
   }, [actions]);
 
