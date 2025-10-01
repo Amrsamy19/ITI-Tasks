@@ -176,9 +176,9 @@ const booksSlice = createSlice({
         state.error = action.payload || "Failed to sort books";
       })
       .addCase(addNewBook.fulfilled, (state, action) => {
-        state.books.push(action.payload);
-        state.filtered.push(action.payload);
-        state.message = "Book added successfully!";
+        state.books.push(action.payload.book);
+        state.filtered.push(action.payload.book);
+        state.message = action.payload.message;
       })
       .addCase(addNewBook.rejected, (state, action) => {
         state.error = action.payload || "Failed to add book";

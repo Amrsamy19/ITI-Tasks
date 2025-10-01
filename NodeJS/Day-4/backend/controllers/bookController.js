@@ -1,3 +1,4 @@
+const book = require("../models/book");
 const {
   getById,
   getAllBooks,
@@ -85,9 +86,9 @@ const addBook = async (req, res) => {
     return res.status(400).json({ error: "Book data is missing" });
   }
 
-  await addBookFromDB({ ...body, createdBy: currentUser.id });
+  const book = await addBookFromDB({ ...body, createdBy: currentUser.id });
 
-  res.status(201).json({ message: "Book added successfully" });
+  res.status(201).json({ message: "Book added successfully", book: book });
 };
 
 const updateBook = async (req, res) => {

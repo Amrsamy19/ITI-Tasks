@@ -8,15 +8,30 @@ const getCartByUserId = async (userId) => {
 };
 
 const createCart = async (data) => {
-  const cart = new CartModel({
-    userId: new mongoose.Types.ObjectId(data.userId),
-    books: data.books,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    totalAmount: data.totalAmount,
-    isPurchased: data.isPurchased,
-  });
-  return await cart.save();
+  const found = await getCartByUserId(data.userId);
+
+  if (found) {
+    return await CartModel.findOneAndUpdate(
+      { userId: new mongoose.Types.ObjectId(data.userId) },
+      {
+        $set: {
+          books: data.books,
+          totalAmount: data.totalAmount,
+          isPurchased: data.isPurchased,
+        },
+      },
+      { new: true }
+    );
+  } else {
+    return new CartModel({
+      userId: new mongoose.Types.ObjectId(data.userId),
+      books: data.books,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      totalAmount: data.totalAmount,
+      isPurchased: data.isPurchased,
+    }).save();
+  }
 };
 
 const updateBooksQuantity = async (cartId, updatedCart) => {

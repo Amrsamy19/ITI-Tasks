@@ -20,7 +20,7 @@ function Model({ setPopUp, type, book }) {
     setPopUp(false);
   };
 
-  useEffect(() => {}, [error, message]);
+  useEffect(() => {}, [error, message, actions]);
 
   return (
     <div

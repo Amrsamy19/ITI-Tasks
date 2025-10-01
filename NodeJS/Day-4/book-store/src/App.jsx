@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -25,6 +25,7 @@ function ProtectedLayout({
   user,
 }) {
   const { message, error } = useSelector((state) => state.books);
+  // const { cartMessage, cartrror } = useSelector((state) => state.cart);
   const action = useDispatch();
 
   useEffect(() => {
