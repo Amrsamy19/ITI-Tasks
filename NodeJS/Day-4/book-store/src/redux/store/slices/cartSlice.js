@@ -72,6 +72,32 @@ export const deleteCart = createAsyncThunk(
   }
 );
 
+export const deleteBookFromCart = createAsyncThunk(
+  "cart/deleteBookFromCart",
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/carts/${data.cartId}/${data.id}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (!res.ok) {
+        const error = await res.json();
+        return rejectWithValue(
+          error.message || "Failed to delete book from cart"
+        );
+      }
+      return await res.json();
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const updateCart = createAsyncThunk(
   "cart/updateCart",
   async ({ cartId, item }, { rejectWithValue }) => {
@@ -85,6 +111,7 @@ export const updateCart = createAsyncThunk(
         body: JSON.stringify({
           productId: item.id,
           quantity: item.quantity,
+          price: item.price,
         }),
       });
       if (!res.ok) {
@@ -119,21 +146,8 @@ export const cartSlice = createSlice({
         });
       }
     },
-    removeFromCart: (state, action) => {
-      state.cart = state.cart.books.filter(
-        (item) => item._id !== action.payload
-      );
-    },
     clearCart: (state) => {
       state.cart = [];
-    },
-    updateQuantity: (state, action) => {
-      const item = state.cart.books.find(
-        (item) => item._id === action.payload.id
-      );
-      if (item) {
-        item.quantity = action.payload.quantity;
-      }
     },
   },
   extraReducers: (builder) => {
@@ -163,6 +177,13 @@ export const cartSlice = createSlice({
         state.cart = { books: [] };
       })
       .addCase(deleteCart.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(deleteBookFromCart.fulfilled, (state, action) => {
+        state.message = action.payload.message;
+        state.cart = action.payload.cart;
+      })
+      .addCase(deleteBookFromCart.rejected, (state, action) => {
         state.error = action.payload;
       });
   },

@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 import {
+  deleteBookFromCart,
   deleteCart,
-  removeFromCart,
   updateCart,
 } from "../redux/store/slices/cartSlice";
 
@@ -14,9 +14,9 @@ const CartModel = ({ setIsOpen }) => {
     actions(deleteCart(cart._id));
   };
 
-  const handleQuantity = (id, cartId, quantity, type) => {
+  const handleBook = (id, cartId, quantity, price, type) => {
     if (type === "decrement" && quantity === 1) {
-      actions(removeFromCart(id));
+      actions(deleteBookFromCart({ cartId, id }));
       return;
     }
 
@@ -26,6 +26,7 @@ const CartModel = ({ setIsOpen }) => {
         item: {
           id,
           quantity: type === "decrement" ? quantity - 1 : quantity + 1,
+          price,
         },
       })
     );
@@ -55,10 +56,11 @@ const CartModel = ({ setIsOpen }) => {
                   <div className="flex items-center gap-4">
                     <button
                       onClick={(event) =>
-                        handleQuantity(
+                        handleBook(
                           book.productId,
                           cart._id,
                           book.quantity,
+                          book.price,
                           event.currentTarget.dataset.type
                         )
                       }
@@ -70,10 +72,11 @@ const CartModel = ({ setIsOpen }) => {
                     <p className="text-gray-600">{book.quantity}</p>
                     <button
                       onClick={(event) =>
-                        handleQuantity(
+                        handleBook(
                           book.productId,
                           cart._id,
                           book.quantity,
+                          book.price,
                           event.currentTarget.dataset.type
                         )
                       }
@@ -83,7 +86,14 @@ const CartModel = ({ setIsOpen }) => {
                       <FaPlus />
                     </button>
                     <button
-                      onClick={() => actions(removeFromCart(book._id))}
+                      onClick={() =>
+                        actions(
+                          deleteBookFromCart({
+                            cartId: cart._id,
+                            id: book.productId,
+                          })
+                        )
+                      }
                       className="text-red-800 hover:text-red-600 transition duration-200"
                     >
                       <FaTrash />

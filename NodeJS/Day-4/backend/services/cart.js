@@ -19,10 +19,15 @@ const createCart = async (data) => {
   return await cart.save();
 };
 
-const updateCart = async (cartId, updatedCart) => {
+const updateBooksQuantity = async (cartId, updatedCart) => {
   return await CartModel.findOneAndUpdate(
     { _id: new mongoose.Types.ObjectId(cartId) },
-    { $set: { "books.$[elem].quantity": updatedCart.quantity } },
+    {
+      $set: {
+        "books.$[elem].quantity": updatedCart.quantity,
+        totalAmount: updatedCart.quantity * updatedCart.price,
+      },
+    },
     {
       arrayFilters: [
         {
@@ -30,7 +35,32 @@ const updateCart = async (cartId, updatedCart) => {
         },
       ],
       new: true,
+    }
+  );
+};
+
+const updateCartBooks = async (cartId, bookId) => {
+  const cart = await CartModel.findOne({
+    _id: new mongoose.Types.ObjectId(cartId),
+  });
+
+  const book = cart.books.find((item) =>
+    item.productId.equals(new mongoose.Types.ObjectId(bookId))
+  );
+
+  if (!cart) {
+    throw new Error("Cart not found");
+  }
+
+  return await CartModel.findOneAndUpdate(
+    { _id: new mongoose.Types.ObjectId(cartId) },
+    {
+      $set: {
+        books: cart.books.filter((item) => !item.productId.equals(bookId)),
+        totalAmount: cart.totalAmount - book.price * book.quantity,
+      },
     },
+    { new: true }
   );
 };
 
@@ -41,6 +71,7 @@ const deleteCart = async (cartId) => {
 module.exports = {
   getCartByUserId,
   createCart,
-  updateCart,
+  updateBooksQuantity,
+  updateCartBooks,
   deleteCart,
 };

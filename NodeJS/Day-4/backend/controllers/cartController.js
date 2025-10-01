@@ -1,7 +1,8 @@
 const {
   getCartByUserId,
   createCart,
-  updateCart,
+  updateBooksQuantity,
+  updateCartBooks,
   deleteCart,
 } = require("../services/cart");
 
@@ -37,7 +38,12 @@ const addCart = async (req, res) => {
 };
 
 const updateCartBooksById = async (req, res) => {
-  const cart = await updateCart(req.params.id, req.body);
+  const cart = await updateBooksQuantity(req.params.id, req.body);
+  return res.status(200).json({ message: "Cart updated successfully", cart });
+};
+
+const updateCart = async (req, res) => {
+  const cart = await updateCartBooks(req.params.cartId, req.params.bookId);
   return res.status(200).json({ message: "Cart updated successfully", cart });
 };
 
@@ -49,6 +55,7 @@ const deleteCartById = async (req, res) => {
 module.exports = {
   getCart,
   addCart,
+  updateCart,
   updateCartBooksById,
   deleteCartById,
 };
