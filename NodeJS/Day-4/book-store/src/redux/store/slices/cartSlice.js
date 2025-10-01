@@ -14,7 +14,7 @@ export const addCart = createAsyncThunk(
           books: cart.books.map((item) => ({
             productId: item.productId,
             quantity: item.quantity,
-            price: item.price * item.quantity,
+            price: item.price,
             poster: item.poster,
             title: item.title,
           })),
@@ -131,6 +131,8 @@ export const cartSlice = createSlice({
     cart: {
       books: [],
     },
+    message: null,
+    error: null,
   },
   reducers: {
     addToCart: (state, action) => {
@@ -148,6 +150,10 @@ export const cartSlice = createSlice({
     },
     clearCart: (state) => {
       state.cart = [];
+    },
+    clearCartMessage: (state) => {
+      state.message = null;
+      state.error = null;
     },
   },
   extraReducers: (builder) => {
@@ -189,13 +195,6 @@ export const cartSlice = createSlice({
   },
 });
 
-export const {
-  addToCart,
-  removeFromCart,
-  clearCart,
-  incrementQuantity,
-  decrementQuantity,
-  updateQuantity,
-} = cartSlice.actions;
+export const { addToCart, clearCartMessage, clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

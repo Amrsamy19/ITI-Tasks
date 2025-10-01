@@ -126,7 +126,7 @@ const booksSlice = createSlice({
     filtered: [],
     status: "idle",
     error: null,
-    message: null,
+    bookMessage: null,
   },
   reducers: {
     filterBooks: (state, action) => {
@@ -139,7 +139,7 @@ const booksSlice = createSlice({
       }
     },
     clearMessage: (state) => {
-      state.message = null;
+      state.bookMessage = null;
       state.error = null;
     },
   },
@@ -155,7 +155,7 @@ const booksSlice = createSlice({
       })
       .addCase(fetchBooks.rejected, (state, action) => {
         state.state = "failed";
-        state.error = action.error.message;
+        state.error = action.error.bookMessage;
       })
       .addCase(fetchBookById.fulfilled, (state, action) => {
         state.currentBook = action.payload;
@@ -178,7 +178,7 @@ const booksSlice = createSlice({
       .addCase(addNewBook.fulfilled, (state, action) => {
         state.books.push(action.payload.book);
         state.filtered.push(action.payload.book);
-        state.message = action.payload.message;
+        state.bookMessage = action.payload.message;
       })
       .addCase(addNewBook.rejected, (state, action) => {
         state.error = action.payload || "Failed to add book";
@@ -188,7 +188,7 @@ const booksSlice = createSlice({
           b._id === action.payload._id ? action.payload : b
         );
         state.currentBook = action.payload;
-        state.message = "Book updated successfully!";
+        state.bookMessage = "Book updated successfully!";
       })
       .addCase(updateBook.rejected, (state, action) => {
         state.error = action.payload || "Failed to add book";
@@ -196,7 +196,7 @@ const booksSlice = createSlice({
       .addCase(deleteBook.fulfilled, (state, action) => {
         state.books = state.books.filter((b) => b._id !== action.payload);
         state.filtered = state.filtered.filter((b) => b._id !== action.payload);
-        state.message = "Book removed successfully!";
+        state.bookMessage = "Book removed successfully!";
       })
       .addCase(deleteBook.rejected, (state, action) => {
         state.error = action.payload || "Failed to remove book";

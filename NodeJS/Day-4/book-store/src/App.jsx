@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -16,6 +16,7 @@ import MyBooks from "./components/MyBooks";
 import Notification from "./components/Notification";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { clearMessage } from "./redux/store/slices/booksSlice";
+import { clearCartMessage } from "./redux/store/slices/cartSlice";
 
 // Layout wrapper for protected routes
 function ProtectedLayout({
@@ -24,18 +25,19 @@ function ProtectedLayout({
   setUser,
   user,
 }) {
-  const { message, error } = useSelector((state) => state.books);
-  // const { cartMessage, cartrror } = useSelector((state) => state.cart);
+  const { message: bookMessage, error } = useSelector((state) => state.books);
+  const { message: cartMessage } = useSelector((state) => state.cart);
   const action = useDispatch();
 
   useEffect(() => {
-    if (message || error) {
+    if (bookMessage || error || cartMessage) {
       const timer = setTimeout(() => {
-        action(clearMessage());
+        action(clearMessage()); // books
+        action(clearCartMessage()); // cart
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [message, error, action]);
+  }, [cartMessage, action, bookMessage, error]);
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
@@ -43,11 +45,8 @@ function ProtectedLayout({
   return (
     <>
       <Navigation setIsAuthenticated={setIsAuthenticated} setUser={setUser} />
-      {message && (
-        <Notification
-          message={message || error}
-          type={message ? "success" : "error"}
-        />
+      {(bookMessage || cartMessage) && (
+        <Notification message={bookMessage || cartMessage} type="success" />
       )}
       <Outlet context={{ user, setIsAuthenticated, setUser }} />
     </>

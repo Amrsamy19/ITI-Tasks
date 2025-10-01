@@ -34,22 +34,26 @@ const addCart = async (req, res) => {
     isPurchased: body.isPurchased || false,
   });
 
-  return res.status(201).json({ message: "Cart added successfully", cart });
+  return res
+    .status(201)
+    .json({ message: "Book added to cart successfully", cart: cart });
 };
 
 const updateCartBooksById = async (req, res) => {
   const cart = await updateBooksQuantity(req.params.id, req.body);
-  return res.status(200).json({ message: "Cart updated successfully", cart });
+  return res.status(200).json({ message: "Book quantity updated", cart });
 };
 
 const updateCart = async (req, res) => {
   const cart = await updateCartBooks(req.params.cartId, req.params.bookId);
-  return res.status(200).json({ message: "Cart updated successfully", cart });
+  return res
+    .status(200)
+    .json({ message: "Removed book from cart successfully", cart });
 };
 
 const deleteCartById = async (req, res) => {
   await deleteCart(req.params.id);
-  return res.status(200).json({ message: "Cart deleted successfully" });
+  return res.status(200).json({ message: "Cart has been cleared" });
 };
 
 module.exports = {

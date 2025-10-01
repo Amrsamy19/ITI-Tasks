@@ -2,11 +2,13 @@ import { BsTrash2 } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { checkAuth } from "../utils";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { addCart, addToCart } from "../redux/store/slices/cartSlice";
 import { deleteBook } from "../redux/store/slices/booksSlice";
+import Notification from "./Notification";
 
 function Book({ book }) {
+  const { message } = useSelector((state) => state.books);
   const action = useDispatch();
 
   const handleDelete = async (event) => {
@@ -25,6 +27,7 @@ function Book({ book }) {
           title: book.title,
         })
       );
+
       const { cart } = getState().cart;
       action(addCart(cart));
     });
@@ -32,6 +35,7 @@ function Book({ book }) {
 
   return (
     <>
+      {message && <Notification message={message} type={"success"} />}
       <li className="relative w-full list-none" key={book._id}>
         <Link
           to={`/book/${book._id}`}
