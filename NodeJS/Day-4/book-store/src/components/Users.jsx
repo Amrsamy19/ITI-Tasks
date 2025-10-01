@@ -58,7 +58,7 @@ function Users({ user }) {
       },
     });
     const data = await response.json();
-    setUsers(data.filter((u) => u._id !== user.id));
+    setUsers(data);
     setLoading(false);
   };
 
@@ -115,6 +115,16 @@ function Users({ user }) {
                           handleEdit(event.target.value, user._id)
                         }
                         value={user.role}
+                        className={
+                          user._id.toString() ===
+                          JSON.parse(localStorage.getItem("user")).id
+                            ? "text-gray-500 font-bold py-2 rounded-lg"
+                            : "font-bold  py-2 rounded-lg"
+                        }
+                        disabled={
+                          user._id.toString() ===
+                          JSON.parse(localStorage.getItem("user")).id
+                        }
                       >
                         <option value="user">User</option>
                         <option value="admin">Admin</option>
@@ -124,7 +134,16 @@ function Users({ user }) {
                     <td className="flex items-center justify-around px-6 py-4 whitespace-nowrap">
                       <button
                         onClick={() => handleDelete(user._id)}
-                        className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
+                        className={
+                          user._id.toString() ===
+                          JSON.parse(localStorage.getItem("user")).id
+                            ? "bg-gray-600 text-gray-100 font-bold px-4 py-2 rounded-lg"
+                            : "bg-red-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
+                        }
+                        disabled={
+                          user._id.toString() ===
+                          JSON.parse(localStorage.getItem("user")).id
+                        }
                       >
                         Delete
                       </button>
