@@ -51,6 +51,53 @@ export const fetchCart = createAsyncThunk(
   }
 );
 
+export const deleteCart = createAsyncThunk(
+  "cart/deleteCart",
+  async (id, { rejectWithValue }) => {
+    try {
+      const res = await fetch(`http://localhost:3000/api/carts/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (!res.ok) {
+        const error = await res.json();
+        return rejectWithValue(error.message || "Failed to delete cart");
+      }
+      return id;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateCart = createAsyncThunk(
+  "cart/updateCart",
+  async ({ cartId, item }, { rejectWithValue }) => {
+    try {
+      const res = await fetch(`http://localhost:3000/api/carts/${cartId}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productId: item.id,
+          quantity: item.quantity,
+        }),
+      });
+      if (!res.ok) {
+        const error = await res.json();
+        return rejectWithValue(error.message || "Failed to update cart");
+      }
+      return await res.json();
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState: {
@@ -80,18 +127,6 @@ export const cartSlice = createSlice({
     clearCart: (state) => {
       state.cart = [];
     },
-    incrementQuantity: (state, action) => {
-      const item = state.cart.books.find((item) => item._id === action.payload);
-      if (item) {
-        item.quantity++;
-      }
-    },
-    decrementQuantity: (state, action) => {
-      const item = state.cart.books.find((item) => item._id === action.payload);
-      if (item && item.quantity > 1) {
-        item.quantity--;
-      }
-    },
     updateQuantity: (state, action) => {
       const item = state.cart.books.find(
         (item) => item._id === action.payload.id
@@ -104,7 +139,8 @@ export const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(addCart.fulfilled, (state, action) => {
-        state.message = action.payload;
+        state.message = action.payload.message;
+        state.cart = action.payload.cart;
       })
       .addCase(addCart.rejected, (state, action) => {
         state.error = action.payload;
@@ -113,6 +149,20 @@ export const cartSlice = createSlice({
         state.cart = action.payload;
       })
       .addCase(fetchCart.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(updateCart.fulfilled, (state, action) => {
+        state.message = action.payload.message;
+        state.cart = action.payload.cart;
+      })
+      .addCase(updateCart.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(deleteCart.fulfilled, (state, action) => {
+        state.message = action.payload.message;
+        state.cart = { books: [] };
+      })
+      .addCase(deleteCart.rejected, (state, action) => {
         state.error = action.payload;
       });
   },

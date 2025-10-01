@@ -20,10 +20,17 @@ const createCart = async (data) => {
 };
 
 const updateCart = async (cartId, updatedCart) => {
-  return await CartModel.findByIdAndUpdate(
-    cartId,
-    { ...updatedCart, updatedAt: new Date() },
-    { new: true }
+  return await CartModel.findOneAndUpdate(
+    { _id: new mongoose.Types.ObjectId(cartId) },
+    { $set: { "books.$[elem].quantity": updatedCart.quantity } },
+    {
+      arrayFilters: [
+        {
+          "elem.productId": new mongoose.Types.ObjectId(updatedCart.productId),
+        },
+      ],
+      new: true,
+    },
   );
 };
 

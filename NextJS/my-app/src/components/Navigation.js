@@ -61,6 +61,54 @@ export const Navigation = () => {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                href="/ssr"
+                className={`${
+                  pathname === "/ssr"
+                    ? "text-white font-bold border-b-2 border-[#FE7F2D] transition duration-200 ease-in-out"
+                    : "text-[#FE7F2D] hover:text-white font-bold transition duration-200 ease-in-out"
+                }`}
+              >
+                SSR
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/csr"
+                className={`${
+                  pathname === "/csr"
+                    ? "text-white font-bold border-b-2 border-[#FE7F2D] transition duration-200 ease-in-out"
+                    : "text-[#FE7F2D] hover:text-white font-bold transition duration-200 ease-in-out"
+                }`}
+              >
+                CSR
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/ssg"
+                className={`${
+                  pathname === "/ssg"
+                    ? "text-white font-bold border-b-2 border-[#FE7F2D] transition duration-200 ease-in-out"
+                    : "text-[#FE7F2D] hover:text-white font-bold transition duration-200 ease-in-out"
+                }`}
+              >
+                SSG
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/isr"
+                className={`${
+                  pathname === "/isr"
+                    ? "text-white font-bold border-b-2 border-[#FE7F2D] transition duration-200 ease-in-out"
+                    : "text-[#FE7F2D] hover:text-white font-bold transition duration-200 ease-in-out"
+                }`}
+              >
+                ISR
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

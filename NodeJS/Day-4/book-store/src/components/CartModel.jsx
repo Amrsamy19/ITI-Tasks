@@ -1,10 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 import {
-  clearCart,
-  decrementQuantity,
-  incrementQuantity,
+  deleteCart,
   removeFromCart,
+  updateCart,
 } from "../redux/store/slices/cartSlice";
 
 const CartModel = ({ setIsOpen }) => {
@@ -12,7 +11,24 @@ const CartModel = ({ setIsOpen }) => {
   const actions = useDispatch();
 
   const handleClear = () => {
-    actions(clearCart());
+    actions(deleteCart(cart._id));
+  };
+
+  const handleQuantity = (id, cartId, quantity, type) => {
+    if (type === "decrement" && quantity === 1) {
+      actions(removeFromCart(id));
+      return;
+    }
+
+    actions(
+      updateCart({
+        cartId: cartId,
+        item: {
+          id,
+          quantity: type === "decrement" ? quantity - 1 : quantity + 1,
+        },
+      })
+    );
   };
 
   return (
@@ -22,27 +38,46 @@ const CartModel = ({ setIsOpen }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white py-8 px-10 rounded-lg flex flex-col items-center justify-center gap-8 shadow-md"
+        className="bg-white py-8 px-10 rounded-lg flex flex-col items-center justify-between gap-8 shadow-md"
       >
-        <h1 className="text-2xl text-gray-900 font-bold">Cart</h1>
+        <h1 className="text-2xl text-gray-900 font-bold">Your Cart</h1>
         <div className="h-64 overflow-y-auto p-4 flex flex-col gap-6">
           {cart.books.length > 0 ? (
             cart.books.map((book) => (
-              <div key={book._id} className="flex items-center w-full gap-4">
-                <img src={book.poster} alt={book.title} className="w-20 h-24" />
+              <div
+                key={book._id}
+                className="flex items-center justify-between w-full gap-12"
+              >
+                <img src={book.poster} alt={book.title} className="w-22 h-26" />
                 <div className="flex flex-col">
                   <p className="font-bold">{book.title}</p>
                   <p className="font-bold text-green-600">${book.price}</p>
                   <div className="flex items-center gap-4">
                     <button
-                      onClick={() => actions(decrementQuantity(book._id))}
+                      onClick={(event) =>
+                        handleQuantity(
+                          book.productId,
+                          cart._id,
+                          book.quantity,
+                          event.currentTarget.dataset.type
+                        )
+                      }
+                      data-type="decrement"
                       className="text-blue-800 hover:text-blue-600 transition duration-200"
                     >
                       <FaMinus />
                     </button>
                     <p className="text-gray-600">{book.quantity}</p>
                     <button
-                      onClick={() => actions(incrementQuantity(book._id))}
+                      onClick={(event) =>
+                        handleQuantity(
+                          book.productId,
+                          cart._id,
+                          book.quantity,
+                          event.currentTarget.dataset.type
+                        )
+                      }
+                      data-type="increment"
                       className="text-blue-800 hover:text-blue-600 transition duration-200"
                     >
                       <FaPlus />

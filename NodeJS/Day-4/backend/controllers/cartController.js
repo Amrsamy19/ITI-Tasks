@@ -12,7 +12,7 @@ const getCart = async (req, res) => {
     return res.status(404).json({ error: "Cart not found" });
   }
 
-  res.status(200).json(cart);
+  return res.status(200).json(cart);
 };
 
 const addCart = async (req, res) => {
@@ -26,29 +26,29 @@ const addCart = async (req, res) => {
     .reduce((acc, book) => acc + book.price, 0)
     .toFixed(2);
 
-  await createCart({
+  const cart = await createCart({
     books: body.books,
     userId: req.currentUser.id,
     totalAmount: total,
     isPurchased: body.isPurchased || false,
   });
 
-  res.status(201).json({ message: "Cart added successfully" });
+  return res.status(201).json({ message: "Cart added successfully", cart });
 };
 
-const updateCartById = async (req, res) => {
+const updateCartBooksById = async (req, res) => {
   const cart = await updateCart(req.params.id, req.body);
-  res.status(200).json(cart);
+  return res.status(200).json({ message: "Cart updated successfully", cart });
 };
 
 const deleteCartById = async (req, res) => {
   await deleteCart(req.params.id);
-  res.status(200).json({ message: "Cart deleted successfully" });
+  return res.status(200).json({ message: "Cart deleted successfully" });
 };
 
 module.exports = {
   getCart,
   addCart,
-  updateCartById,
+  updateCartBooksById,
   deleteCartById,
 };
