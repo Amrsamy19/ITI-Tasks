@@ -2,6 +2,7 @@ const bookRoutes = require("./routes/bookRoutes");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
 const cartRoutes = require("./routes/cartRoutes");
+const checkoutRoutes = require("./routes/paymentRoutes");
 const logger = require("./middlewares/logger");
 const express = require("express");
 const connectDB = require("./db/db");
@@ -37,6 +38,7 @@ app.use(createApiPrefix("/auth"), authRoutes);
 app.use(createApiPrefix("/users"), userRoutes);
 app.use(createApiPrefix("/books"), bookRoutes);
 app.use(createApiPrefix("/carts"), cartRoutes);
+app.use(createApiPrefix("/checkout"), checkoutRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${process.env.PORT}`);

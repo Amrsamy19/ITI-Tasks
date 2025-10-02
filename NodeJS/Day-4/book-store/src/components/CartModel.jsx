@@ -32,6 +32,26 @@ const CartModel = ({ setIsOpen }) => {
     );
   };
 
+  const handlePayment = async (event) => {
+    event.preventDefault();
+
+    const res = await fetch("http://localhost:3000/api/checkout", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        products: cart,
+      }),
+    });
+    const session = await res.json();
+    if (session.error) {
+      console.log(session.error.message);
+    }
+    window.location.assign(session.url);
+  };
+
   return (
     <div
       onClick={() => setIsOpen(false)}
@@ -42,7 +62,7 @@ const CartModel = ({ setIsOpen }) => {
         className="bg-white py-8 px-10 rounded-lg flex flex-col items-center justify-between gap-8 shadow-md"
       >
         <h1 className="text-2xl text-gray-900 font-bold">Your Cart</h1>
-        <div className="h-64 overflow-y-auto p-4 flex flex-col gap-6">
+        <div className="w-full h-72 overflow-y-scroll p-4 flex flex-col gap-6">
           {cart.books.length > 0 ? (
             cart.books.map((book) => (
               <div
@@ -50,7 +70,7 @@ const CartModel = ({ setIsOpen }) => {
                 className="flex items-center justify-between w-full gap-12"
               >
                 <img src={book.poster} alt={book.title} className="w-22 h-26" />
-                <div className="flex flex-col">
+                <div className="flex flex-col w-1/2">
                   <p className="font-bold">{book.title}</p>
                   <p className="font-bold text-green-600">${book.price}</p>
                   <div className="flex items-center gap-4">
@@ -125,7 +145,10 @@ const CartModel = ({ setIsOpen }) => {
           >
             Clear cart
           </button>
-          <button className="bg-green-800 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-200">
+          <button
+            onClick={handlePayment}
+            className="bg-green-800 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-200"
+          >
             Checkout
           </button>
         </div>

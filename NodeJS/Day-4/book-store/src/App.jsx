@@ -17,8 +17,9 @@ import Notification from "./components/Notification";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { clearMessage } from "./redux/store/slices/booksSlice";
 import { clearCartMessage } from "./redux/store/slices/cartSlice";
+import Success from "./components/Success";
+import Cancel from "./components/Cancel";
 
-// Layout wrapper for protected routes
 function ProtectedLayout({
   isAuthenticated,
   setIsAuthenticated,
@@ -107,6 +108,14 @@ function App() {
         {
           path: "/users",
           element: <Users user={user} />,
+        },
+        {
+          path: "/success",
+          element: <Success />,
+        },
+        {
+          path: "/cancel",
+          element: <Cancel />,
         },
       ],
     },
