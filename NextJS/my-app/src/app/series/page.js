@@ -28,7 +28,7 @@ const Movies = () => {
             key={movie.id}
           >
             <Link
-              href={`/movies/${movie.id}`}
+              href={`/series/${movie.id}`}
               className="text-[#233d4d] hover:text-[#FE7F2D] hover:scale-105 transition duration-300"
             >
               <Image

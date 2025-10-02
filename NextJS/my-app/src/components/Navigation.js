@@ -7,7 +7,7 @@ export const Navigation = () => {
   const pathname = usePathname();
   const links = [
     { href: "/", label: "Home" },
-    { href: "/movies", label: "Movies" },
+    { href: "/series", label: "Series" },
     { href: "/comments", label: "Comments" },
   ];
   return (
