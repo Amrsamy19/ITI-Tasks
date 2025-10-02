@@ -9,6 +9,7 @@ export const Navigation = () => {
     { href: "/", label: "Home" },
     { href: "/movies", label: "Movies" },
     { href: "/actors", label: "Actors" },
+    { href: "/comments", label: "Comments" },
   ];
   return (
     <nav className="bg-[#233d4d] text-white border-white ">
