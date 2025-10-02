@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 
 const Cancel = () => {
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       window.location.href = "/dashboard";
     }, 3000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (

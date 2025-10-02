@@ -9,10 +9,12 @@ const Success = () => {
 
   useEffect(() => {
     dispatch(deleteCart(cart._id));
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       window.location.href = "/dashboard";
     }, 3000);
-  }, []);
+
+    return () => clearTimeout(timer);
+  }, [cart._id, dispatch]);
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
