@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { toast } from "sonner";
 import { TriangleAlert } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { set } from "mongoose";
+import { signIn } from "next-auth/react";
 
 const Page = () => {
   const [formData, setFormData] = useState({});
@@ -24,25 +24,23 @@ const Page = () => {
     e.preventDefault();
     setPending(true);
 
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
+    const res = await signIn("credentials", {
+      redirect: false,
+      username: formData.username,
+      password: formData.password,
     });
-
-    const data = await res.json();
     if (res.ok) {
       setPending(false);
-      toast.success(data.message);
-      router.push("/login");
-    } else if (res.status === 400) {
+      toast.success("Login successful", {
+        duration: 2000,
+      });
+      router.push("/");
+    } else if (res.status === 401) {
       setPending(false);
-      setError(data.message);
+      setError("Invalid credentials");
     } else {
       setPending(false);
-      setError(data.message);
+      setError("Something went wrong");
     }
   };
 
@@ -50,7 +48,7 @@ const Page = () => {
     <div className="h-screen flex items-center justify-center bg-[#233d4d]">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-lg w-7/12 flex flex-col items-center justify-center gap-6"
+        className="bg-white p-8 rounded-lg w-5/12 flex flex-col items-center justify-center gap-6"
       >
         <div className="flex flex-col gap-2 items-center">
           <h1 className="text-2xl text-[#233d4d] font-extrabold">Login</h1>
@@ -96,10 +94,10 @@ const Page = () => {
           disabled={pending}
           className="bg-[#233d4d] text-white px-4 py-2 rounded-2xl font-bold text-lg hover:bg-[#FE7F2D] border border-[#233d4d] hover:border-[#FE7F2D] transition duration-300 ease-in-out cursor-pointer"
         >
-          Login
+          {pending ? "Logging in..." : "Login"}
         </button>
         <p>
-          Don&apos;t have an account?
+          Don&apos;t have an account?{" "}
           <Link
             className="text-[#233d4d] underline hover:text-[#FE7F2D] hover:font-bold transition-all duration-400 ease-in-out"
             href="/signup"

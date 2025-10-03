@@ -1,13 +1,21 @@
 "use client";
+
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
+import { UserMenu } from "./UserMenu";
 
 export const Navigation = () => {
+  const { data: session, status } = useSession();
   const pathname = usePathname();
+
+  if (status === "loading") return null;
+
+  if (!session) return null;
+
   const links = [
     { href: "/", label: "Home" },
-    { href: "/series", label: "Series" },
     { href: "/comments", label: "Comments" },
   ];
   return (
@@ -61,6 +69,10 @@ export const Navigation = () => {
                 </Link>
               </li>
             ))}
+
+            <li>
+              <UserMenu />
+            </li>
           </ul>
         </div>
       </div>

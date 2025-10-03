@@ -1,5 +1,7 @@
 "use client";
+import Protected from "@/components/ui/Protected";
 import React, { useState, useEffect } from "react";
+import { toast } from "sonner";
 
 const Page = () => {
   const [comments, setComments] = useState([]);
@@ -23,19 +25,29 @@ const Page = () => {
       }),
     });
     const returnedData = await res.json();
-    setComments(returnedData);
-    setData("");
+    if (res.ok) {
+      setComments([returnedData, ...comments]);
+      toast.success("Comment added successfully", {
+        duration: 2000,
+      });
+    } else {
+      toast.error("Something went wrong", {
+        duration: 2000,
+      });
+    }
   };
 
   const handleDelete = async (id) => {
     const res = await fetch(`http://localhost:3000/api/comments/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
       method: "DELETE",
     });
     const data = await res.json();
-    setComments(data);
+    if (res.ok) {
+      toast.success("Comment deleted successfully", {
+        duration: 2000,
+      });
+      setComments(data);
+    }
   };
 
   const handleChange = (e) => {
@@ -75,54 +87,68 @@ const Page = () => {
   if (!comments) return <p>Loading...</p>;
 
   return (
-    <div>
-      <div className="flex gap-2">
-        <input
-          type="text"
-          name="comment"
-          id="comment"
-          className="border border-amber-500 rounded-2xl p-4"
-          placeholder="Comment"
-          onChange={handleChange}
-        />
-        <button
-          onClick={handleClick}
-          className="bg-[#FE7F2D] px-5 py-4 rounded-2xl border border-amber-50 font-bold text-amber-50 hover:bg-amber-50 hover:text-[#FE7F2D] hover:border-amber-500 transition duration-300"
-        >
-          Send
-        </button>
-      </div>
-      {comments.map((comment) => (
-        <div key={comment.id}>
-          <h2 className="text-2xl text-[#FE7F2D]">{comment.text}</h2>
-          <div className="flex gap-2">
-            <div>
-              <input
-                type="text"
-                name="comment"
-                id="comment"
-                placeholder="Update Comment"
-                onChange={handleChange}
-                className="border border-amber-500 rounded-2xl p-4"
-              />
-              <button
-                onClick={() => handleUpdate(comment)}
-                className="bg-[#FE7F2D] px-5 py-4 rounded-2xl border border-amber-50 font-bold text-amber-50 hover:bg-amber-50 hover:text-[#FE7F2D] hover:border-amber-500 transition duration-300"
-              >
-                Edit
-              </button>
-            </div>
+    <Protected>
+      <div className="flex flex-col justify-center items-center p-6">
+        <div className="flex flex-col justify-center items-center gap-4 mb-24">
+          <label className="text-2xl font-bold text-[#FE7F2D]">
+            Add a comment
+          </label>
+          <div className="flex gap-4">
+            <input
+              type="text"
+              name="comment"
+              id="comment"
+              className="border border-amber-500 rounded-2xl p-4"
+              placeholder="Add a comment"
+              onChange={handleChange}
+            />
             <button
-              onClick={() => handleDelete(comment.id)}
+              onClick={handleClick}
               className="bg-[#FE7F2D] px-5 py-4 rounded-2xl border border-amber-50 font-bold text-amber-50 hover:bg-amber-50 hover:text-[#FE7F2D] hover:border-amber-500 transition duration-300"
             >
-              Delete
+              Add
             </button>
           </div>
-          <hr />
         </div>
-      ))}
-    </div>
+
+        {comments.length === 0 ? (
+          <h1 className="text-2xl text-[#FE7F2D] font-extrabold">
+            No comments yet
+          </h1>
+        ) : (
+          comments.map((comment) => (
+            <div key={comment._id}>
+              <h2 className="text-2xl text-[#FE7F2D]">{comment.text}</h2>
+              <div className="flex gap-2">
+                <div>
+                  <input
+                    type="text"
+                    name="comment"
+                    id="comment"
+                    placeholder="Update Comment"
+                    onChange={handleChange}
+                    className="border border-amber-500 rounded-2xl p-4"
+                  />
+                  <button
+                    onClick={() => handleUpdate(comment)}
+                    className="bg-[#FE7F2D] px-5 py-4 rounded-2xl border border-amber-50 font-bold text-amber-50 hover:bg-amber-50 hover:text-[#FE7F2D] hover:border-amber-500 transition duration-300"
+                  >
+                    Edit
+                  </button>
+                </div>
+                <button
+                  onClick={() => handleDelete(comment._id)}
+                  className="bg-[#FE7F2D] px-5 py-4 rounded-2xl border border-amber-50 font-bold text-amber-50 hover:bg-amber-50 hover:text-[#FE7F2D] hover:border-amber-500 transition duration-300"
+                >
+                  Delete
+                </button>
+              </div>
+              <hr />
+            </div>
+          ))
+        )}
+      </div>
+    </Protected>
   );
 };
 

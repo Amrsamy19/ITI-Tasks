@@ -1,19 +1,15 @@
-"use client ";
-
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
-import StoreProvider from "./StoreProvider";
-import { Toaster } from "@/components/ui/sonner";
+import Providers from "@/components/providers";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        {/* <Navigation /> */}
-        <StoreProvider>
-          <Toaster position="top-center"/>
+        <Providers>
+          <Navigation />
           <main>{children}</main>
-        </StoreProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -113,7 +113,7 @@ const Page = () => {
           disabled={pending}
           className="bg-[#233d4d] text-white px-4 py-2 rounded-2xl font-bold text-lg hover:bg-[#FE7F2D] border border-[#233d4d] hover:border-[#FE7F2D] transition duration-300 ease-in-out cursor-pointer"
         >
-          Sign Up
+          {pending ? "Signing up..." : "Sign Up"}
         </button>
         <p>
           Already have an account?{" "}
