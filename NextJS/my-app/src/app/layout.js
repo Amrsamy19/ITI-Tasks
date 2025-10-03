@@ -3,14 +3,16 @@
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 import StoreProvider from "./StoreProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navigation />
+        {/* <Navigation /> */}
         <StoreProvider>
-          <main className="p-8">{children}</main>
+          <Toaster position="top-center"/>
+          <main>{children}</main>
         </StoreProvider>
       </body>
     </html>
