@@ -3,6 +3,7 @@ import User from "@/models/user";
 import connectToDatabase from "@/lib/mongo";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
+import GithhubProvider from "next-auth/providers/github";
 
 export const authOptions = {
   session: {
@@ -41,6 +42,10 @@ export const authOptions = {
           return null;
         }
       },
+    }),
+    GithhubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
     }),
   ],
   callbacks: {

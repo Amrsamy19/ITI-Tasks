@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { toast } from "sonner";
-import { TriangleAlert } from "lucide-react";
+import { Github, TriangleAlert } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
@@ -95,6 +95,12 @@ const Page = () => {
           className="bg-[#233d4d] text-white px-4 py-2 rounded-2xl font-bold text-lg hover:bg-[#FE7F2D] border border-[#233d4d] hover:border-[#FE7F2D] transition duration-300 ease-in-out cursor-pointer"
         >
           {pending ? "Logging in..." : "Login"}
+        </button>
+        <button
+          onClick={() => signIn("github", { callbackUrl: "/" })}
+          className="flex items-center gap-2 px-6 py-3 bg-white text-[#233d4d] rounded-2xl hover:bg-[#233d4d] hover:text-white border border-[#233d4d] transition"
+        >
+          <Github /> Sign in with Github
         </button>
         <p>
           Don&apos;t have an account?{" "}
