@@ -15,10 +15,16 @@ export async function DELETE(req, { params }) {
 }
 
 export async function PUT(req, { params }) {
+  const { id } = await params;
   const data = await req.json();
 
-  let newComments = data.comments;
-  return new Response(JSON.stringify(newComments), {
-    status: 200,
-  });
+  if (!id) return new Response({ error: "No id" }, { status: 400 });
+
+  await connectToDatabase();
+
+  await Comment.findByIdAndUpdate({ _id: id }, { ...data });
+
+  const comments = await Comment.find({}).sort({ createdAt: -1 });
+
+  return new Response(JSON.stringify(comments), { status: 200 });
 }

@@ -2,10 +2,13 @@
 import Protected from "@/components/ui/Protected";
 import React, { useState, useEffect } from "react";
 import { toast } from "sonner";
+import Model from "@/components/Model";
 
 const Page = () => {
   const [comments, setComments] = useState([]);
   const [data, setData] = useState("");
+  const [isOpened, setIsOpened] = useState(false);
+  const [editingCommentId, setEditingCommentId] = useState(null);
 
   const getComments = async () => {
     const res = await fetch("http://localhost:3000/api/comments");
@@ -54,32 +57,6 @@ const Page = () => {
     setData(e.target.value);
   };
 
-  const updateComment = async (com) => {
-    let updatedComments = comments.map((comment) =>
-      comment.id === +com.id ? { ...comment, text: data } : comment
-    );
-
-    const res = await fetch(
-      `http://localhost:3000/api/comments/${comment.id}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "PUT",
-        body: JSON.stringify({
-          comments: updatedComments,
-        }),
-      }
-    );
-    const returnedData = await res.json();
-    setComments(returnedData);
-    setData("");
-  };
-
-  const handleUpdate = (comment) => {
-    updateComment(comment);
-  };
-
   useEffect(() => {
     getComments();
   }, []);
@@ -117,25 +94,23 @@ const Page = () => {
           </h1>
         ) : (
           comments.map((comment) => (
-            <div key={comment._id}>
-              <h2 className="text-2xl text-[#FE7F2D]">{comment.text}</h2>
-              <div className="flex gap-2">
-                <div>
-                  <input
-                    type="text"
-                    name="comment"
-                    id="comment"
-                    placeholder="Update Comment"
-                    onChange={handleChange}
-                    className="border border-amber-500 rounded-2xl p-4"
-                  />
-                  <button
-                    onClick={() => handleUpdate(comment)}
-                    className="bg-[#FE7F2D] px-5 py-4 rounded-2xl border border-amber-50 font-bold text-amber-50 hover:bg-amber-50 hover:text-[#FE7F2D] hover:border-amber-500 transition duration-300"
-                  >
-                    Edit
-                  </button>
-                </div>
+            <div
+              className="flex items-center justify-between w-1/3 p-4"
+              key={comment._id}
+            >
+              <h2 className="text-2xl text-[#FE7F2D] w-full">{comment.text}</h2>
+              <div className="flex w-full justify-around items-center">
+                <button
+                  onClick={() => {
+                    setEditingCommentId(
+                      comment._id === editingCommentId ? null : comment._id
+                    );
+                    setIsOpened(!isOpened);
+                  }}
+                  className="bg-[#FE7F2D] px-5 py-4 rounded-2xl border border-amber-50 font-bold text-amber-50 hover:bg-amber-50 hover:text-[#FE7F2D] hover:border-amber-500 transition duration-300"
+                >
+                  Edit
+                </button>
                 <button
                   onClick={() => handleDelete(comment._id)}
                   className="bg-[#FE7F2D] px-5 py-4 rounded-2xl border border-amber-50 font-bold text-amber-50 hover:bg-amber-50 hover:text-[#FE7F2D] hover:border-amber-500 transition duration-300"
@@ -143,7 +118,13 @@ const Page = () => {
                   Delete
                 </button>
               </div>
-              <hr />
+              {isOpened && (
+                <Model
+                  id={editingCommentId}
+                  setIsOpened={setIsOpened}
+                  setComments={setComments}
+                />
+              )}
             </div>
           ))
         )}

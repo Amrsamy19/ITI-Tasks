@@ -3,7 +3,7 @@ import Comment from "@/models/comments";
 
 export async function GET() {
   await connectToDatabase();
-  const comments = await Comment.find({});
+  const comments = await Comment.find({}).sort({ createdAt: -1 });
   return new Response(JSON.stringify(comments), {
     status: 200,
   });
