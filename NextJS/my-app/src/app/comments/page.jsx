@@ -33,10 +33,12 @@ const Page = () => {
       toast.success("Comment added successfully", {
         duration: 2000,
       });
+      setData("");
     } else {
       toast.error("Something went wrong", {
         duration: 2000,
       });
+      setData("");
     }
   };
 
