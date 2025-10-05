@@ -9,10 +9,12 @@ import {
   sortBooks,
 } from "../redux/store/slices/booksSlice";
 import { fetchCart } from "../redux/store/slices/cartSlice";
+import { useTranslation } from "react-i18next";
 
 const Dashboard = ({ user }) => {
   const { filtered, status, error } = useSelector((state) => state.books);
   const actions = useDispatch();
+  const { t, i18n } = useTranslation();
   const [genres, setGenres] = useState([]);
   const [popUp, setPopUp] = useState(false);
 
@@ -48,9 +50,15 @@ const Dashboard = ({ user }) => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center bg-white rounded-lg shadow p-6">
-          <h2 className="text-2xl font-bold text-gray-900">
-            Welcome,
+        <div
+          className={`flex justify-between items-center bg-white rounded-lg shadow p-6 ${
+            i18n.language === "ar"
+              ? "direction-rtl font-sans font-medium"
+              : "font-bold"
+          }`}
+        >
+          <h2 className="text-2xl text-gray-900">
+            {t("home.welcome")},
             <span className="text-blue-800">
               {` ${user?.name || user?.username}`}
             </span>
@@ -62,29 +70,37 @@ const Dashboard = ({ user }) => {
               user.role === "admin" || user.role === "owner" ? "" : "hidden"
             }`}
           >
-            Add a Book
+            {t("home.addBook")}
           </button>
           {popUp && <Model type={"add"} book={null} setPopUp={setPopUp} />}
         </div>
         <div>
           <div>
             <h2 className="text-center text-2xl font-bold text-blue-800 mb-4 mt-8">
-              Available Books
+              {t("home.availableBooks")}
             </h2>
             <div className="flex items-center justify-around space-x-4 mb-4">
-              <div className="flex items-center justify-around space-x-4">
-                <label htmlFor="search">Search:</label>
+              <div
+                className={`flex ${
+                  i18n.language === "ar" && "direction-rtl"
+                } items-center justify-around space-x-4`}
+              >
+                <label htmlFor="search">{t("home.search")}:</label>
                 <input
                   type="text"
                   id="search"
                   name="search"
                   onChange={handleSearch}
-                  placeholder="Search by title or description"
+                  placeholder={t("home.searchPlaceholder")}
                   className="border border-gray-300 rounded-md px-4 py-2 bg-white"
                 />
               </div>
-              <div className="flex items-center justify-around space-x-4">
-                <label htmlFor="filter">Filter by:</label>
+              <div
+                className={`flex ${
+                  i18n.language === "ar" && "direction-rtl"
+                } items-center justify-around space-x-4`}
+              >
+                <label htmlFor="filter">{t("home.filter")}:</label>
                 <select
                   name="filter"
                   onChange={handleFilter}
@@ -93,7 +109,7 @@ const Dashboard = ({ user }) => {
                   className="border border-gray-300 rounded-md px-4 py-2 bg-white"
                 >
                   <option value="" disabled>
-                    Select a genre
+                    {t("home.filterPlaceholder")}
                   </option>
                   <option value="all">All</option>
                   {genres.map((genre) => (
@@ -103,8 +119,12 @@ const Dashboard = ({ user }) => {
                   ))}
                 </select>
               </div>
-              <div className="flex items-center justify-around space-x-4">
-                <label htmlFor="sort">Sort by Price</label>
+              <div
+                className={`flex ${
+                  i18n.language === "ar" && "direction-rtl"
+                } items-center justify-around space-x-4`}
+              >
+                <label htmlFor="sort">{t("home.sort")}</label>
                 <select
                   name="sort"
                   onChange={handleSort}
@@ -113,10 +133,10 @@ const Dashboard = ({ user }) => {
                   className="border border-gray-300 rounded-md px-4 py-2 bg-white"
                 >
                   <option value="" disabled>
-                    Sort by
+                    {t("home.sort")}
                   </option>
-                  <option value="price">Ascending</option>
-                  <option value="-price">Descending</option>
+                  <option value="price">{t("home.sortLowToHigh")}</option>
+                  <option value="-price">{t("home.sortHighToLow")}</option>
                 </select>
               </div>
             </div>

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewBook, updateBook } from "../redux/store/slices/booksSlice";
+import { useTranslation } from "react-i18next";
 
 function Model({ setPopUp, type, book }) {
   const { error, message } = useSelector((state) => state.books);
   const actions = useDispatch();
+  const { t } = useTranslation();
   const [formData, setFormData] = useState(book || {});
 
   const handleChange = (e) => {
@@ -31,76 +33,78 @@ function Model({ setPopUp, type, book }) {
         onClick={(e) => e.stopPropagation()}
         className="bg-white w-1/2 p-10 rounded-md shadow-md"
       >
-        <h1 className="font-bold text-center text-2xl my-5">Add a book</h1>
+        <h1 className="font-bold text-center text-2xl my-5">
+          {t("addBook.addBook")}
+        </h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col">
           <div className="flex items-center justify-between mb-3">
-            <label>Title:</label>
+            <label>{t("addBook.title")}:</label>
             <input
               type="text"
               name="title"
               value={formData.title}
               onChange={handleChange}
-              placeholder="Title"
+              placeholder={t("addBook.title")}
               className="block border border-gray-200 rounded-md px-4 py-2 mb-3 w-10/12"
             />
           </div>
 
           <div className="flex items-center justify-between mb-3">
-            <label>Image:</label>
+            <label>{t("addBook.bookCoverImage")}:</label>
             <input
               type="text"
               name="bookCoverImage"
               value={formData.bookCoverImage}
               onChange={handleChange}
-              placeholder="Image"
+              placeholder={t("addBook.bookCoverImage")}
               className="block border border-gray-200 rounded-md px-4 py-2 mb-3 w-10/12"
             />
           </div>
 
           <div className="flex items-center justify-between mb-3">
-            <label>Genre:</label>
+            <label>{t("addBook.genre")}:</label>
             <input
               type="text"
               name="genre"
               value={formData.genre}
               onChange={handleChange}
-              placeholder="Genre"
+              placeholder={t("addBook.genre")}
               className="block border border-gray-200 rounded-md px-4 py-2 mb-3 w-10/12"
             />
           </div>
 
           <div className="flex items-center justify-between mb-3">
-            <label>Price:</label>
+            <label>{t("addBook.price")}:</label>
             <input
               type="number"
               name="price"
               value={formData.price}
               onChange={handleChange}
-              placeholder="Price"
+              placeholder={t("addBook.price")}
               className="block border border-gray-200 rounded-md px-4 py-2 mb-3 w-10/12"
             />
           </div>
 
           <div className="flex items-center justify-between mb-3">
-            <label>Created at:</label>
+            <label>{t("addBook.createdAt")}:</label>
             <input
               type="date"
               name="createdAt"
               value={formData.createdAt}
               onChange={handleChange}
-              placeholder="Created at"
+              placeholder={t("addBook.createdAt")}
               className="block border border-gray-200 rounded-md px-4 py-2 mb-3 w-10/12"
             />
           </div>
 
           <div className="flex items-center justify-between mb-3">
-            <label>Description:</label>
+            <label>{t("addBook.description")}:</label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
-              placeholder="Description"
+              placeholder={t("addBook.description")}
               rows={3}
               className="block border border-gray-200 rounded-md px-4 py-2 mb-3 w-10/12"
             />
@@ -110,13 +114,13 @@ function Model({ setPopUp, type, book }) {
               className="bg-red-800 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
               onClick={() => setPopUp(false)}
             >
-              Cancel
+              {t("addBook.cancel")}
             </button>
             <button
               type="submit"
               className="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
             >
-              {type === "edit" ? "Update" : "Add"}
+              {type === "edit" ? t("addBook.update") : t("addBook.add")}
             </button>
           </div>
         </form>

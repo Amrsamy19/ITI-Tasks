@@ -4,5 +4,30 @@
     "users": "Users",
     "myBooks": "My Books",
     "logout": "Logout"
+  },
+  "home": {
+    "welcome": "Welcome to Book Store",
+    "addBook": "Add Book",
+    "availableBooks": "Available Books",
+    "search": "Search",
+    "searchPlaceholder": "Search by title or description",
+    "filter": "Filter",
+    "filterPlaceholder": "Select a genre",
+    "sort": "Sort by price",
+    "sortPlaceholder": "Sort by price",
+    "sortLowToHigh": "Low to High",
+    "sortHighToLow": "High to Low"
+  },
+  "addBook": {
+    "addBook": "Add Book",
+    "title": "Book Title",
+    "bookCoverImage": "Image",
+    "description": "Book Description",
+    "price": "Book Price",
+    "genre": "Book Genre",
+    "createdAt": "Created At",
+    "cancel": "Cancel",
+    "add": "Add",
+    "update": "Update"
   }
 }

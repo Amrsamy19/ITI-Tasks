@@ -4,5 +4,30 @@
     "users": "المستخدمين",
     "myBooks": "كتبي",
     "logout": "تسجيل الخروج"
+  },
+  "home": {
+    "welcome": "مرحبا بكم في متجر الكتب",
+    "addBook": "إضافة كتاب",
+    "availableBooks": "الكتب المتاحة",
+    "search": "بحث",
+    "searchPlaceholder": "بحث بالعنوان أو الوصف",
+    "filter": "تصفية",
+    "filterPlaceholder": "اختر نوع الكتاب",
+    "sort": "ترتيب بالسعر",
+    "sortPlaceholder": "ترتيب بالسعر",
+    "sortLowToHigh": "من الأقل إلى الأعلى",
+    "sortHighToLow": "من الأعلى إلى الأقل"
+  },
+  "addBook": {
+    "addBook": "إضافة كتاب",
+    "title": "عنوان كتاب",
+    "bookCoverImage": "صورة الكتاب",
+    "description": "وصف الكتاب",
+    "price": "سعر الكتاب",
+    "genre": "نوع الكتاب",
+    "createdAt": "تاريخ الإضافة",
+    "cancel": "إلغاء",
+    "add": "إضافة",
+    "update": "تحديث"
   }
 }
