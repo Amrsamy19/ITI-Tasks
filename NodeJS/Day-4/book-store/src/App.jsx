@@ -19,6 +19,7 @@ import { clearMessage } from "./redux/store/slices/booksSlice";
 import { clearCartMessage } from "./redux/store/slices/cartSlice";
 import Success from "./components/Success";
 import Cancel from "./components/Cancel";
+import "./i18n";
 
 function ProtectedLayout({
   isAuthenticated,

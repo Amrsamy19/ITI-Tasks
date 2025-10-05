@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import CartModel from "./CartModel";
+import Toggle from "./Toggle";
 
 function Navigation({ setIsAuthenticated, setUser }) {
+  const { t } = useTranslation();
   const cart = useSelector((state) => state.cart.cart);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
@@ -27,6 +30,7 @@ function Navigation({ setIsAuthenticated, setUser }) {
         <div className="flex justify-between items-center h-16">
           <h1 className="text-xl font-semibold text-gray-900">Bookys</h1>
           <div className="flex justify-center items-center gap-8">
+            <Toggle />
             <NavLink
               to={"/dashboard"}
               className={({ isActive }) =>
@@ -37,7 +41,7 @@ function Navigation({ setIsAuthenticated, setUser }) {
                 } text-lg hover:text-gray-900 transition duration-300`
               }
             >
-              Books
+              {t("nav.books")}
             </NavLink>
             {user.role === "admin" && (
               <NavLink
@@ -50,7 +54,7 @@ function Navigation({ setIsAuthenticated, setUser }) {
                   } text-lg hover:text-gray-900 transition duration-300`
                 }
               >
-                Users
+                {t("nav.users")}
               </NavLink>
             )}
 
@@ -65,7 +69,7 @@ function Navigation({ setIsAuthenticated, setUser }) {
                   } text-lg hover:text-gray-900 transition duration-300`
                 }
               >
-                My Books
+                {t("nav.myBooks")}
               </NavLink>
             )}
             <button
@@ -95,7 +99,7 @@ function Navigation({ setIsAuthenticated, setUser }) {
               onClick={handleLogout}
               className="bg-red-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-red-700 transition duration-200"
             >
-              Logout
+              {t("nav.logout")}
             </button>
           </div>
         </div>

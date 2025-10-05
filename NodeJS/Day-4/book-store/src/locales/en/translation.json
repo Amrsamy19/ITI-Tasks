@@ -1,0 +1,8 @@
+{
+  "nav": {
+    "books": "Books",
+    "users": "Users",
+    "myBooks": "My Books",
+    "logout": "Logout"
+  }
+}
