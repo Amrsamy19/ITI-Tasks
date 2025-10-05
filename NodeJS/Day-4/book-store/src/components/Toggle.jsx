@@ -3,6 +3,13 @@ import { useTranslation } from "react-i18next";
 export default function Toggle() {
   const { i18n } = useTranslation();
 
+  const handleToggle = () => {
+    i18n.changeLanguage(i18n.language === "en" ? "ar" : "en");
+    if (localStorage.getItem("lang") === "en")
+      localStorage.setItem("lang", "ar");
+    else localStorage.setItem("lang", "en");
+  };
+
   return (
     <div className="inline-flex w-auto">
       <label
@@ -12,9 +19,7 @@ export default function Toggle() {
         <p className="text-sm text-gray-900">EN</p>
         <div className="relative">
           <input
-            onClick={() =>
-              i18n.changeLanguage(i18n.language === "en" ? "ar" : "en")
-            }
+            onClick={handleToggle}
             type="checkbox"
             id="toggle"
             className="sr-only peer"

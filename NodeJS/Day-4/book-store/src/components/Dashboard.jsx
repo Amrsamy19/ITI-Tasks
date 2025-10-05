@@ -45,7 +45,8 @@ const Dashboard = ({ user }) => {
     actions(fetchBooks());
     actions(fetchCart());
     getGenres();
-  }, [actions]);
+    i18n.changeLanguage(localStorage.getItem("lang") || "en");
+  }, [actions, i18n]);
 
   return (
     <div className="min-h-screen bg-gray-50">

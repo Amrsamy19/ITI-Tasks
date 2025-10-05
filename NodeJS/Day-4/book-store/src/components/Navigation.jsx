@@ -1,13 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import CartModel from "./CartModel";
 import Toggle from "./Toggle";
-import i18next from "i18next";
-
 function Navigation({ setIsAuthenticated, setUser }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const cart = useSelector((state) => state.cart.cart);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
@@ -25,18 +23,22 @@ function Navigation({ setIsAuthenticated, setUser }) {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    i18n.changeLanguage(localStorage.getItem("lang") || "en");
+  }, [i18n]);
+
   return (
     <nav className="bg-white shadow-sm border-b border-b-blue-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className={`flex ${
-            i18next.language === "ar" && "direction-rtl"
+            i18n.language === "ar" && "direction-rtl"
           } justify-between items-center h-16`}
         >
           <h1 className="text-xl font-semibold text-gray-900">Bookys</h1>
           <div
             className={`flex ${
-              i18next.language === "ar" ? "font-medium font-sans" : "font-bold"
+              i18n.language === "ar" ? "font-medium font-sans" : "font-bold"
             } justify-center items-center gap-8`}
           >
             <Toggle />
