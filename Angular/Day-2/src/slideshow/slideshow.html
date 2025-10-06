@@ -1,0 +1,15 @@
+<div class="slideshow">
+  <img
+    width="400"
+    [src]="imageSources[currentImageIndex]"
+    alt="Slideshow image"
+    class="slideshow-image"
+  />
+  <div class="buttons">
+    <button (click)="previous()">⏪ Previous</button>
+    <button (click)="next()">Next ⏩</button>
+    <button (click)="startSlideshow()">▶️ Start</button>
+    <button (click)="stopSlideshow()">⏸️ Stop</button>
+  </div>
+  <p class="caption">Image {{ currentImageIndex + 1 }} of {{ imageSources.length }}</p>
+</div>

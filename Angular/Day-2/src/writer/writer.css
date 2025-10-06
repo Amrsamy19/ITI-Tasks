@@ -1,0 +1,36 @@
+.writer {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  justify-content: center;
+  align-items: center;
+  padding: 10em;
+  background-color: #7d4b4b77;
+  border-radius: 0.5em;
+}
+
+.writer input {
+  width: 15em;
+  height: 2em;
+  border-radius: 0.5em;
+  border: none;
+  padding: 1em;
+  font-size: 1em;
+  color: #565353;
+}
+
+.writer button {
+  padding: 1em 2em;
+  border-radius: 0.5em;
+  border: none;
+  background-color: #7a1414;
+  color: #fff;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.writer button:hover {
+  background-color: #c50707;
+}

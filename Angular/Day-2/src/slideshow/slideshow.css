@@ -1,0 +1,39 @@
+.slideshow {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  justify-content: center;
+  align-items: center;
+  padding: 5em;
+  background-color: #7d4b4b77;
+  border-radius: 0.5em;
+}
+
+.buttons {
+  display: flex;
+  gap: 2em;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  padding: 1em 2em;
+  border-radius: 0.5em;
+  border: none;
+  background-color: #7a1414;
+  color: #fff;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #c50707;
+}
+
+.caption {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #fff;
+}
