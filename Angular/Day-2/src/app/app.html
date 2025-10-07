@@ -1,4 +1,13 @@
-<div>
-  <app-writer></app-writer>
-  <app-slideshow></app-slideshow>
+<div class="app">
+  <div class="task-1">
+    <!-- Task-1 -->
+    <app-writer></app-writer>
+    <app-slideshow></app-slideshow>
+  </div>
+
+  <div class="task-2">
+    <!-- Task-2 -->
+    <app-login (dataSender)="reciever($event)"></app-login>
+    <app-home [data]="studentsData"></app-home>
+  </div>
 </div>

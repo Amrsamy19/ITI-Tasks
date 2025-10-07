@@ -1,7 +1,19 @@
-div {
+.app {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  gap: 4em;
+  justify-content: space-between;
   align-items: center;
-  height: 100vh;
+  height: 100%;
   background-color: #7d4b4b77;
+}
+
+.task-1,
+.task-2 {
+  display: flex;
+  gap: 2em;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+  border-radius: 0.5em;
 }

@@ -1,4 +1,4 @@
-.writer {
+.login {
   display: flex;
   flex-direction: column;
   gap: 2em;
@@ -9,7 +9,7 @@
   border-radius: 0.5em;
 }
 
-.writer input {
+input {
   width: 15em;
   height: 2em;
   border-radius: 0.5em;
@@ -19,7 +19,7 @@
   color: #565353;
 }
 
-.writer button {
+button {
   padding: 1em 2em;
   border-radius: 0.5em;
   border: none;
@@ -30,7 +30,6 @@
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
-
-.writer button:hover {
+button:hover {
   background-color: #c50707;
 }
