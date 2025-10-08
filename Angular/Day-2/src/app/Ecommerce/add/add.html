@@ -1,0 +1,37 @@
+<div class="flex flex-col items-center justify-center w-full p-16 gap-4">
+  <h1 class="text-2xl text-zinc-500 text-center">Add Product</h1>
+  <div class="flex gap-4 w-full">
+    <input
+      class="border px-2.5 py-1.5 rounded-2xl border-zinc-500 focus:outline-none focus:scale-105 transition duration-300"
+      type="text"
+      placeholder="Product Name"
+      [(ngModel)]="productName"
+    />
+    <input
+      class="border px-2.5 py-1.5 rounded-2xl border-zinc-500 focus:outline-none focus:scale-105 transition duration-300"
+      type="text"
+      placeholder="Product Description"
+      [(ngModel)]="productDescription"
+    />
+  </div>
+  <div class="flex gap-4 w-full">
+    <input
+      class="border px-2.5 py-1.5 rounded-2xl border-zinc-500 focus:outline-none focus:scale-105 transition duration-300"
+      type="text"
+      placeholder="Product Image"
+      [(ngModel)]="productImage"
+    />
+    <input
+      class="border px-2.5 py-1.5 rounded-2xl border-zinc-500 focus:outline-none focus:scale-105 transition duration-300"
+      type="text"
+      placeholder="Product Rating"
+      [(ngModel)]="productRating"
+    />
+  </div>
+  <button
+    class="w-full border px-4 py-2 rounded-2xl border-zinc-500 hover:bg-zinc-500 hover:text-amber-50 transition duration-300"
+    (click)="add()"
+  >
+    Add
+  </button>
+</div>
