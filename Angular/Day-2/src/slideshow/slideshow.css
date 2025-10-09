@@ -1,11 +1,9 @@
 .slideshow {
   display: flex;
   flex-direction: column;
-  gap: 2em;
+  gap: 4em;
   justify-content: center;
   align-items: center;
-  padding: 2em;
-  background-color: #7d4b4b77;
   border-radius: 0.5em;
 }
 
@@ -20,7 +18,7 @@ button {
   padding: 1em 2em;
   border-radius: 0.5em;
   border: none;
-  background-color: #7a1414;
+  background-color: #333;
   color: #fff;
   font-size: 1em;
   font-weight: 500;
@@ -29,11 +27,11 @@ button {
 }
 
 button:hover {
-  background-color: #c50707;
+  background-color: #33333350;
 }
 
 .caption {
   font-size: 1.2em;
   font-weight: 600;
-  color: #fff;
+  color: #333;
 }

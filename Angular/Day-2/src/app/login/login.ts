@@ -1,24 +1,34 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
 })
 export class Login {
-  name: string = '';
-  age: string = '';
-  @Output() dataSender = new EventEmitter();
+  formData: {}[] = [];
 
-  add() {
-    this.dataSender.emit({
-      name: this.name,
-      age: this.age,
-    });
+  validator = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+  });
 
-    this.name = '';
-    this.age = '';
+  get isValid() {
+    return this.validator.valid;
+  }
+
+  getData() {
+    if (this.validator.valid) {
+      this.formData.push(this.validator.value);
+      console.log(this.formData);
+    }
   }
 }

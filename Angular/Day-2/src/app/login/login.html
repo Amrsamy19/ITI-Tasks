@@ -1,21 +1,26 @@
-<div class="login">
+<div [formGroup]="validator" class="login h-screen">
+  <h1 class="text-3xl font-bold mb-10">Login</h1>
   <input
     class="border px-2.5 py-1.5 rounded-2xl border-zinc-500 focus:outline-none focus:scale-105 transition duration-300"
     type="text"
     placeholder="Name"
-    [(ngModel)]="name"
+    formControlName="name"
   />
   <input
     class="border px-2.5 py-1.5 rounded-2xl border-zinc-500 focus:outline-none focus:scale-105 transition duration-300"
-    type="text"
-    placeholder="Age"
-    [(ngModel)]="age"
+    type="password"
+    placeholder="Password"
+    formControlName="password"
   />
 
+  @if (validator.touched && !isValid) {
+  <p class="text-red-600">Invalid Data</p>
+  }
+
   <button
-    class="w-full border px-4 py-2 rounded-2xl border-zinc-500 hover:bg-zinc-500 hover:text-amber-50 transition duration-300"
-    (click)="add()"
+    class="border px-4 py-2 rounded-2xl border-zinc-500 hover:bg-zinc-500 hover:text-amber-50 transition duration-300"
+    (click)="getData()"
   >
-    Add
+    Login
   </button>
 </div>

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IProduct } from '../../../interfaces/product';
+import { IProduct } from '../../interfaces/product';
 
 @Component({
   selector: 'app-cards',
