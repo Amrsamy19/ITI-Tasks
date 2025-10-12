@@ -1,11 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import { ruruHTML } from "ruru/server";
 import schema from "./schema/graphql.js";
 import userRoutes from "./routes/userRoutes.js";
 import companyRoutes from "./routes/companyRoutes.js";
 import { createHandler } from "graphql-http/lib/use/express";
+import { ruruHTML } from "ruru/server";
 
 const app = express();
 
