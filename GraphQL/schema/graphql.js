@@ -9,6 +9,7 @@ import User from "../models/User.js";
 import Company from "../models/Company.js";
 import { UserType } from "./types/User.js";
 import { CompanyType } from "./types/Company.js";
+import { Mutation } from "./mutations/User.js";
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
@@ -42,6 +43,6 @@ const RootQuery = new GraphQLObjectType({
   },
 });
 
-const graphql = new GraphQLSchema({ query: RootQuery });
+const graphql = new GraphQLSchema({ query: RootQuery, mutation: Mutation });
 
 export default graphql;
