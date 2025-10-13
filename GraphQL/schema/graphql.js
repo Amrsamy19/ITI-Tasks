@@ -1,7 +1,5 @@
 import {
   GraphQLObjectType,
-  GraphQLString,
-  GraphQLInt,
   GraphQLSchema,
   GraphQLID,
   GraphQLList,
@@ -9,36 +7,8 @@ import {
 
 import User from "../models/User.js";
 import Company from "../models/Company.js";
-
-const CompanyType = new GraphQLObjectType({
-  name: "Company",
-  fields: () => ({
-    id: { type: GraphQLID },
-    name: { type: GraphQLString },
-    users: {
-      type: new GraphQLList(UserType),
-      resolve(parent) {
-        return User.find({ companyId: parent.id });
-      },
-    },
-  }),
-});
-
-const UserType = new GraphQLObjectType({
-  name: "User",
-  fields: () => ({
-    id: { type: GraphQLID },
-    firstName: { type: GraphQLString },
-    lastName: { type: GraphQLString },
-    age: { type: GraphQLInt },
-    company: {
-      type: CompanyType,
-      resolve(parent) {
-        return Company.findById(parent.companyId);
-      },
-    },
-  }),
-});
+import { UserType } from "./types/User.js";
+import { CompanyType } from "./types/Company.js";
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
