@@ -20,11 +20,5 @@ installBtn.addEventListener("click", async () => {
   const { outcome } = await deferredPrompt.userChoice;
   console.log(`User response: ${outcome}`);
 
-  deferredPrompt = null;
-  installBtn.hidden = true;
-});
-
-window.addEventListener("appinstalled", () => {
-  console.log("PWA was installed!");
   installBtn.hidden = true;
 });
