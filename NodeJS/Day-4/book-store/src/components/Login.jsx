@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = ({ setIsAuthenticated, setUser }) => {
   const [formData, setFormData] = useState({
@@ -8,6 +8,7 @@ const Login = ({ setIsAuthenticated, setUser }) => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -38,7 +39,7 @@ const Login = ({ setIsAuthenticated, setUser }) => {
 
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(userData));
-        window.location.href = "/";
+        navigate("/dashboard");
       } else {
         const data = await response.json();
         setError(data.error || "Login failed. Please try again.");
