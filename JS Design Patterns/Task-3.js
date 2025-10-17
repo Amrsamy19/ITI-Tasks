@@ -3,13 +3,15 @@ class Product {
     this.brand = brand;
     this.ram = ram;
     this.color = color;
+    this.date = {};
   }
 
   clone(updates = {}) {
     return new Product(
       updates.brand || this.brand,
       updates.ram || this.ram,
-      updates.color || this.color
+      updates.color || this.color,
+      updates.date || this.date
     );
   }
 }
