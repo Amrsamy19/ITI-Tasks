@@ -4,13 +4,13 @@ class Notifier {
   }
 }
 
-class EmailNotifier extends Notifier {
+class EmailNotification extends Notifier {
   send(message) {
     console.log(`Sending email with message: ${message}`);
   }
 }
 
-class SMSNotifier extends Notifier {
+class SMSNotification extends Notifier {
   send(message) {
     console.log(`Sending SMS with message: ${message}`);
   }
@@ -18,10 +18,10 @@ class SMSNotifier extends Notifier {
 
 const Notiyfiers = {
   EMAIL: () => {
-    return new EmailNotifier();
+    return new EmailNotification();
   },
   SMS: () => {
-    return new SMSNotifier();
+    return new SMSNotification();
   },
 };
 
