@@ -1,5 +1,5 @@
 class Notifier {
-  send(message) {
+  send(_) {
     throw new Error("Method not implemented.");
   }
 }
@@ -16,19 +16,17 @@ class SMSNotifier extends Notifier {
   }
 }
 
-const createNotifier = (type) => {
-  switch (type) {
-    case "email":
-      return new EmailNotifier();
-    case "sms":
-      return new SMSNotifier();
-    default:
-      throw new Error("Invalid notifier type.");
-  }
+const Notiyfiers = {
+  EMAIL: () => {
+    return new EmailNotifier();
+  },
+  SMS: () => {
+    return new SMSNotifier();
+  },
 };
 
-const emailNotifier = createNotifier("email");
+const emailNotifier = Notiyfiers.EMAIL();
 emailNotifier.send("Hello via Email!");
 
-const smsNotifier = createNotifier("sms");
+const smsNotifier = Notiyfiers.SMS();
 smsNotifier.send("Hello via SMS!");
