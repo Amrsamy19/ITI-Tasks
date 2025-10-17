@@ -17,12 +17,8 @@ class SMSNotification extends Notifier {
 }
 
 const Notiyfiers = {
-  EMAIL: () => {
-    return new EmailNotification();
-  },
-  SMS: () => {
-    return new SMSNotification();
-  },
+  EMAIL: () => new EmailNotification(),
+  SMS: () => new SMSNotification(),
 };
 
 const emailNotifier = Notiyfiers.EMAIL();
