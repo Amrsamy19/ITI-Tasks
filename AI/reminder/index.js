@@ -1,25 +1,27 @@
 const nodemailer = require("nodemailer");
-
-require("dotenv").config();
+const API_KEY = "AIzaSyA2YKcVFJwG4F37r6h8FbEeFT3xl2-jD1w";
 
 const AiTaskExtractor = async (text) => {
-  const res = await fetch(process.env.AI_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      contents: [
-        {
-          parts: [
-            {
-              text: `Extract reminder & time in minutes from: "${text}" Return only JSON like: {"task":"drink water", "minutes":2} No code blocks, no comments, no text.`,
-            },
-          ],
-        },
-      ],
-    }),
-  });
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              {
+                text: `Extract reminder & time in minutes from: "${text}" Return only JSON like: {"task":"drink water", "minutes":1} No code blocks, no comments, no text.`,
+              },
+            ],
+          },
+        ],
+      }),
+    }
+  );
 
   const data = await res.json();
 
@@ -64,4 +66,4 @@ const sendEmailReminder = async (task) => {
   } catch (error) {
     console.error(error.message);
   }
-})("Remind me to drink water in 0.5 minute");
+})("Remind me to drink water in 1 minute");
