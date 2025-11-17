@@ -1,0 +1,22 @@
+<div class="todo-card">
+  <h1>Todo</h1>
+
+  <div class="input-row">
+    <input
+      type="text"
+      placeholder="Add a todo..."
+      [(ngModel)]="newTodo"
+      (keyup.enter)="addTodo()"
+    />
+    <button (click)="addTodo()" [disabled]="!newTodo.trim()">Add</button>
+  </div>
+
+  <ul class="todo-list">
+    <li *ngFor="let todo of todos; let i = index" class="todo-item">
+      <span class="text">{{ todo }}</span>
+      <button class="delete" (click)="deleteTodo(i)">Delete</button>
+    </li>
+  </ul>
+
+  <p *ngIf="todos.length === 0" class="empty">No todos yet — add one!</p>
+</div>
